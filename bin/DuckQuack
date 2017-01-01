@@ -1,0 +1,13 @@
+#!/bin/sh
+if [ -L $0 ]
+then
+    BASEPATH=$(dirname $(readlink -f /home/nissl/bin/generate-jruby-app-template))
+else
+    BASEPATH=$(dirname $0)
+fi
+BASEPATH=$(realpath $BASEPATH)
+CD=$(realpath $(dirname $BASEPATH))
+cd $CD
+export GEM_HOME="./.gems"
+export GEM_PATH="./.gems"
+java -Dfile.encoding=UTF8 -jar $BASEPATH/jruby-complete.jar -S ../config/boot.rb DuckQuack        

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+JRUBY_VERSION=9.1.6.0
+JRUBY=jruby-complete-$JRUBY_VERSION.jar
+DOWNLOAD_PATH=http://jruby.org.s3.amazonaws.com/downloads/$JRUBY_VERSION/$JRUBY
+
+if [ -L $0 ]
+then
+    BASEPATH=$(dirname $(readlink -f $0))
+else
+    BASEPATH=$(dirname $0)
+fi 
+
+BASEPATH=$(realpath $BASEPATH)
+CD=$(realpath $(dirname $BASEPATH))
+cd $CD
+
+JRUBYBIN=$BASEPATH/jruby-complete.jar
+
+if [ ! -f ./jruby-complete.jar ]
+then
+		echo "=========================================================================="
+		echo download JRuby... from $DOWNLOAD_PATH
+		echo "=========================================================================="
+		wget $DOWNLOAD_PATH -O $JRUBYBIN -v
+else
+		echo "=========================================================================="
+		echo JRuby exist, skipping
+		echo "=========================================================================="
+fi
+
+export GEM_HOME="./.gems"
+export GEM_PATH="./.gems"
+
+echo "=========================================================================="
+echo Preparing bundler in $CD/$GEM_PATH
+echo "=========================================================================="
+java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri bundler
+
+echo "=========================================================================="
+echo Preparing gems in $CD/$GEM_PATH
+echo "=========================================================================="
+$BASEPATH/bundle install
+echo done...

@@ -1,0 +1,11 @@
+.output-pane {
+    -fx-highlight-fill: #6E7691;
+    -fx-highlight-text-fill: #000000;
+    -fx-text-fill: #f8f8f2;
+    -fx-font-family: 'monospace';
+    -fx-font-size: 14px;
+}
+
+.output-pane .content {
+    -fx-background-color: #282a36;
+}
