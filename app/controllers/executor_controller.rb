@@ -8,7 +8,16 @@ require 'yaml'
 require 'fileutils'
 require 'facets'
 
-class ExecutorController
+import javafx.scene.control.TextArea
+import javafx.scene.canvas.Canvas
+import javafx.scene.control.Alert
+import javafx.scene.control.ButtonType
+import javafx.scene.paint.Color
+import javafx.scene.control.Button
+import javafx.scene.control.TextField
+import javafx.event.ActionEvent
+
+class RunningCode
 
   attr_reader :canvas
   attr_reader :container
@@ -22,33 +31,18 @@ class ExecutorController
     require(m)
     name = File.basename(m).slice(0..-4)
     include const_get(name.modulize)
-    #class_eval("include #{name.modulize}", m, 0)
   }
 
-  def initialize(container, source_controller, output)
+  def initialize(container, source_controller, canvas, output)
     @output = output
-    @output.get_style_class.add("output-pane");
-    @output.get_stylesheets.add('file://' + File.join(app.configs[:path][:config], 'output-pane.css'))
     @source_controller = source_controller
     @container = container
-    find_canvas
-    canvas_fix
+    @canvas = canvas
     inject_gc_methods
     inject_canvas_methods
     inject_additional_methods
     generate_methods_list if app.configs.fetch2([:generate_methods_list], false)
     inject_methods_alias
-  end
-
-  def find_canvas
-    @canvas = @container.getChildren.reduce { |m, child|
-      child.is_a?(Java::JavafxSceneCanvas::Canvas) ? child : nil
-    }
-  end
-
-  def canvas_fix
-    @canvas.widthProperty.bind(@container.widthProperty)
-    @canvas.heightProperty.bind(@container.heightProperty)
   end
 
   def inject_canvas_methods
@@ -62,6 +56,7 @@ class ExecutorController
       end
     }
   end
+  private :inject_canvas_methods
 
   def inject_gc_methods 
     @graphic_context = @canvas.getGraphicsContext2D
@@ -75,12 +70,33 @@ class ExecutorController
       end
     }
   end
+  private :inject_gc_methods
 
-  def inject_additional_methods
+  def inject_additional_methods    
+    
     self.class.send(:define_method, :clear_output) { @output.text = '' }
     self.class.send(:define_method, :print) { |text| @output.text += text.to_s }
     self.class.send(:define_method, :println) { |text| @output.text += "#{text.to_s}\n" }
+    self.class.send(:define_method, :reset) {
+      children = @container.get_children
+      (children.reduce([]) { |acc, child| acc << child unless child.get_id == 'default_canvas'; acc}).each { |child| children.remove(child)}
+    }
+    self.class.send(:define_method, :alert) { |caption, message|
+      alert = Alert.new(Alert::AlertType::INFORMATION, message)
+      alert.header_text = caption
+      alert.show
+    }
+    self.class.send(:define_method, :alert_and_wait) { |caption, message|
+      alert = Alert.new(Alert::AlertType::INFORMATION, message, ButtonType::CANCEL, ButtonType::OK)
+      alert.header_text = caption
+      result = false
+      alert.show_and_wait.filter { |response| response == ButtonType::OK }
+      .if_present { |response| result = true}
+      result
+    }
+    self.class.send(:define_method, :add_control) { |control| @container.get_children.add(control) }
   end
+  private :inject_additional_methods
 
   def generate_methods_list
     path = File.join(app.configs.fetch2([:path, :locale], './'), 'en')
@@ -95,6 +111,7 @@ class ExecutorController
       f.write(loc_hash.to_yaml)
     }
   end
+  private :generate_methods_list
 
   def inject_methods_alias
     methods.sort.each { |m|
@@ -111,24 +128,60 @@ class ExecutorController
       end
     }
   end
+  private :inject_methods_alias
 
-  def run
+  def activate
     s = @source_controller.code_get
     begin
-      self.instance_eval(s.to_s)
+      self.instance_eval(s.to_s, "CODE", 0)
     rescue Exception => excp
       message = %(#{excp.message}\n#{excp.backtrace.join("\n")})
       @output.text += "\n#{message}"
     end
   end
 
-  private(:find_canvas,
-    :canvas_fix,
-    :inject_gc_methods,
-    :inject_canvas_methods,
-    :inject_additional_methods,
-    :generate_methods_list,
-    :inject_methods_alias
-  )
+end
 
+
+class ExecutorController
+
+  attr_reader :containers
+  attr_reader :output
+  attr_reader :canvas
+  attr_reader :source_controller
+
+  def initialize(containers, source_controller)
+    @containers = containers
+    @source_controller = source_controller
+    find_output_areas
+  end
+
+  def stack_pane
+    @containers[0]
+  end
+
+  def output_pane
+    @containers[1]
+  end
+
+  def find_output_areas
+    @canvas = stack_pane.getChildren.reduce { |m, child|
+      child.is_a?(Canvas) ? child : nil
+    }
+    @canvas.widthProperty.bind(stack_pane.widthProperty)
+    @canvas.heightProperty.bind(stack_pane.heightProperty)
+    
+    @output = output_pane.getChildren.reduce { |m, child|
+      child.is_a?(TextArea) ? child : nil
+    }
+    @output.get_style_class.add("output-pane");
+    @output.get_stylesheets.add('file://' + File.join(app.configs[:path][:config], 'output-pane.css'))
+  end
+  private :find_output_areas
+
+  def run
+    running_code = RunningCode.new(stack_pane, @source_controller, @canvas, @output)
+    running_code.activate
+  end
+  
 end

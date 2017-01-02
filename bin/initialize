@@ -13,6 +13,7 @@ fi
 
 BASEPATH=$(realpath $BASEPATH)
 CD=$(realpath $(dirname $BASEPATH))
+LIB=../lib
 cd $CD
 
 JRUBYBIN=$BASEPATH/jruby-complete.jar
@@ -41,4 +42,18 @@ echo "==========================================================================
 echo Preparing gems in $CD/$GEM_PATH
 echo "=========================================================================="
 $BASEPATH/bundle install
+echo done...
+
+echo "=========================================================================="
+echo Preparing libs...
+echo "=========================================================================="
+cd $LIB
+
+wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.wellbehaved&a=wellbehavedfx&v=0.3&e=jar" -O wellbehavedfx-0.3.jar -v
+wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.undo&a=undofx&v=1.2.2&e=jar" -O undofx-1.2.2.jar -v
+wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.richtext&a=richtextfx&v=0.7-M3&e=jar" -O richtextfx-0.7-M3.jar -v
+wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.flowless&a=flowless&v=0.5.1&e=jar" -O flowless-0.5.1.jar -v
+wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.reactfx&a=reactfx&v=2.0-M5&e=jar" -O reactfx-2.0-M5.jar -v
+
+cd ../bin
 echo done...

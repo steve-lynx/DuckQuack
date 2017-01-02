@@ -4,6 +4,8 @@ include Java
 import java.lang.System
 require 'jrubyfx'
 require 'yaml'
+import javafx.stage.Screen
+javafx.application.Platform
 
 class DuckQuackApp < JRubyFX::Application
   include AppHelpers
@@ -24,7 +26,9 @@ class DuckQuackApp < JRubyFX::Application
           :title => 'DuckQuack',
           :width => 960,
           :height => 700,
+          :size => 'window',
           :lang => 'en',
+          :tab_chars => '  ',
           :generate_methods_list => false,
           :database => {
             :active => false,
@@ -95,14 +99,28 @@ class DuckQuackApp < JRubyFX::Application
 
   def start(stage)
     @stage = stage
+    bounds = Screen.get_primary.get_visual_bounds
+    size = case @configs.fetch2([:size], 'window')
+           when 'window'
+             [@configs.fetch2([:width], 800), @configs.fetch2([:height], 600)]
+           when 'medium'
+             [bounds.get_width / 2, bounds.get_height / 2]
+           else            
+             [bounds.get_width - 20, bounds.get_height - 40]
+           end
     with(stage,
       title: @configs.fetch2([:title], 'title'),
-      width: @configs.fetch2([:width], 800),
-      height: @configs.fetch2([:height], 600)
+      width: size[0],
+      height: size[1]
     ) do
       fxml DuckQuackController          
       show
     end
+  end
+
+  def close
+    logger.info("DuckQuack - Closing")
+    Platform.exit
   end
   
 end

@@ -83,11 +83,11 @@ booleans:
   - 'true'
   - 'false'
 strings:
-  - '''\b\w+\b\'''
-  - '"\b\w+\b"'
+  - '''.*'''
+  - '".*"'
 comments:
   - '#.*$'
-  - '=begin\W.*\W=end'
+  - '(?m)=begin\W.*\W=end'
 symbols:
   - ':\b\w+\b'
   - ':''\b\w+\b'''
@@ -98,6 +98,7 @@ variables:
   - '\$\b\w+\b'
 constants:
   - '\b[A-Z]+\b'
+  - '[:|\.]+[A-Z]+\b'
 classes:
   - '\b[A-Z][a-z]+\b'
 modules:

@@ -6,6 +6,8 @@ require 'jrubyfx'
 import org.fxmisc.richtext.CodeArea
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
+import javafx.scene.input.KeyEvent
+import javafx.scene.input.KeyCode
 
 class Java::JavafxSceneCanvas::Canvas
 
@@ -33,15 +35,39 @@ class DuckQuackController
   include JRubyFX::Controller
   fxml "main.fxml"
 
-  attr_reader :source
-
   def initialize
+    @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) { |ev|
+      if ev.get_code == KeyCode::TAB
+        @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '    '))
+        ev.consume
+      end
+      
+    }
     scroll_pane = VirtualizedScrollPane.new(@code_editor)
     @vbox_code_editor.add(scroll_pane)
     VBox.setVgrow(scroll_pane, Priority::ALWAYS);
-    @executor = ExecutorController.new(@stack_pane, SourceCodeController.new(@code_editor), @output)
-    @@filename = ''
+    @executor = ExecutorController.new([@stack_pane, @output_pane], SourceCodeController.new(@code_editor))
+    @filename = ''
+    set_captions
   end
+
+  def set_captions
+    @file_menu.text = app._t(:file).capitalize
+    @file_new_menu_item.text = app._t(:new).capitalize
+    @file_load_menu_item.text = app._t(:load).capitalize
+    @file_save_menu_item.text = app._t(:save).capitalize
+    @file_close_app_menu_item.text = app._t(:exit).capitalize
+    
+    @help_menu.text = app._t(:help).capitalize
+    @help_about_menu_item.text = app._t(:about).capitalize
+    
+    @run_button.text = app._t(:run).capitalize
+    @new_button.text = app._t(:new).capitalize
+    @save_button.text = app._t(:save).capitalize
+    @load_button.text = app._t(:load).capitalize
+    @clear_output_button.text = app._t(:clear_output).capitalize
+  end
+  private :set_captions
 
   def write_output(message)
     @output.text << message
@@ -117,4 +143,16 @@ class DuckQuackController
   def clear_output_clicked    
     @output.text = ''  
   end
+
+  def close_app_clicked
+    app.close
+  end
+
+  def about_menu_item_clicked
+    message = app._t(:about_text).capitalize
+    alert = Alert.new(Alert::AlertType::INFORMATION, message)
+    alert.header_text = app._t(:about_caption).capitalize
+    alert.show
+  end
+  
 end
