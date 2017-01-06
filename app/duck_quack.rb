@@ -29,6 +29,7 @@ class DuckQuackApp < JRubyFX::Application
           :size => 'window',
           :lang => 'en',
           :tab_chars => '  ',
+          :language => 'ruby',
           :generate_methods_list => false,
           :database => {
             :active => false,
@@ -36,12 +37,14 @@ class DuckQuackApp < JRubyFX::Application
           },
           :path  => {
             :root => PATH_ROOT,
-            :app => PATH_APP,
+            :app => PATH_APP,            
             :fxml => File.join(PATH_ROOT,'app', 'fxml'),
             :lib => File.join(PATH_ROOT, 'lib'),
             :config => File.join(PATH_ROOT, 'config'),
             :locale => File.join(PATH_ROOT, 'config', 'locale'),
+            :editor => File.join(PATH_ROOT, 'config', 'editor'),
             :controllers => File.join(PATH_ROOT,'app', 'controllers'),
+            :helpers => File.join(PATH_ROOT,'app', 'helpers'),
             :db => File.join(PATH_ROOT, 'db'),
           }
         }.deep_merge(c)
@@ -55,7 +58,8 @@ class DuckQuackApp < JRubyFX::Application
         self.configs[:path][:lib], 
         self.configs[:path][:config],
         self.configs[:path][:app],
-        self.configs[:path][:controllers]
+        self.configs[:path][:controllers],
+        self.configs[:path][:helpers]
       ].each {|path|
         $LOAD_PATH << path unless $LOAD_PATH.include?(path)
       }

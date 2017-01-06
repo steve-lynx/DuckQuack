@@ -7,7 +7,18 @@ save: salva
 load: carica
 about: informazioni su...
 exit: esci
+cut: taglia
+copy: copia
+paste: incolla
+select_all: seleziona tutto
+undo: annulla
+redo: ripeti
 clear_output: pulisci output
+language: linguaggio
+error_line_marker: "LINEA IN CUI SI È VERIFICATO L'ERRORE"
+are_you_sure_to_new: Sei sicuro di creare un nuovo file?
+are_you_sure_to_load: Sei sicuro di caricare un nuovo file?
+are_you_sure_to_overwrite: Sei sicuro di sovrascrivere il file?
 substitutions:
   '\bINIZIO\b': BEGIN
   '\bFINE\b': END
@@ -48,7 +59,10 @@ substitutions:
 methods:
   make_a_simple_methods: un_metodo_semplice
   reset: reimposta
-  add_control: aggiungi_controllo
+  control_add: aggiungi_controllo
+  button_create: nuovo_bottone
+  label_create: nuova_etichetta
+  text_field_create: nuovo_campo_di_testo
   alert_and_wait: allerta_e_aspetta
   alert: allerta
   accessible: accessible

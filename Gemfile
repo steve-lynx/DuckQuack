@@ -21,5 +21,3 @@ gem 'json'
 gem 'facets'
 gem 'pry'
 gem 'pry-doc'
-
-

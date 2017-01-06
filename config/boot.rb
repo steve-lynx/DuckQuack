@@ -14,7 +14,7 @@ PATH_LIB = File.join(PATH_ROOT, 'lib')
 require 'rubygems'
 require 'bundler/setup'
 
-Dir[File.join(File.join(PATH_ROOT, 'lib'), '*.rb')].sort.each { |h| require(h) }
+Dir[File.join(File.join(PATH_ROOT, 'lib'), '*.{rb,jar}')].sort.each { |h| p h; require(h) }
 
 require 'duck_quack'
 

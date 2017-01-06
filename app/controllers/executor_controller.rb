@@ -16,6 +16,7 @@ import javafx.scene.paint.Color
 import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.event.ActionEvent
+import javafx.scene.control.Label
 
 class RunningCode
 
@@ -24,6 +25,9 @@ class RunningCode
   attr_reader :graphic_context
   attr_reader :output
   attr_reader :source_controller
+
+  require 'running_code_helpers'
+  include RunningCodeHelpers
 
   path = File.join(app.configs.fetch2([:path, :locale], './'), app.configs.fetch2([:lang], 'en'))
   $LOAD_PATH << path unless $LOAD_PATH.include?(path)
@@ -72,29 +76,10 @@ class RunningCode
   end
   private :inject_gc_methods
 
-  def inject_additional_methods    
-    
+  def inject_additional_methods
     self.class.send(:define_method, :clear_output) { @output.text = '' }
     self.class.send(:define_method, :print) { |text| @output.text += text.to_s }
     self.class.send(:define_method, :println) { |text| @output.text += "#{text.to_s}\n" }
-    self.class.send(:define_method, :reset) {
-      children = @container.get_children
-      (children.reduce([]) { |acc, child| acc << child unless child.get_id == 'default_canvas'; acc}).each { |child| children.remove(child)}
-    }
-    self.class.send(:define_method, :alert) { |caption, message|
-      alert = Alert.new(Alert::AlertType::INFORMATION, message)
-      alert.header_text = caption
-      alert.show
-    }
-    self.class.send(:define_method, :alert_and_wait) { |caption, message|
-      alert = Alert.new(Alert::AlertType::INFORMATION, message, ButtonType::CANCEL, ButtonType::OK)
-      alert.header_text = caption
-      result = false
-      alert.show_and_wait.filter { |response| response == ButtonType::OK }
-      .if_present { |response| result = true}
-      result
-    }
-    self.class.send(:define_method, :add_control) { |control| @container.get_children.add(control) }
   end
   private :inject_additional_methods
 
@@ -117,31 +102,29 @@ class RunningCode
     methods.sort.each { |m|
       a = app._t_method(m).to_sym
       if a.to_s != m.to_s
-        logger.debug("ALIAS: #{a} for #{m}")
-        unless respond_to?(a)
-          if method(m).arity == 0
-            self.class.send(:define_method, a) { send(m) }
-          else
-            self.class.send(:define_method, a) { |*args| send(m, *args) }
-          end
-        end
+        logger.debug("ALIAS: #{a} for #{m}")        
+        self.class.send(:alias_method, a, m) unless respond_to?(a)
       end
     }
   end
   private :inject_methods_alias
 
   def activate
+    error_code_marker = ">>>> #{app._t(:error_line_marker)} >>>> "
     s = @source_controller.code_get
     begin
-      self.instance_eval(s.to_s, "CODE", 0)
-    rescue Exception => excp
-      message = %(#{excp.message}\n#{excp.backtrace.join("\n")})
+      base = -s.fetch2([:preamble_size], 0) + 1
+      self.instance_eval(s.fetch2([:code], ''), "\n#{error_code_marker}", base)
+    rescue Exception => excp      
+      message = %(MESSAGE:\n#{excp.message}\nBACKTRACE:\n#{excp.backtrace.join("\n")})
+      r = Regexp.new(Regexp.escape(error_code_marker).to_s + ':(\d*):in')
+      n = message.scan(r)[0][0].to_i - 1
+      @source_controller.set_error_point(n)      
       @output.text += "\n#{message}"
     end
   end
 
 end
-
 
 class ExecutorController
 

@@ -11,15 +11,17 @@
     -fx-cursor: text;
 }
 
+.code-area-context-menu-item * {
+    -fx-text-fill: #000000;
+    -fx-fill: #000000;
+    -fx-font-family: 'sans serif';
+    -fx-font-size: 14px;
+    -fx-cursor: text;
+}
+
 .code-area .caret {
     -fx-stroke: #f8f8f2;
     -fx-stroke-width: 2;
-    /*
-    -fx-rotate: 90;
-    -fx-translate-x: -0.3em;
-    -fx-translate-y: 0.6em;
-    -fx-scale-y: 0.5;
-    */
 }
 
 .linenumber {
@@ -27,6 +29,30 @@
     -fx-text-fill: #f8f8f2;
     -fx-fill: #f8f8f2;
     -fx-font-weight: bold;
+    -fx-padding-left: 0.4em;
+    -fx-padding-right: 0.4em;
+}
+
+.lineerror,
+.lineerror * {
+    -fx-text-fill: #ff0000;
+    -fx-fill: #ff0000;
+    -fx-font-weight: bold;
+}
+
+.lineerrorsymbol,
+.lineerrorsymbol * {
+    -fx-text-fill: #ff0000;
+    -fx-fill: #ff0000;
+    -fx-font-weight: bold;
+}
+
+.linesymbol,
+.linesymbol * {
+    -fx-fill: #00ff00;
+    -fx-text-fill: #00ff00;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
 }
 
 .default {
@@ -35,7 +61,7 @@
 
 .keywords { 
     -fx-fill: #C678DD; 
-    -fx-font-weight: bold; 
+    -fx-font-weight: bold;
 }
 
 .italian_keywords { 
@@ -67,7 +93,8 @@
     -fx-font-style: italic;
 }
 
-.comments{
+.comments,
+multiline_comments {
     -fx-fill: #E5C07B;
     -fx-font-style: italic;
 }
@@ -132,6 +159,4 @@
 .space{
     -fx-fill: #ffffff;
 }
-
-
 

@@ -1,3 +1,4 @@
+#-*- ruby -*-
 
 reimposta
 

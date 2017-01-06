@@ -87,6 +87,7 @@ strings:
   - '".*"'
 comments:
   - '#.*$'
+multiline_comments:
   - '(?m)=begin\W.*\W=end'
 symbols:
   - ':\b\w+\b'
