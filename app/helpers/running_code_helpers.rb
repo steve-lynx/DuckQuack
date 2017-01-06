@@ -69,4 +69,39 @@ module RunningCodeHelpers
     c
   end
   
+  def text_area_create(opts = {})
+    params = {
+      :x => 0,
+      :y => 0
+    }.deep_merge(opts)
+    c = TextArea.new
+    c.relocate(params[:x], params[:y])
+    control_add(c)
+    c
+  end
+
+  def image_view_create(image, opts = {})
+    params = {
+      :x => 0,
+      :y => 0,
+      :resize => {:width => 130, :height => 150, :preserve => false}
+    }.deep_merge(opts)
+    c = ImageView.new
+    image = Image.new("file://" + image, true)
+    c.setImage(image)
+    if params[:resize]
+      width, height = [params[:resize][:width], params[:resize][:height]]
+      c.setFitWidth(width) unless width.nil?
+      c.setFitHeight(height) unless height.nil?
+      c.setPreserveRatio(!params[:resize][:preserve].nil?)
+    end
+    c.setSmooth(true);
+    c.relocate(params[:x], params[:y])
+    @container.get_children.add(c)
+    @container.applyCss
+    @container.layout
+    c
+  end
+
+  
 end

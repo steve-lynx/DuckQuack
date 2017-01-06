@@ -60,9 +60,11 @@ methods:
   make_a_simple_methods: un_metodo_semplice
   reset: reimposta
   control_add: aggiungi_controllo
+  image_view_create: mostra_immagine
   button_create: nuovo_bottone
   label_create: nuova_etichetta
   text_field_create: nuovo_campo_di_testo
+  text_area_create: nuova_area_di_testo
   alert_and_wait: allerta_e_aspetta
   alert: allerta
   accessible: accessible
