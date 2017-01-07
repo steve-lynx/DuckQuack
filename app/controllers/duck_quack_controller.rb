@@ -14,9 +14,9 @@ import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.input.MouseButton
 
-class Java::JavafxSceneCanvas::Canvas
+require 'ruby-beautify'
 
-  ##puts self.methods.sort
+class Java::JavafxSceneCanvas::Canvas
 
   def isResizable
     true
@@ -39,6 +39,8 @@ end
 class DuckQuackController
   include JRubyFX::Controller
   fxml "main.fxml"
+
+  include RubyBeautify
 
   def initialize
     
@@ -121,6 +123,7 @@ class DuckQuackController
     @edit_copy_menu_item.text = app._t(:copy).capitalize
     @edit_paste_menu_item.text = app._t(:paste).capitalize
     @edit_select_all_menu_item.text = app._t(:select_all).capitalize
+    @edit_format_menu_item.text = app._t(:format_code).capitalize
     
     @help_menu.text = app._t(:help).capitalize
     @help_about_menu_item.text = app._t(:about).capitalize
@@ -251,6 +254,14 @@ class DuckQuackController
 
   def edit_select_all_item_clicked
     @code_editor.select_all
+  end
+
+  def edit_format_item_clicked
+    code = pretty_string(
+      @executor.source_controller.code_text_get,
+      :indent_token =>  " ",
+      :indent_count => app.configs.fetch2([:tab_chars], '  ').size)
+    @executor.source_controller.code_set(code)
   end
   
 end

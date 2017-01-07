@@ -15,7 +15,8 @@ undo: annulla
 redo: ripeti
 clear_output: pulisci output
 language: linguaggio
-error_line_marker: "LINEA IN CUI SI È VERIFICATO L'ERRORE"
+format_code: organizza codice
+error_line_marker: "DuckQuack: file eseguito"
 are_you_sure_to_new: Sei sicuro di creare un nuovo file?
 are_you_sure_to_load: Sei sicuro di caricare un nuovo file?
 are_you_sure_to_overwrite: Sei sicuro di sovrascrivere il file?
@@ -58,6 +59,9 @@ substitutions:
   '\brendi\b': yield
 methods:
   make_a_simple_methods: un_metodo_semplice
+  pwd: cartella_di_lavoro
+  media_player_create: visore_multimediale
+  audio_clip_create: suona
   reset: reimposta
   control_add: aggiungi_controllo
   image_view_create: mostra_immagine

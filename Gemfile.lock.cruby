@@ -3,23 +3,12 @@ GEM
   specs:
     coderay (1.1.1)
     facets (3.1.0)
-    ffi (1.9.14-java)
-    jdbc-sqlite3 (3.15.1)
-    jrubyfx (1.2.0-java)
-      jrubyfx-fxmlloader (>= 0.4)
-    jrubyfx-fxmlloader (0.4.1-java)
     json (2.0.2)
-    json (2.0.2-java)
     method_source (0.8.2)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry (0.10.4-java)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
-      spoon (~> 0.0)
     pry-doc (0.10.0)
       pry (~> 0.9)
       yard (~> 0.9)
@@ -27,18 +16,13 @@ GEM
     ruby-beautify (0.97.4)
     sequel (4.42.0)
     slop (3.6.0)
-    spoon (0.0.6)
-      ffi
     yard (0.9.5)
 
 PLATFORMS
-  java
   ruby
 
 DEPENDENCIES
   facets
-  jdbc-sqlite3
-  jrubyfx
   json
   pry
   pry-doc

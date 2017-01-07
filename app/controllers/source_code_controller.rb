@@ -28,6 +28,8 @@ class SymbolFactory
     @error_style = error_style
     @error_symbol = ["\u25b6", @error_style + "symbol"]
     @line_symbol = ["\u25b6", line_style]
+    @syntax_regexs = nil
+    @substitutions_regex = nil
   end
 
   def symbol(line_number)
@@ -93,14 +95,19 @@ class SourceCodeController
   end
   private :prepare_grapics_factory
 
-  def set_error_point(point, c = "E")
-    @current_error = @code_area.get_paragraph(point)    
+  def set_error_point(point, cause)
+    logger.debug("ERROR POINT: #{ point + 1}")
+    @current_error = @code_area.get_paragraph(point) 
+    @syntax_regexs.insert(0, error_regex) if error_point?
     @code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
     code_area.move_to(point, 0)
   end
 
   def reset_error_point
-    @current_error = nil
+    if error_point?
+      @current_error = nil
+      @syntax_regexs.slice!(0)
+    end
   end
   private :reset_error_point
 
@@ -132,26 +139,27 @@ class SourceCodeController
   private :error_regex
   
   def syntax_regex
-    regexs = @syntax_specs.keys.reduce([]) { |acc, k|
-      words = @syntax_specs[k].reduce([]) { |memo, w|
-        memo << (w.size > 1 ? Regexp.new(w) : Regexp.escape(w) );
-        memo
-      } 
-      acc << %((?<#{k.to_s}>#{words.join('|')})); acc
-    }
-    regexs.insert(0, error_regex) if error_point?
-    @syntax_regex = Regexp.new(regexs.join('|'))
-    @syntax_regex
+    if @syntax_regexs.nil?      
+      @syntax_regexs = @syntax_specs.keys.reduce([]) { |acc, k|
+        words = @syntax_specs[k].reduce([]) { |memo, w|
+          memo << (w.size > 1 ? Regexp.new(w) : Regexp.escape(w) );
+          memo
+        } 
+        acc << %((?<#{k.to_s}>#{words.join('|')})); acc
+      }
+    end
+    Regexp.new(@syntax_regexs.join('|'))
   end
   private :syntax_regex
 
   def substitutions_regex
-    if defined?(@substitutions_regex).nil?
+    if @substitutions_regex.nil?
       substitutions = app._substitutions
       regex = substitutions.keys.reduce([]) { |acc, k|
         acc << %((?<#{substitutions[k]}>#{Regexp.new(k.to_s)})); acc
       }.join('|')
       @substitutions_regex = Regexp.new(regex)
+      @substitutions_regex
     else
       @substitutions_regex
     end

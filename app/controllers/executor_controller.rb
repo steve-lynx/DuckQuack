@@ -115,12 +115,12 @@ class RunningCode
     begin
       base = -s.fetch2([:preamble_size], 0) + 1
       self.instance_eval(s.fetch2([:code], ''), "\n#{error_code_marker}", base)
-    rescue Exception => excp      
-      message = %(MESSAGE:\n#{excp.message}\nBACKTRACE:\n#{excp.backtrace.join("\n")})
-      #r = Regexp.new(Regexp.escape(error_code_marker).to_s + ':(\d*):in')
-      r = Regexp.new(Regexp.escape(error_code_marker).to_s + ':(\d*).*|:in')     
-      n = message.scan(r)[0][0].to_i - 1
-      @source_controller.set_error_point(n)      
+    rescue Exception => excp
+      backtrace = excp.respond_to?(:backtrace_locations) ? excp.backtrace_locations.join("\n") : excp.backtrace.join("\n")
+      message = %(MESSAGE:\n#{excp.message}\nBACKTRACE:\n#{backtrace})
+      r = Regexp.new(Regexp.escape(error_code_marker).to_s + ':(?<linenumber>\d*)(?<cause>.*|:in)')
+      match = message.match(r)
+      @source_controller.set_error_point(match['linenumber'].to_i - 1, match['cause'])      
       @output.text += "\n#{message}"
     end
   end
