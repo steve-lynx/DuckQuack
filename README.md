@@ -9,6 +9,17 @@ L'ambiente è diviso in tre parti: *il codice*, un *canvas* aperto su cui si pu�
 
 ![immagine1](./images/img1.png)
 
+### Avvio
+
+Nella cartella ```bin``` ci sono due file: ```initialize``` ed ```initialize.bat```. Il *batchfile* è per Windows(tm) ed è più rudimentale. Il primo aggiorna la versione di JRuby ed installa *Bundler*, il secondo solo *Bundler*.
+
+Quindi la sequenza prima di partire è:
+
++ initialize
++ bundle install
+
+Dopodiché si può lanciare l'applicazione. In caso di aggiornamento del file ```Gemfile``` nella radice della applicazione va eliminato o rinominato il file ```Gemfile.lock``` che verrà ricostruito.
+
 ### Codice
 
 Il codice supportato è **Ruby** che viene eseguito e valutato travite il pulsante *avvia*. In caso di errori:
@@ -40,11 +51,24 @@ Sono presenti alcune primitive per la creazione di interfacce grafiche all'inter
 + ```reset``` (pulisce il camvas dagli oggetti di interfaccia)
 + ```alert(caption, message)``` e ```alert_and_wait(caption, message)``` (per finestre di allerta)
 + ```control_add(control)``` (aggiunge un controllo al contenitore dopo avero costruito)
-+ ```button_create(text, opts, &block)``` (crea un controllo alle coordinate fornite)
++ ```button_create(text, opts, &action)``` (crea un controllo alle coordinate fornite)
 + ```label_create(text, opts = {}, &action)``` 
 + ```text_field_create(opts = {}, &action)```
++ ```canvas_create(opts = {})``` (iizializza un nuovo canvas)
++ ```text_area_create(opts = {})```
++ ```image_view_create(image, opts = {})```
++ ```audio_clip_create(source, opts = {})```
++ ```media_player_create(source, opts = {})```
++ ```window_create(caption, opts = {})```
 + ... (fare riferimento al file ```app/helpers/running_code_helpers.rb```)
 
 Ogni nome di funzione aggiunta nei vari modi è localizzabile nel suo nome con i meccanismi accennati prima.
 
-Ovviamnte tutto questo salvo bachi.
+Ovviamente tutto questo salvo bachi.
+
+## Licenza
+
++ **Initial developer**: Massimo Maria Ghisalberti <massimo.ghisalberti@gmail.org>
++ **Date**: 2016-12-18
++ **Company**: Pragmas <contact.info@pragmas.org>
++ **Licence**: Apache License Version 2.0, http://www.apache.org/licenses/

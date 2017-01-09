@@ -1,6 +1,6 @@
 ---
 about_caption: "Informazione"
-about_text: "DuckQuack versione 0.5.0"
+about_text: "DuckQuack versione 0.5.0 beta\n(c) 2016-2017 Massimo Maria Ghisalberti <zairik@gmail.com>\nlicence: Apache 2.0"
 new: nuovo
 run: avvia
 save: salva
@@ -59,6 +59,8 @@ substitutions:
   '\brendi\b': yield
 methods:
   make_a_simple_methods: un_metodo_semplice
+  canvas_create: nuova_tela
+  window_create: nuova_finestra
   pwd: cartella_di_lavoro
   media_player_create: visore_multimediale
   audio_clip_create: suona

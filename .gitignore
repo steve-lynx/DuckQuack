@@ -1,14 +1,15 @@
+app/gems
 lib/gems
 .gems
 bin/scenebuilder-all-*.jar
 .jrubyfx_cache
 *_flymake.css
 bin/*
-!bin/bundle
 !bin/DuckQuack
 !bin/DuckQuack.bat
 !bin/initialize
-!bin/initialize.bat
+!bin/jarify
+!bin/jruby-complete.jar
 
 
 *.gem

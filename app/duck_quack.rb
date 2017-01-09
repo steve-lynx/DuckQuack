@@ -1,16 +1,103 @@
 # encoding: utf-8
+################################################################################
+## Initial developer: Massimo Maria Ghisalberti <massimo.ghisalberti@gmail.org>
+## Date: 2016-12-18
+## Company: Pragmas <contact.info@pragmas.org>
+## Licence: Apache License Version 2.0, http://www.apache.org/licenses/
+################################################################################
+
+################################################################################
+# DuckQuack Initializations
+################################################################################
 
 include Java
 import java.lang.System
-require 'jrubyfx'
+require 'rubygems'
+require 'pathname'
 require 'yaml'
-import javafx.stage.Screen
-javafx.application.Platform
+
+RUN_PATH = System.getProperty("user.dir")
+
+ENV['APP_ENV'] ||= 'development'
+
+IS_IN_JAR = Pathname.new(
+  File.expand_path(
+    File.join(
+      File.dirname(__FILE__), ".."))).realpath.to_s == "classpath:/"
+
+if IS_IN_JAR 
+  PATH_ROOT = 'uri:classloader:/' #"classpath:" #
+  PATH_APP = File.join(PATH_ROOT, 'app')
+  PATH_LIB = File.join(PATH_ROOT, 'lib')
+  PATH_JARS = File.join(PATH_ROOT, 'jars')
+  PATH_CONTROLLERS = File.join(PATH_ROOT, 'controllers')
+  PATH_HELPERS = File.join(PATH_ROOT, 'helpers')
+
+  PATH_GEMS_INT = PATH_ROOT + 'gems'
+  PATH_GEMS_EXT = File.join(RUN_PATH, 'gems')
+
+  PATH_FXML = File.join(RUN_PATH, 'fxml') #'./fxml'
+  PATH_CONFIG = File.join(RUN_PATH, 'config')
+  PATH_LOCALE = File.join(PATH_CONFIG, 'locale')
+  PATH_EDITOR = File.join(PATH_CONFIG, 'editor')
+  PATH_DB = File.join(RUN_PATH, 'db')
+else
+  PATH_ROOT = Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), ".."))).realpath.to_s
+  PATH_APP = File.join(PATH_ROOT, 'app')
+  PATH_LIB = File.join(PATH_APP, 'lib')
+  PATH_JARS = File.join(PATH_APP, 'jars')
+
+  PATH_GEMS_INT = File.join(PATH_APP, "gems")
+  PATH_GEMS_EXT = File.join(PATH_ROOT, "gems")
+
+  PATH_FXML = File.join(PATH_ROOT, 'fxml')
+  PATH_CONFIG = File.join(PATH_ROOT, 'config')
+  PATH_LOCALE = File.join(PATH_ROOT, 'config', 'locale')
+  PATH_EDITOR = File.join(PATH_ROOT, 'config', 'editor')
+  PATH_CONTROLLERS =  File.join(PATH_APP, 'controllers')
+  PATH_HELPERS = File.join(PATH_APP, 'helpers')
+  PATH_DB = File.join(PATH_ROOT, 'db')
+end
+
+PATH_FXML_JIT_CACHE = File.join(RUN_PATH, '.cache')
+
+gem_paths = Gem.path
+gem_paths << PATH_GEMS_INT
+gem_paths << PATH_GEMS_EXT
+
+Gem.use_paths(PATH_GEMS_INT, gem_paths)
+
+$LOAD_PATH << PATH_APP unless $LOAD_PATH.include?(PATH_APP)
+$LOAD_PATH << PATH_JARS unless $LOAD_PATH.include?(PATH_JARS)
+$LOAD_PATH << PATH_LIB unless $LOAD_PATH.include?(PATH_LIB)
+$LOAD_PATH << PATH_CONTROLLERS unless $LOAD_PATH.include?(PATH_CONTROLLERS)
+$LOAD_PATH << PATH_HELPERS unless $LOAD_PATH.include?(PATH_HELPERS)
+$LOAD_PATH << PATH_GEMS_INT unless $LOAD_PATH.include?(PATH_GEMS_INT)
+$LOAD_PATH << PATH_GEMS_EXT unless $LOAD_PATH.include?(PATH_GEMS_EXT)
+
+Dir[File.join(PATH_JARS, '*.jar')].sort.each { |h|
+  puts "LOADING JAVA JARFILES: #{h} "
+  require(h)
+}
+Dir[File.join(PATH_LIB, '*.rb')].sort.each { |h|
+  puts "LOADING RUBY EXTENSIONS: #{h} "
+  require(h)
+}
+
+#end
+
+################################################################################
+
+require 'jrubyfx'
 
 class DuckQuackApp < JRubyFX::Application
+
+  import javafx.stage.Screen
+  import javafx.application.Platform
+
   include AppHelpers
   attr_reader :stage
-  
+
   class << self
 
     def locale(path, lang)
@@ -18,10 +105,10 @@ class DuckQuackApp < JRubyFX::Application
       @@locale = File.exist?(locale) ? YAML.load_file(locale).deep_rekey { |k| k.to_sym } :
         {:key => 'value', :methods => [{ :name => '', :alias => '' }]}
     end
-    
+
     def configs
       if defined?(@@configs).nil?
-        c = (YAML.load_file(File.join(File.join(PATH_ROOT, 'config'), 'config.yml'))).deep_rekey { |k| k.to_sym }
+        c = (YAML.load_file(File.join(PATH_CONFIG, 'config.yml'))).deep_rekey { |k| k.to_sym }
         @@configs = {
           :title => 'DuckQuack',
           :width => 960,
@@ -37,25 +124,25 @@ class DuckQuackApp < JRubyFX::Application
           },
           :path  => {
             :root => PATH_ROOT,
-            :app => PATH_APP,            
-            :fxml => File.join(PATH_ROOT,'app', 'fxml'),
-            :lib => File.join(PATH_ROOT, 'lib'),
-            :config => File.join(PATH_ROOT, 'config'),
-            :locale => File.join(PATH_ROOT, 'config', 'locale'),
-            :editor => File.join(PATH_ROOT, 'config', 'editor'),
-            :controllers => File.join(PATH_ROOT,'app', 'controllers'),
-            :helpers => File.join(PATH_ROOT,'app', 'helpers'),
-            :db => File.join(PATH_ROOT, 'db'),
+            :app => PATH_APP,
+            :fxml => PATH_FXML,
+            :lib => PATH_LIB,
+            :config => PATH_CONFIG,
+            :locale => PATH_LOCALE,
+            :editor => PATH_EDITOR,
+            :controllers => PATH_CONTROLLERS,
+            :helpers => PATH_HELPERS,
+            :db => PATH_DB,
           }
         }.deep_merge(c)
         @@configs.deep_rekey! { |k| k.to_sym }
       end
       @@configs
     end
-    
+
     def initialization
-      [  
-        self.configs[:path][:lib], 
+      [
+        self.configs[:path][:lib],
         self.configs[:path][:config],
         self.configs[:path][:app],
         self.configs[:path][:controllers],
@@ -63,22 +150,31 @@ class DuckQuackApp < JRubyFX::Application
       ].each {|path|
         $LOAD_PATH << path unless $LOAD_PATH.include?(path)
       }
-      fxml_root(self.configs[:path][:fxml])
+      fxml_root(self.configs[:path][:fxml]) #, 'uri:classloader:/')
       @@configs[:locale] = self.locale(@@configs[:path][:locale], @@configs[:lang])
       @@configs
     end
   end
 
   attr_reader :configs
+  attr_reader :stage
 
   def initialize
-    super    
+    super
     logger.info("DuckQuack - Initialization")
-    @configs = DuckQuackApp.initialization    
+    @configs = DuckQuackApp.initialization
     set_app(self)
-    Dir[File.join(self.configs[:path][:lib], '*.{rb,jar}')].sort.each { |h| p h; require(h) }
-    Dir[File.join(self.configs[:path][:controllers], '*.rb')].sort.each { |h| require(h) }
-    Dir[File.join(self.configs[:path][:db], '*.rb')].sort.each { |h| require(h) } if self.configs.fetch2([:database, :active], false)
+    Dir[File.join(self.configs[:path][:lib], '*.{rb,jar}')].sort.each { |h|
+      puts "LOADING EXTERNAL LIBS: #{h} "
+      require(h)
+    }
+    Dir[File.join(self.configs[:path][:controllers], '*.rb')].sort.each { |h|
+      puts "LOADING CONTROLLERS: #{h} "
+      require(h)
+    }
+    Dir[File.join(self.configs[:path][:db], '*.rb')].sort.each { |h|
+      require(h)
+    } if self.configs.fetch2([:database, :active], false)
   end
 
   def _substitutions
@@ -95,7 +191,7 @@ class DuckQuackApp < JRubyFX::Application
 
   def _t_methods
     _opt(:methods, {})
-  end  
+  end
 
   def _t_method(key)
     _t_methods.fetch2([key.to_sym], key)
@@ -109,7 +205,7 @@ class DuckQuackApp < JRubyFX::Application
              [@configs.fetch2([:width], 800), @configs.fetch2([:height], 600)]
            when 'medium'
              [bounds.get_width / 2, bounds.get_height / 2]
-           else            
+           else
              [bounds.get_width - 20, bounds.get_height - 40]
            end
     with(stage,
@@ -117,7 +213,7 @@ class DuckQuackApp < JRubyFX::Application
       width: size[0],
       height: size[1]
     ) do
-      fxml DuckQuackController          
+      fxml DuckQuackController
       show
     end
   end
@@ -126,8 +222,7 @@ class DuckQuackApp < JRubyFX::Application
     logger.info("DuckQuack - Closing")
     Platform.exit
   end
-  
+
 end
 
 DuckQuackApp.launch
-

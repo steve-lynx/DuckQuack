@@ -1,0 +1,29 @@
+#!/bin/sh
+
+JRUBY_VERSION=9.1.6.0
+JRUBY=jruby-complete-$JRUBY_VERSION.jar
+DOWNLOAD_PATH=http://jruby.org.s3.amazonaws.com/downloads/$JRUBY_VERSION/$JRUBY
+
+if [ -L $0 ]
+then
+    BASEPATH=$(dirname $(readlink -f $0))
+else
+    BASEPATH=$(dirname $0)
+fi
+
+BASEPATH=$(realpath $BASEPATH)
+CD=$(realpath $(dirname $BASEPATH))
+#LIB=../lib
+cd $CD
+
+JRUBYBIN=$BASEPATH/jruby-complete.jar
+
+export GEM_HOME="$CD/app/gems"
+export GEM_PATH="$CD/app/gems"
+
+echo "=========================================================================="
+echo Build App jar....
+echo "=========================================================================="
+
+java -jar $JRUBYBIN $GEM_PATH/bin/jrubyfx-jarify app --main app/duck_quack.rb DuckQuack.jar --name "DuckQuackBoot" -v
+

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.fxmisc.richtext.CodeArea?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <MenuBar>
+          <menus>
+            <Menu fx:id="file_menu" mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem fx:id="file_new_menu_item" mnemonicParsing="false" onAction="#new_clicked" text="New" />
+                <MenuItem fx:id="file_load_menu_item" mnemonicParsing="false" onAction="#load_clicked" text="Load" />
+                <MenuItem fx:id="file_save_menu_item" mnemonicParsing="false" onAction="#save_clicked" text="Save" />
+                <SeparatorMenuItem />
+                <MenuItem fx:id="file_close_app_menu_item" mnemonicParsing="false" onAction="#close_app_clicked" text="Exit" />
+              </items>
+            </Menu>
+            <Menu fx:id="edit_menu" mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem fx:id="edit_undo_menu_item" mnemonicParsing="false" onAction="#edit_undo_item_clicked" text="Undo" />
+                <MenuItem fx:id="edit_redo_menu_item" mnemonicParsing="false" onAction="#edit_redo_item_clicked" text="Redo" />
+                <SeparatorMenuItem />
+                <MenuItem fx:id="edit_cut_menu_item" mnemonicParsing="false" onAction="#edit_cut_item_clicked" text="Cut" />
+                <MenuItem fx:id="edit_copy_menu_item" mnemonicParsing="false" onAction="#edit_copy_item_clicked" text="Copy" />
+                <MenuItem fx:id="edit_paste_menu_item" mnemonicParsing="false" onAction="#edit_paste_item_clicked" text="Paste" />
+                <MenuItem fx:id="edit_select_all_menu_item" mnemonicParsing="false" onAction="#edit_select_all_item_clicked" text="Select All" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="edit_format_menu_item" mnemonicParsing="false" onAction="#edit_format_item_clicked" text="Format" />
+              </items>
+            </Menu>
+            <Menu fx:id="help_menu" mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem fx:id="help_about_menu_item" mnemonicParsing="false" onAction="#about_menu_item_clicked" text="About" />
+              </items>
+            </Menu>
+          </menus>
+        </MenuBar>
+        <SplitPane dividerPositions="0.42066805845511485" prefHeight="794.0" prefWidth="960.0" VBox.vgrow="ALWAYS">
+          <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+              <children>
+                <VBox fx:id="vbox_code_editor" prefHeight="398.0" prefWidth="236.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                    <ButtonBar maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                      <buttons>
+                        <Button id="run_button" fx:id="run_button" mnemonicParsing="false" onAction="#run_clicked" text="Run" />
+                        <Button id="new_button" fx:id="new_button" mnemonicParsing="false" onAction="#new_clicked" text="New" />
+                        <Button id="save_button" fx:id="save_button" mnemonicParsing="false" onAction="#save_clicked" text="Save" />
+                        <Button id="load_button" fx:id="load_button" mnemonicParsing="false" onAction="#load_clicked" text="Load" />
+                      </buttons>
+                      <VBox.margin>
+                        <Insets />
+                      </VBox.margin>
+                      <padding>
+                        <Insets right="8.0" />
+                      </padding>
+                    </ButtonBar>
+                    <CodeArea id="code_editor" fx:id="code_editor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="320.0" showCaret="ON" VBox.vgrow="ALWAYS">
+                    </CodeArea>
+                  </children>
+                </VBox>
+              </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+              <children>
+                <SplitPane dividerPositions="0.6853448275862069" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane fx:id="stack_pane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <Canvas id="default_canvas" fx:id="canvas" height="139.0" styleClass="default_canvas" width="225.0" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane>
+                      <children>
+                        <VBox fx:id="output_pane" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <ButtonBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="352.0" VBox.vgrow="ALWAYS">
+                              <buttons>
+                                <Button fx:id="clear_output_button" mnemonicParsing="false" onAction="#clear_output_clicked" text="clear" />
+                              </buttons>
+                              <padding>
+                                <Insets right="8.0" />
+                              </padding>
+                              <VBox.margin>
+                                <Insets />
+                              </VBox.margin>
+                            </ButtonBar>
+                            <TextArea fx:id="output" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="189.0" styleClass="output-pane" wrapText="true" VBox.vgrow="ALWAYS">
+                              <font>
+                                <Font name="Monospaced Regular" size="13.0" />
+                              </font>
+                              <VBox.margin>
+                                <Insets />
+                              </VBox.margin>
+                            </TextArea>
+                          </children>
+                        </VBox>
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </items>
+          <VBox.margin>
+            <Insets />
+          </VBox.margin>
+        </SplitPane>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>

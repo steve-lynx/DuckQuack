@@ -1,4 +1,10 @@
 # encoding: utf-8
+################################################################################
+## Initial developer: Massimo Maria Ghisalberti <massimo.ghisalberti@gmail.org>
+## Date: 2016-12-18
+## Company: Pragmas <contact.info@pragmas.org>
+## Licence: Apache License Version 2.0, http://www.apache.org/licenses/
+################################################################################
 
 include Java
 import java.lang.System
@@ -25,7 +31,7 @@ class Java::JavafxSceneCanvas::Canvas
   def prefWidth(height)
     getWidth
   end
-  
+
   def prefHeight(width)
     getHeight
   end
@@ -37,18 +43,20 @@ class Java::JavafxSceneCanvas::Canvas
 end
 
 class DuckQuackController
+  
   include JRubyFX::Controller
+
   fxml "main.fxml"
 
   include RubyBeautify
 
   def initialize
-    
+
     @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) { |ev|
       if ev.get_code == KeyCode::TAB
         @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '    '))
         ev.consume
-      end      
+      end
     }
     code_editor_context_menu
     scroll_pane = VirtualizedScrollPane.new(@code_editor)
@@ -69,7 +77,7 @@ class DuckQuackController
     undo_mi = MenuItem.new(app._t(:undo).capitalize)
     undo_mi.get_style_class.add("code-area-context-menu-item")
     undo_mi.set_on_action {  |ev| edit_undo_item_clicked }
-      
+
     redo_mi = MenuItem.new(app._t(:redo).capitalize)
     redo_mi.get_style_class.add("code-area-context-menu-item")
     redo_mi.set_on_action {  |ev| edit_redo_item_clicked }
@@ -90,7 +98,7 @@ class DuckQuackController
     select_all_mi.get_style_class.add("code-area-context-menu-item")
     select_all_mi.set_on_action {  |ev| edit_select_all_item_clicked }
 
-    
+
     @context_menu.getItems.addAll(
       undo_mi,
       redo_mi,
@@ -124,10 +132,10 @@ class DuckQuackController
     @edit_paste_menu_item.text = app._t(:paste).capitalize
     @edit_select_all_menu_item.text = app._t(:select_all).capitalize
     @edit_format_menu_item.text = app._t(:format_code).capitalize
-    
+
     @help_menu.text = app._t(:help).capitalize
     @help_about_menu_item.text = app._t(:about).capitalize
-    
+
     @run_button.text = app._t(:run).capitalize
     @new_button.text = app._t(:new).capitalize
     @save_button.text = app._t(:save).capitalize
@@ -139,36 +147,36 @@ class DuckQuackController
   def write_output(message)
     @output.text << message
   end
-  
+
   def run_clicked
-    @executor.run   
+    @executor.run
   end
 
   def save_open_dialog(action = :open)
     java_import javafx.stage.FileChooser
     fileChooser = FileChooser.new
     file = case action
-            when :open
-              fileChooser.title = app._t(:load_file).capitalize
-              fileChooser.show_open_dialog(app.stage)
-            when :save
-              fileChooser.title = app._t(:save_file).capitalize
-              savefile = fileChooser.show_open_dialog(app.stage)
-              if File.exist?(savefile.to_s)
-                alert = Alert.new(Alert::AlertType::CONFIRMATION, app._t(:are_you_sure_to_overwrite).capitalize)
-                alert.show_and_wait.filter { |response| response == ButtonType::CANCEL }.ifPresent { |response| savefile = '' }
-                savefile
-              else
-                savefile
-              end
-            end
+           when :open
+             fileChooser.title = app._t(:load_file).capitalize
+             fileChooser.show_open_dialog(app.stage)
+           when :save
+             fileChooser.title = app._t(:save_file).capitalize
+             savefile = fileChooser.show_open_dialog(app.stage)
+             if File.exist?(savefile.to_s)
+               alert = Alert.new(Alert::AlertType::CONFIRMATION, app._t(:are_you_sure_to_overwrite).capitalize)
+               alert.show_and_wait.filter { |response| response == ButtonType::CANCEL }.ifPresent { |response| savefile = '' }
+               savefile
+             else
+               savefile
+             end
+           end
     file.to_s
   end
 
   def save_file(filename)
     unless filename.empty?
       @filename = filename
-      File.open(@filename, 'w') { |f| f.write(@executor.source_controller.code_text_get) } 
+      File.open(@filename, 'w') { |f| f.write(@executor.source_controller.code_text_get) }
     end
   end
   private :save_file
@@ -176,10 +184,10 @@ class DuckQuackController
   def load_file(filename)
     unless filename.empty?
       @filename = filename
-      File.open(@filename, 'r') { |f| @executor.source_controller.code_set(f.read) } 
+      File.open(@filename, 'r') { |f| @executor.source_controller.code_set(f.read) }
     end
   end
-  private :load_file  
+  private :load_file
 
   def save_clicked
     if File.exist?(@filename.to_s)
@@ -217,8 +225,8 @@ class DuckQuackController
     end
   end
 
-  def clear_output_clicked    
-    @output.text = ''  
+  def clear_output_clicked
+    @output.text = ''
   end
 
   def close_app_clicked
@@ -263,5 +271,5 @@ class DuckQuackController
       :indent_count => app.configs.fetch2([:tab_chars], '  ').size)
     @executor.source_controller.code_set(code)
   end
-  
+
 end

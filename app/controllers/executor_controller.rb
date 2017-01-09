@@ -1,4 +1,10 @@
 # encoding: utf-8
+################################################################################
+## Initial developer: Massimo Maria Ghisalberti <massimo.ghisalberti@gmail.org>
+## Date: 2016-12-18
+## Company: Pragmas <contact.info@pragmas.org>
+## Licence: Apache License Version 2.0, http://www.apache.org/licenses/
+################################################################################
 
 include Java
 import java.lang.System
@@ -62,7 +68,7 @@ class RunningCode
   end
   private :inject_canvas_methods
 
-  def inject_gc_methods 
+  def inject_gc_methods
     @graphic_context = @canvas.getGraphicsContext2D
     @graphic_context.methods.each { |m|
       unless respond_to?(m)
@@ -102,7 +108,7 @@ class RunningCode
     methods.sort.each { |m|
       a = app._t_method(m).to_sym
       if a.to_s != m.to_s
-        logger.debug("ALIAS: #{a} for #{m}")        
+        logger.debug("ALIAS: #{a} for #{m}")
         self.class.send(:alias_method, a, m) unless respond_to?(a)
       end
     }
@@ -120,7 +126,7 @@ class RunningCode
       message = %(MESSAGE:\n#{excp.message}\nBACKTRACE:\n#{backtrace})
       r = Regexp.new(Regexp.escape(error_code_marker).to_s + ':(?<linenumber>\d*)(?<cause>.*|:in)')
       match = message.match(r)
-      @source_controller.set_error_point(match['linenumber'].to_i - 1, match['cause'])      
+      @source_controller.set_error_point(match['linenumber'].to_i - 1, match['cause'])
       @output.text += "\n#{message}"
     end
   end
@@ -154,7 +160,7 @@ class ExecutorController
     }
     @canvas.widthProperty.bind(stack_pane.widthProperty)
     @canvas.heightProperty.bind(stack_pane.heightProperty)
-    
+
     @output = output_pane.getChildren.reduce { |m, child|
       child.is_a?(TextArea) ? child : nil
     }
@@ -167,5 +173,5 @@ class ExecutorController
     running_code = RunningCode.new(stack_pane, @source_controller, @canvas, @output)
     running_code.activate
   end
-  
+
 end
