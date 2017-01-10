@@ -1,0 +1,6 @@
+#!/bin/sh
+APPPATH=$(dirname $0)
+BASEPATH=$(realpath $APPPATH)
+cd $BASEPATH
+
+java -Dfile.encoding=UTF8 -jar $BASEPATH/DuckQuack.jar

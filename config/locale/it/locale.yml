@@ -58,7 +58,11 @@ substitutions:
   '\bmentre\b': while
   '\brendi\b': yield
 methods:
-  make_a_simple_methods: un_metodo_semplice
+  set_control_tooltip: imposta_indizio
+  close_main_stage: chiudi
+  show_main_stage: mostra
+  set_control_dimension: dimensiona_controllo
+  web_engine_create: nuovo_browser_web
   canvas_create: nuova_tela
   window_create: nuova_finestra
   pwd: cartella_di_lavoro
@@ -93,20 +97,19 @@ methods:
   apply_css: apply_css
   apply_effect: apply_effect
   arc: arco
-  arc_to: arc_to
+  arc_to: arco_verso
   attempt_conversion: attempt_conversion
-  autosize: autosize
+  autosize: autodimensiona
   baseline_offset: baseline_offset
   begin_path: inizia_traiettoria
   bezier_curve_to: bezier_curve_to
   blend_mode: blend_mode
   blend_mode=: blend_mode=
   blend_mode_property: blend_mode_property
-  boundedSize: boundedSize
   bounded_size: bounded_size
-  bounds_in_local: bounds_in_local
+  bounds_in_local: limiti_in_locale
   bounds_in_local_property: bounds_in_local_property
-  bounds_in_parent: bounds_in_parent
+  bounds_in_parent: limiti_nel_genitore
   bounds_in_parent_property: bounds_in_parent_property
   buffer: buffer
   build: build
@@ -120,8 +123,7 @@ methods:
   cache_property: cache_property
   can_receive_focus: can_receive_focus
   can_receive_focus?: can_receive_focus?
-  canvas: canvas
-  class: class
+  canvas: tela
   clear: pulisci
   clear_output: pulisci_output
   clear_rect: pulisci_rettangolo
@@ -131,7 +133,6 @@ methods:
   clip_property: clip_property
   clone: clone
   close_path: chiudi_traiettoria
-  com: com
   compute_area_in_screen: compute_area_in_screen
   compute_derived_depth_test: compute_derived_depth_test
   connected: connected

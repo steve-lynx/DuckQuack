@@ -8,29 +8,34 @@
 
 module RunningCodeHelpers
 
-  import javafx.scene.paint.Color
-  import javafx.scene.shape.ArcType
-  import javafx.scene.text.Font
-  import javafx.scene.text.TextAlignment
-  import javafx.geometry.VPos
+  include Java
+  import java.lang.System
+
   import javafx.geometry.HPos
-  import javafx.scene.text.FontSmoothingType
-  import javafx.scene.shape.StrokeLineCap
-  import javafx.scene.shape.StrokeLineJoin
-  import javafx.scene.shape.FillRule
+  import javafx.geometry.VPos
+  import javafx.scene.Group
+  import javafx.scene.Scene
+  import javafx.scene.canvas.Canvas
+  import javafx.scene.control.Tooltip
   import javafx.scene.image.Image
   import javafx.scene.image.ImageView
+  import javafx.scene.layout.AnchorPane
+  import javafx.scene.layout.Pane
   import javafx.scene.media.AudioClip
   import javafx.scene.media.Media
-  import javafx.scene.media.MediaView
   import javafx.scene.media.MediaPlayer
-  import javafx.stage.Stage
+  import javafx.scene.media.MediaView
+  import javafx.scene.paint.Color
+  import javafx.scene.shape.ArcType
+  import javafx.scene.shape.FillRule
+  import javafx.scene.shape.StrokeLineCap
+  import javafx.scene.shape.StrokeLineJoin
+  import javafx.scene.text.Font
+  import javafx.scene.text.FontSmoothingType
+  import javafx.scene.text.TextAlignment
+  import javafx.scene.web.WebView
   import javafx.stage.Screen
-  import javafx.scene.Scene
-  import javafx.scene.Group
-  import javafx.scene.layout.Pane
-  import javafx.scene.layout.AnchorPane
-  import javafx.scene.canvas.Canvas
+  import javafx.stage.Stage
 
   require 'fileutils'
 
@@ -43,6 +48,7 @@ module RunningCodeHelpers
     (children.reduce([]) { |acc, child|
        acc << child unless child.get_id == 'default_canvas'; acc}
     ).each { |child| children.remove(child)}
+    System.gc
   end
 
   def alert(caption, message)
@@ -61,9 +67,33 @@ module RunningCodeHelpers
     result
   end
 
+  def set_control_dimension(c, width, height)
+    unless c.nil? && width.nil? && height.nil?
+      set_dim_width, set_dim_height =
+        if c.respond_to?(:set_fit_width)
+          [lambda { |w| c.set_fit_width(w) }, lambda { |h| c.set_fit_height(h) }]
+        elsif c.respond_to?(:set_pref_width)
+          [lambda { |w| c.set_pref_width(w) }, lambda { |h| c.set_pref_height(h) }]
+        elsif c.respond_to?(:set_width)
+          [lambda { |w| c.set_width(w) }, lambda { |h| c.set_height(h) }]
+        elsif c.respond_to?(:set_min_width)
+          [lambda { |w| c.set_min_width(w) }, lambda { |h| c.set_min_height(h) }]
+        elsif c.respond_to?(:set_max_width)
+          [lambda { |w| c.set_min_width(w) }, lambda { |h| c.set_min_height(h) }]
+        else
+          [lambda { |w| logger.warn("CONTROL WIDTH #{w} UNSUPPORTED")}, lambda { |h| logger.warn("CONTROL HEIGHT #{h} UNSUPPORTED")}]
+        end
+      set_dim_width.call(width)
+      set_dim_height.call(height)
+    end
+  end
+
+  def set_control_tooltip(c, text = '')
+    c.set_tooltip(Tooltip.new(text))
+  end
+
   def control_add(control, opts = {})
     params = {
-      :padding => 12,
       :parent => nil,
       :bounds => false
     }.deep_merge(opts)
@@ -73,8 +103,7 @@ module RunningCodeHelpers
     parent.layout
     if params[:bounds]
       bounds = control.get_bounds_in_parent
-      control.width = bounds.get_width + params[:padding]
-      control.height = bounds.get_height + params[:padding]
+      set_control_dimension(control, bounds.get_width, bounds.get_height)
     end
     parent
   end
@@ -83,10 +112,13 @@ module RunningCodeHelpers
     params = {
       :x => 0,
       :y => 0,
+      :fit_width => 100,
+      #:fit_height => 100,
       :parent => nil
     }.deep_merge(opts)
     c = Button.new(text)
     c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height]) 
     c.set_on_action(block) if block_given?
     control_add(c, :parent => params[:parent], :bounds => true)
     c
@@ -97,8 +129,8 @@ module RunningCodeHelpers
       :x => 0,
       :y => 0,
       :parent => nil,
-      :fit_width => 100,
-      :fit_height => 100,
+      :fit_width => 200,
+      :fit_height => 200,
       :background => Color::WHITE
     }.deep_merge(opts)
     c = Canvas.new(params[:fit_width], params[:fit_height])
@@ -123,10 +155,13 @@ module RunningCodeHelpers
     params = {
       :x => 0,
       :y => 0,
+      :fit_width => 100,
+      #:fit_height => 100,
       :parent => nil
     }.deep_merge(opts)
     c = Label.new(text)
     c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height]) 
     c.set_on_action(action) if action
     control_add(c, :parent => params[:parent], :bounds => true)
     c
@@ -136,10 +171,13 @@ module RunningCodeHelpers
     params = {
       :x => 0,
       :y => 0,
+      :fit_width => 200,
+      #:fit_height => 100,
       :parent => nil
     }.deep_merge(opts)
     c = TextField.new
     c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height]) 
     c.set_on_action(action) if action
     control_add(c, :parent => params[:parent], :bounds => true)
     c
@@ -149,10 +187,13 @@ module RunningCodeHelpers
     params = {
       :x => 0,
       :y => 0,
+      :fit_width => 200,
+      :fit_height => 200,
       :parent => nil
     }.deep_merge(opts)
     c = TextArea.new
     c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height])
     control_add(c, :parent => params[:parent], :bounds => true)
     c
   end
@@ -169,9 +210,7 @@ module RunningCodeHelpers
     c = ImageView.new
     image = Image.new("#{params[:protocol].to_s}://" + image, true)
     c.setImage(image)
-    width, height = [params[:fit_width], params[:fit_height]]
-    c.set_fit_width(width) unless width.nil?
-    c.set_fit_height(height) unless height.nil? 
+    set_control_dimension(c, params[:fit_width], params[:fit_height]) 
     c.set_preserve_ratio(!params[:preserve].nil?) unless params[:preserve].nil?
     c.set_smooth(params[:smooth])
     c.relocate(params[:x], params[:y])
@@ -204,9 +243,7 @@ module RunningCodeHelpers
     m = Media.new("#{params[:protocol].to_s}://" + source)
     mp = MediaPlayer.new(m)
     mv = MediaView.new(mp)
-    w, h = [params[:fit_width], params[:fit_height]]
-    mv.set_fit_width(w) unless w.nil?
-    mv.set_fit_height(h) unless h.nil? 
+    set_control_dimension(mv, params[:fit_width], params[:fit_height]) 
     mv.set_smooth(params[:smooth])   
     mv.relocate(params[:x], params[:y])
     control_add(mv, :parent => params[:parent], :bounds => false)
@@ -226,6 +263,7 @@ module RunningCodeHelpers
     root = Group.new
     stage = Stage.new
     stage.set_title(caption)
+    stage.set_on_close_request { |event| app.stage.show }
     scene = Scene.new(root, params[:fit_width], params[:fit_height])
     pane = AnchorPane.new
     root.get_children.add(pane)
@@ -233,6 +271,33 @@ module RunningCodeHelpers
     stage.size_to_scene    
     stage.show
     pane
+  end
+
+  def close_main_stage
+    app.stage.hide
+  end
+
+  def show_main_stage
+    app.stage.show
+  end
+
+  def web_engine_create(url = '', opts = {})
+    params = {
+      :x => 0,
+      :y => 0,
+      :fit_width => 400,
+      :fit_height => 400,
+      :parent => nil
+    }.deep_merge(opts)
+    c = WebView.new
+    e = c.getEngine    
+    c.relocate(params[:x], params[:y])
+    w, h = [params[:fit_width], params[:fit_height]]
+    c.set_pref_width(w) unless w.nil?
+    c.set_pref_height(h) unless h.nil?
+    e.load(url) unless url.empty?
+    control_add(c, :parent => params[:parent], :bounds => true)
+    e
   end
   
 end

@@ -29,6 +29,7 @@ if IS_IN_JAR
   PATH_ROOT = 'uri:classloader:/' #"classpath:" #
   PATH_APP = File.join(PATH_ROOT, 'app')
   PATH_LIB = File.join(PATH_ROOT, 'lib')
+  PATH_LIB_EXT = File.join(RUN_PATH, 'lib')
   PATH_JARS = File.join(PATH_ROOT, 'jars')
   PATH_CONTROLLERS = File.join(PATH_ROOT, 'controllers')
   PATH_HELPERS = File.join(PATH_ROOT, 'helpers')
@@ -45,6 +46,7 @@ else
   PATH_ROOT = Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), ".."))).realpath.to_s
   PATH_APP = File.join(PATH_ROOT, 'app')
   PATH_LIB = File.join(PATH_APP, 'lib')
+  PATH_LIB_EXT = File.join(PATH_ROOT, 'lib')
   PATH_JARS = File.join(PATH_APP, 'jars')
 
   PATH_GEMS_INT = File.join(PATH_APP, "gems")
@@ -89,6 +91,7 @@ Dir[File.join(PATH_LIB, '*.rb')].sort.each { |h|
 ################################################################################
 
 require 'jrubyfx'
+require 'sequel'
 
 class DuckQuackApp < JRubyFX::Application
 
@@ -97,6 +100,8 @@ class DuckQuackApp < JRubyFX::Application
 
   include AppHelpers
   attr_reader :stage
+  attr_accessor :main_pane
+  attr_accessor :executors
 
   class << self
 
@@ -118,15 +123,13 @@ class DuckQuackApp < JRubyFX::Application
           :tab_chars => '  ',
           :language => 'ruby',
           :generate_methods_list => false,
-          :database => {
-            :active => false,
-            :name => 'duck_quack'
-          },
+          :database => 'duck_quack',
           :path  => {
             :root => PATH_ROOT,
             :app => PATH_APP,
             :fxml => PATH_FXML,
             :lib => PATH_LIB,
+            :lib_ext => PATH_LIB_EXT,
             :config => PATH_CONFIG,
             :locale => PATH_LOCALE,
             :editor => PATH_EDITOR,
@@ -143,6 +146,7 @@ class DuckQuackApp < JRubyFX::Application
     def initialization
       [
         self.configs[:path][:lib],
+        self.configs[:path][:lib_ext],
         self.configs[:path][:config],
         self.configs[:path][:app],
         self.configs[:path][:controllers],
@@ -158,11 +162,13 @@ class DuckQuackApp < JRubyFX::Application
 
   attr_reader :configs
   attr_reader :stage
+  attr_reader :database
 
   def initialize
     super
     logger.info("DuckQuack - Initialization")
     @configs = DuckQuackApp.initialization
+    @executors = []
     set_app(self)
     Dir[File.join(self.configs[:path][:lib], '*.{rb,jar}')].sort.each { |h|
       puts "LOADING EXTERNAL LIBS: #{h} "
@@ -172,9 +178,10 @@ class DuckQuackApp < JRubyFX::Application
       puts "LOADING CONTROLLERS: #{h} "
       require(h)
     }
-    Dir[File.join(self.configs[:path][:db], '*.rb')].sort.each { |h|
+    Dir[File.join(self.configs[:path][:lib_ext], '*.{rb,jar}')].sort.each { |h|
+      puts "LOADING EXTERNAL LIBS/JAR: #{h} "
       require(h)
-    } if self.configs.fetch2([:database, :active], false)
+    }
   end
 
   def _substitutions
@@ -197,6 +204,31 @@ class DuckQuackApp < JRubyFX::Application
     _t_methods.fetch2([key.to_sym], key)
   end
 
+  def _database_disconnect
+    logger.info("Disconnecting database...")
+    @database.disconnect
+    logger.info("Database disconnected.")
+    @database.nil?
+  end
+
+  def _database_connect
+    logger.info("Connecting database...")
+    require 'jdbc/sqlite3'
+    Jdbc::SQLite3.load_driver
+    require 'java'
+    java_import Java::OrgSqlite::JDBC
+    path_db = app.configs[:path][:db]    
+    @database =
+      Sequel.connect(
+      "jdbc:sqlite:///" + File.join(path_db, "#{app.configs.fetch2([:database], 'duck_quack')}.db"),
+      :loggers => [logger])
+    @database.pragma_set(:auto_vacuum, 1)
+    @database.pragma_set(:secure_delete, true)
+    @database.pragma_set(:case_sensitive_like, false)
+    logger.info("Database connected.")
+    @database
+  end
+
   def start(stage)
     @stage = stage
     bounds = Screen.get_primary.get_visual_bounds
@@ -213,9 +245,13 @@ class DuckQuackApp < JRubyFX::Application
       width: size[0],
       height: size[1]
     ) do
-      fxml DuckQuackController
+      fxml DuckQuackController      
       show
     end
+  end
+
+  def stop
+    @executors.each { |e| e.shutdown }
   end
 
   def close

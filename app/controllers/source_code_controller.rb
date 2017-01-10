@@ -11,19 +11,23 @@ import java.lang.System
 
 require 'jrubyfx'
 require 'yaml'
-import javafx.scene.layout.HBox
+import java.time.Duration
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import javafx.concurrent.Task
 import javafx.geometry.Pos
-import javafx.scene.Node;
+import javafx.scene.Node
+import javafx.scene.layout.HBox
+import javafx.scene.shape.Ellipse
+import javafx.scene.shape.Polygon
+import org.fxmisc.flowless.VirtualizedScrollPane
 import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
 import org.fxmisc.richtext.StyledTextArea
-import org.fxmisc.flowless.VirtualizedScrollPane
+import org.fxmisc.richtext.model.NavigationActions
 import org.fxmisc.richtext.model.StyleSpans
 import org.fxmisc.richtext.model.StyleSpansBuilder
-import javafx.scene.shape.Polygon
-import javafx.scene.shape.Ellipse
 import org.reactfx.value.Val
-import org.fxmisc.richtext.model.NavigationActions
 
 class SymbolFactory
   
@@ -63,7 +67,7 @@ class SourceCodeController
   attr_reader :code_area
   attr_reader :gutter
 
-  def initialize(code_area, code_area_info)
+  def initialize(code_area, code_area_info)    
     @lineerror_style = 'lineerror'
     @linenumber_style = 'linenumber'
     @linesymbol_style = 'linesymbol'
@@ -104,9 +108,10 @@ class SourceCodeController
   def set_error_point(point, cause)
     logger.debug("ERROR POINT: #{ point + 1}")
     @current_error = @code_area.get_paragraph(point) 
-    @syntax_regexs.insert(0, error_regex) if error_point?
-    @code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
+    @syntax_regexs.insert(0, error_regex) if error_point?    
     code_area.move_to(point, 0)
+    #@code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
+    @code_area.replace_text(point, 0, point, @current_error.length, @current_error.get_text)
   end
 
   def reset_error_point
@@ -128,9 +133,7 @@ class SourceCodeController
     @code_area.set_paragraph_graphic_factory(prepare_grapics_factory)     
     @code_saved = @code_area.get_undo_manager.at_marked_position_property    
     @code_area.richChanges
-    .filter { |change|
-      !change.get_inserted.equals(change.get_removed)
-    }
+    .filter { |change| !change.get_inserted.equals(change.get_removed) }
     .subscribe { |change|
       @code_area.set_style_spans(0, highlight_code(@code_area.get_text)) 
     }    
@@ -145,7 +148,7 @@ class SourceCodeController
   private :error_regex
   
   def syntax_regex
-    if @syntax_regexs.nil?      
+    if @syntax_regexs.nil?
       @syntax_regexs = @syntax_specs.keys.reduce([]) { |acc, k|
         words = @syntax_specs[k].reduce([]) { |memo, w|
           memo << (w.size > 1 ? Regexp.new(w) : Regexp.escape(w) );
@@ -153,6 +156,7 @@ class SourceCodeController
         } 
         acc << %((?<#{k.to_s}>#{words.join('|')})); acc
       }
+      logger.debug(@syntax_regexs)
     end
     Regexp.new(@syntax_regexs.join('|'))
   end

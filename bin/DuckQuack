@@ -4,4 +4,6 @@ BASEPATH=$(realpath $APPPATH)
 CD=$(realpath $(dirname $BASEPATH))
 cd $CD
 
-java -Dfile.encoding=UTF8 -jar $BASEPATH/jruby-complete.jar -S ../app/duck_quack.rb DuckQuack
+#VERBOSE_LOG=-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
+
+java -server -XX:+UseG1GC -XX:MaxGCPauseMillis=1000  -Dfile.encoding=UTF8 -jar $BASEPATH/jruby-complete.jar -S ../app/duck_quack.rb DuckQuack

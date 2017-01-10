@@ -52,6 +52,8 @@ class DuckQuackController
 
   def initialize
 
+    app.main_pane = @main_pane
+
     @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) { |ev|
       if ev.get_code == KeyCode::TAB
         @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '    '))

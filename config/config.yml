@@ -4,6 +4,5 @@ title: DuckQuack
 width: 1024
 height: 768
 size: window
-database:
-  active: false
+database: duck_quack
 
