@@ -59,6 +59,9 @@ substitutions:
   '\brendi\b': yield
 methods:
   set_control_tooltip: imposta_indizio
+  round_to_even: arrotonda_a_pari
+  translate_coord: trasporta_coordinate
+  draw_axis: assi_cartesiani
   close_main_stage: chiudi
   show_main_stage: mostra
   set_control_dimension: dimensiona_controllo

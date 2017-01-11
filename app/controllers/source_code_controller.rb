@@ -11,69 +11,22 @@ import java.lang.System
 
 require 'jrubyfx'
 require 'yaml'
-import java.time.Duration
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import javafx.concurrent.Task
 import javafx.geometry.Pos
-import javafx.scene.Node
 import javafx.scene.layout.HBox
-import javafx.scene.shape.Ellipse
-import javafx.scene.shape.Polygon
-import org.fxmisc.flowless.VirtualizedScrollPane
-import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
-import org.fxmisc.richtext.StyledTextArea
-import org.fxmisc.richtext.model.NavigationActions
-import org.fxmisc.richtext.model.StyleSpans
-import org.fxmisc.richtext.model.StyleSpansBuilder
-import org.reactfx.value.Val
-
-class SymbolFactory
-  
-  java_implements "IntFunction<Node>"
-
-  def initialize(code_area, error_style, line_style)
-    @code_area = code_area
-    @error_style = error_style
-    @error_symbol = ["\u25b6", @error_style + "symbol"]
-    @line_symbol = ["\u25b6", line_style]
-    @syntax_regexs = nil
-    @substitutions_regex = nil
-  end
-
-  def symbol(line_number)
-    spans = @code_area.get_paragraph(line_number).get_style_spans
-    error = spans.find { |sp| sp.get_style == [@error_style] }
-    error ? @error_symbol : @line_symbol
-  end
-  private :symbol
-
-  def apply(line_number)
-    s = symbol(line_number)
-    @indicator = Label.new(s[0])
-    @indicator.get_style_class.add(s[1])    
-    visible = Val.map(@code_area.current_paragraph_property) { |sl| sl == line_number }
-    @indicator.visible_property.bind(
-      Val.flat_map(@indicator.scene_property) { |scene|
-        scene != nil ? visible : Val.constant(false)
-      })
-    @indicator
-  end
-end
 
 class SourceCodeController
 
   attr_reader :code_area
   attr_reader :gutter
+  attr_reader :syntax_highlighter
+
+  LINE_NUMBER_STYLE = 'linenumber'
+  LINE_SYMBOL_STYLE = 'linesymbol'
 
   def initialize(code_area, code_area_info)    
-    @lineerror_style = 'lineerror'
-    @linenumber_style = 'linenumber'
-    @linesymbol_style = 'linesymbol'
     @code_area = code_area
     @code_area_info = code_area_info
-    reset_error_point
     prepare_editing
   end
 
@@ -85,88 +38,28 @@ class SourceCodeController
 
   def prepare_editing
     find_language
-    @syntax_specs = YAML.load_file(File.join(app.configs[:path][:editor], @language, 'syntax-specs.yml'))
-    @comment_tag = @syntax_specs['comments'][0].gsub(".*$", '')
-    @syntax_css = 'file://' + File.join(app.configs[:path][:editor], @language, 'syntax-specs.css')
-    syntax_regex
-    prepare_code_editor
+    @code_area.set_paragraph_graphic_factory(linenumber_and_symbols_factory)
+    @syntax_highlighter = SyntaxHighlighter.new(
+      @code_area, File.join(app.configs[:path][:editor], @language), app.configs[:highlighting])
   end
 
-  def prepare_grapics_factory
-    linenumbers = LineNumberFactory.get(@code_area)
-    linesymbols = SymbolFactory.new(@code_area, @lineerror_style, @linesymbol_style)
-    lambda { |line|
-      @gutter = HBox.new(linenumbers.apply(line), linesymbols.apply(line))
+  def linenumber_and_symbols_factory
+    -> (line) {
+      @gutter = HBox.new(
+        LineNumberFactory.get(@code_area).apply(line),
+        SymbolFactory.new(@code_area, SyntaxHighlighter::LINE_ERROR_STYLE, LINE_SYMBOL_STYLE).apply(line)
+      )
       @gutter.set_alignment(Pos::CENTER_LEFT)
-      line_number = gutter.get_children[0]
-      line_number.get_style_class.add(@linenumber_style)      
+      @gutter.get_children[0].get_style_class.add(LINE_NUMBER_STYLE)      
       @gutter
     }
   end
-  private :prepare_grapics_factory
-
-  def set_error_point(point, cause)
-    logger.debug("ERROR POINT: #{ point + 1}")
-    @current_error = @code_area.get_paragraph(point) 
-    @syntax_regexs.insert(0, error_regex) if error_point?    
-    code_area.move_to(point, 0)
-    #@code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
-    @code_area.replace_text(point, 0, point, @current_error.length, @current_error.get_text)
-  end
-
-  def reset_error_point
-    if error_point?
-      @current_error = nil
-      @syntax_regexs.slice!(0)
-    end
-  end
-  private :reset_error_point
-
-  def error_point?
-    !@current_error.nil?
-  end
-  private :error_point?
-  
-  def prepare_code_editor
-    @code_area.get_stylesheets.add(@syntax_css)
-    @code_area.set_style_class(0,  @code_area.length, 'code-editor')    
-    @code_area.set_paragraph_graphic_factory(prepare_grapics_factory)     
-    @code_saved = @code_area.get_undo_manager.at_marked_position_property    
-    @code_area.richChanges
-    .filter { |change| !change.get_inserted.equals(change.get_removed) }
-    .subscribe { |change|
-      @code_area.set_style_spans(0, highlight_code(@code_area.get_text)) 
-    }    
-  end
-  private :prepare_code_editor
-
-  def error_regex
-    line =  Regexp.escape(@current_error.get_text)
-    name = "lineerror"      
-    "(?<#{name}>#{line})"
-  end
-  private :error_regex
-  
-  def syntax_regex
-    if @syntax_regexs.nil?
-      @syntax_regexs = @syntax_specs.keys.reduce([]) { |acc, k|
-        words = @syntax_specs[k].reduce([]) { |memo, w|
-          memo << (w.size > 1 ? Regexp.new(w) : Regexp.escape(w) );
-          memo
-        } 
-        acc << %((?<#{k.to_s}>#{words.join('|')})); acc
-      }
-      logger.debug(@syntax_regexs)
-    end
-    Regexp.new(@syntax_regexs.join('|'))
-  end
-  private :syntax_regex
+  private :linenumber_and_symbols_factory
 
   def substitutions_regex
     if @substitutions_regex.nil?
-      substitutions = app._substitutions
-      regex = substitutions.keys.reduce([]) { |acc, k|
-        acc << %((?<#{substitutions[k]}>#{Regexp.new(k.to_s)})); acc
+      regex = app._substitutions.keys.reduce([]) { |acc, k|
+        acc << %((?<#{app._substitutions[k]}>#{Regexp.new(k.to_s)})); acc
       }.join('|')
       @substitutions_regex = Regexp.new(regex)
       @substitutions_regex
@@ -175,35 +68,9 @@ class SourceCodeController
     end
   end
   private :substitutions_regex
-
-  def build_ast(code, regex)
-    matches = code.to_enum(:scan, regex).map { Regexp.last_match }
-    matches.reduce([]) { |memo, matcher|
-      names = matcher.names
-      memo << names.size.times.reduce([]) { |acc, index|
-        name =  names[index].to_sym
-        acc = [name, matcher[name], matcher.begin(name), matcher.end(name)] unless matcher[name].nil?
-        acc
-      }      
-      memo
-    }
-  end
-  private :build_ast
   
-  def highlight_code(code = '')
-    spansBuilder = StyleSpansBuilder.new
-    lastKwEnd = 0
-    build_ast(code, syntax_regex).each { |a|
-      spansBuilder.add(['default'], a[2] - lastKwEnd)            
-      spansBuilder.add([a[0].to_s], a[3] - a[2])
-      lastKwEnd = a[3]
-    }
-    spansBuilder.create
-  end
-  private :highlight_code
-
   def saved?
-    @code_saved.get
+    @code_area.get_undo_manager.at_marked_position_property.get
   end
 
   def changed?
@@ -225,8 +92,8 @@ class SourceCodeController
   end
   
   def preprocess_code
-    code = find_language
-    build_ast(code, substitutions_regex).each { |a|
+    code = find_language    
+    @syntax_highlighter.build_ast(code, substitutions_regex).each { |a|
       code.gsub!(Regexp.new('\b'+ a[1] +'\b'), a[0].to_s)
     }
     @source = code
@@ -234,7 +101,7 @@ class SourceCodeController
   private :preprocess_code
 
   def code_get
-    reset_error_point
+    @syntax_highlighter.reset_error_point
     preprocess_code
     syntax_code = YAML.load_file(File.join(app.configs[:path][:editor], @language, 'code.yml'))
     preamble = syntax_code['preamble'].join("\n")
@@ -250,7 +117,6 @@ class SourceCodeController
   def code_set(code)
     @code_area.replaceText(0, @code_area.get_length, code)
     find_language
-    prepare_editing
   end
 
   def empty?

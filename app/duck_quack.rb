@@ -25,7 +25,8 @@ IS_IN_JAR = Pathname.new(
     File.join(
       File.dirname(__FILE__), ".."))).realpath.to_s == "classpath:/"
 
-if IS_IN_JAR 
+if IS_IN_JAR
+  ENV['APP_ENV'] = 'production'
   PATH_ROOT = 'uri:classloader:/' #"classpath:" #
   PATH_APP = File.join(PATH_ROOT, 'app')
   PATH_LIB = File.join(PATH_ROOT, 'lib')
@@ -86,8 +87,6 @@ Dir[File.join(PATH_LIB, '*.rb')].sort.each { |h|
   require(h)
 }
 
-#end
-
 ################################################################################
 
 require 'jrubyfx'
@@ -101,7 +100,6 @@ class DuckQuackApp < JRubyFX::Application
   include AppHelpers
   attr_reader :stage
   attr_accessor :main_pane
-  attr_accessor :executors
 
   class << self
 
@@ -124,6 +122,7 @@ class DuckQuackApp < JRubyFX::Application
           :language => 'ruby',
           :generate_methods_list => false,
           :database => 'duck_quack',
+          :highlighting => { :async => false, :time => 300 },
           :path  => {
             :root => PATH_ROOT,
             :app => PATH_APP,
@@ -168,7 +167,6 @@ class DuckQuackApp < JRubyFX::Application
     super
     logger.info("DuckQuack - Initialization")
     @configs = DuckQuackApp.initialization
-    @executors = []
     set_app(self)
     Dir[File.join(self.configs[:path][:lib], '*.{rb,jar}')].sort.each { |h|
       puts "LOADING EXTERNAL LIBS: #{h} "
@@ -251,10 +249,11 @@ class DuckQuackApp < JRubyFX::Application
   end
 
   def stop
-    @executors.each { |e| e.shutdown }
+    ExecutorsPool.stop_all
   end
 
   def close
+    ExecutorsPool.stop_all
     logger.info("DuckQuack - Closing")
     Platform.exit
   end

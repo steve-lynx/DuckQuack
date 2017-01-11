@@ -19,6 +19,7 @@ import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.input.MouseButton
+import org.fxmisc.flowless.VirtualizedScrollPane
 
 require 'ruby-beautify'
 
@@ -51,9 +52,7 @@ class DuckQuackController
   include RubyBeautify
 
   def initialize
-
     app.main_pane = @main_pane
-
     @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) { |ev|
       if ev.get_code == KeyCode::TAB
         @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '    '))
@@ -99,7 +98,6 @@ class DuckQuackController
     select_all_mi = MenuItem.new(app._t(:select_all).capitalize)
     select_all_mi.get_style_class.add("code-area-context-menu-item")
     select_all_mi.set_on_action {  |ev| edit_select_all_item_clicked }
-
 
     @context_menu.getItems.addAll(
       undo_mi,

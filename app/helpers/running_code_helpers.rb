@@ -11,11 +11,18 @@ module RunningCodeHelpers
   include Java
   import java.lang.System
 
+  import javafx.event.ActionEvent
   import javafx.geometry.HPos
   import javafx.geometry.VPos
   import javafx.scene.Group
   import javafx.scene.Scene
   import javafx.scene.canvas.Canvas
+  import javafx.scene.control.Alert
+  import javafx.scene.control.Button
+  import javafx.scene.control.ButtonType
+  import javafx.scene.control.Label
+  import javafx.scene.control.TextArea
+  import javafx.scene.control.TextField
   import javafx.scene.control.Tooltip
   import javafx.scene.image.Image
   import javafx.scene.image.ImageView
@@ -299,5 +306,122 @@ module RunningCodeHelpers
     control_add(c, :parent => params[:parent], :bounds => true)
     e
   end
+
+  def draw_axis(color = Color::BLACK, size = 1, canvas = @canvas)
+    gc = canvas.get_graphics_context2_d
+    bounds = canvas.get_bounds_in_local
+    width = round_to_even(bounds.width)
+    height = round_to_even(bounds.height)
+    x0 = width / 2
+    y0 = height / 2
+    gc.set_line_width(size)
+    gc.set_stroke(color)
+    gc.stroke_line(0, y0, width, y0)
+    gc.stroke_line(x0, height, x0, -height)
+  end
+
+  def round_to_even(n)
+    x = n.to_i
+    x % 2 == 0 ? x : x + 1
+  end
+
+  def translate_coord(x, y, canvas = @canvas)
+    bounds = canvas.get_bounds_in_local
+    width = round_to_even(bounds.width)
+    height = round_to_even(bounds.height)
+    x0 = width / 2
+    y0 = height / 2
+    [x0 + x, y0 + -y]
+  end
+
+
+  class Turtle
+
+    attr_accessor :color
+    attr_accessor :size
+    attr_accessor :size
+
+    def initialize(canvas = @canvas)
+      @canvas = canvas
+      @gc = @canvas.get_graphics_context2_d
+      @x0, @y0 = translate_coord(0, 0)
+      @color = Color::BLACK
+      @size = 3
+      home
+      pen_down
+    end
+
+    def round_to_even(n)
+      x = n.to_i
+      x % 2 == 0 ? x : x + 1
+    end
+
+    def translate_coord(x, y)
+      bounds = @canvas.get_bounds_in_local
+      width = round_to_even(bounds.width)
+      height = round_to_even(bounds.height)
+      x0 = width / 2
+      y0 = height / 2
+      [x0 + x, y0 + -y]
+    end
+
+    def dx
+      Math.cos(@heading * DEG)
+    end
+    
+    def dy
+      Math.sin(@heading * DEG)
+    end
+
+    def home
+      @x = @x0
+      @y = @y0
+      @heading = 0
+    end
+
+    def pen_up
+      @drawing = false
+    end
+    
+    def pen_down
+      @drawing = true
+    end
+
+    def is_drawing?
+      @drawing
+    end
+
+    def dot(size = 4, color = Color::BLACK)
+      if @drawing
+        @gc.beginPath
+        @gc.arc(@x, @y, size, size, 0, 360)
+        @gc.closePath
+        @gc.setFill(color)
+        @gc.fill
+      end
+    end
+
+    def heading(rad)
+      @heading = rad
+    end
+
+    def move_to(x, y)
+      @x, @y = translate_coord(x, y)
+    end
+
+    def position
+      [@x, @y]
+    end
+
+    def right(offset)
+      @heading = (@heading + offset) % 360
+    end
+    
+    def left(offset)
+      @heading = (@heading - offset) % 360
+    end
+    
+  end
+  
   
 end
