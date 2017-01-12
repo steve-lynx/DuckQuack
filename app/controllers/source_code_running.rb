@@ -22,8 +22,8 @@ class RunningCode
   attr_reader :output
   attr_reader :source_controller
 
-  require 'running_code_helpers'
-  include RunningCodeHelpers
+  require 'code_running_helpers'
+  include CodeRunningHelpers
 
   path = File.join(app.configs.fetch2([:path, :locale], './'), app.configs.fetch2([:lang], 'en'))
   $LOAD_PATH << path unless $LOAD_PATH.include?(path)

@@ -130,8 +130,8 @@ class SyntaxHighlighter
     @current_error = @code_area.get_paragraph(point) 
     @syntax_regexs.insert(0, error_regex) if error_point?    
     code_area.move_to(point, 0)
-    #@code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
-    @code_area.replace_text(point, 0, point, @current_error.length, @current_error.get_text)
+    @code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
+    #@code_area.replace_text(point, 0, point, @current_error.length, @current_error.get_text)
   end
 
   def reset_error_point    

@@ -57,10 +57,40 @@ substitutions:
   '\bquando\b': when
   '\bmentre\b': while
   '\brendi\b': yield
+
+  
 methods:
+  
+  home: casa
+  pen_up: penna_su
+  pen_down: penna_giu
+  pen_size: spessore_penna
+  pen_color: colore_penna
+  pen_size=: spessore_penna=
+  pen_color=: colore_penna=
+  dot_size: dimensione_punto
+  dot_color: colore_punto
+  dot_size=: dimensione_punto=
+  dot_color=: colore_punto=
+  drawing=: disegnando=
+  drawing?: disegnando?
+  dot: punto
+  heading=: direzione=
+  heading: direzione
+  forward: avanti
+  back: insietro
+  move: muove
+  move_to: muove_verso
+  position: posizione
+  right: destra
+  left: sinistra
+  axis: assi
+  
   set_control_tooltip: imposta_indizio
+  draw_line: disegna_linea
+  draw_dot: disegna_punto
   round_to_even: arrotonda_a_pari
-  translate_coord: trasporta_coordinate
+  translate_coords: trasporta_coordinate
   draw_axis: assi_cartesiani
   close_main_stage: chiudi
   show_main_stage: mostra
@@ -224,8 +254,8 @@ methods:
   get_accessible_text: get_accessible_text
   get_baseline_offset: get_baseline_offset
   get_blend_mode: get_blend_mode
-  get_bounds_in_local: get_bounds_in_local
-  get_bounds_in_parent: get_bounds_in_parent
+  get_bounds_in_local: misura
+  get_bounds_in_parent: misura_al_genitore
   get_buffer: get_buffer
   get_cache_hint: get_cache_hint
   get_canvas: get_canvas
