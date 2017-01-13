@@ -20,13 +20,16 @@ def quadrato(canvas)
   papera = Duck.new(canvas)
   papera.punto
   papera.assi
-  papera.spessore_penna = 1
-  4.times.each {|n|
-    papera.colore_penna = Color::RED
+  papera.spessore_penna = 2
+  papera.colore_penna = Color::RED
+  4.times.each {|n| 
+    #papera.alza_penna   
     papera.avanti(100)
     papera.destra
-    papera.punto
+    papera.punto(size: 8)
   }
+  papera.colore_fondo = Color::GREEN
+  #papera.disegna_percorso
 end
 
 quadrato(tela)

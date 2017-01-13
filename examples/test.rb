@@ -1,4 +1,4 @@
-clear
+reset
 setFill(Color.rgb(255,0,0))
 setStroke(Color.rgb(0,255,0))
 setLineWidth(5)

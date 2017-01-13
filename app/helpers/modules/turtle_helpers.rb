@@ -14,6 +14,7 @@ module TurtleHelpers
     
     DEG = Math::PI / 180.0
     COLOR = Color::BLACK
+    BACKGROUND = Color::WHITE
     PEN_SIZE = 2
     DOT_SIZE = 4
     HEADING = 180
@@ -26,6 +27,8 @@ module TurtleHelpers
     attr_accessor :dot_size
     attr_accessor :heading
     attr_accessor :drawing
+    attr_accessor :background
+    attr_reader :path
 
     def initialize(canvas)
       @canvas = canvas
@@ -35,14 +38,68 @@ module TurtleHelpers
       @pen_size = PEN_SIZE
       @dot_color = COLOR
       @dot_size = DOT_SIZE
+      @background = BACKGROUND
       home
       pen_down
     end
 
     def home
-      @home_point = PointRelative.new(0, 0, @bounds)
-      @current_point = PointRelative.new(0, 0, @bounds)
+      @path = [PointRelative.new(0, 0, @bounds)]
       @heading = HEADING
+    end
+
+    def clear
+      children = @canvas.get_parent.get_children
+      (children.reduce([]) { |acc, child|       
+         acc << child unless child == @canvas; acc}
+      ).each { |child| children.remove(child)}
+      @canvas.clear
+      System.gc
+    end
+
+    def move_to_home
+      move_to(0, 0)
+    end
+
+    def calculate_delta_position
+      b0 = @canvas.get_bounds_in_parent
+      b1 = @canvas.get_bounds_in_local
+      [b0.max_x - b1.max_x, b0.max_y - b1.max_y]
+    end
+    private :calculate_delta_position
+
+    def draw_path(opts = {})
+      params = {
+        :color => @pen_color,
+        :background => @background,
+        :size => @pen_size
+      }.deep_merge(opts)
+      d = calculate_delta_position
+      p = Polyline.new
+      p.get_points.add_all(
+        @path.map { |point| [point.a_x.to_f + d[0], point.a_y.to_f + d[1]] }.flatten
+      )
+      p.setStroke(params[:color])
+      p.setFill(params[:background])
+      p.setStrokeWidth(params[:size])
+      @canvas.get_parent.get_children.add(p)
+    end
+
+    def draw_path_polygon(opts = {})
+      params = {
+        :color => @pen_color,
+        :background => @background,
+        :size => @pen_size
+      }.deep_merge(opts)
+      d = calculate_delta_position
+      p = Polygon.new
+      p.get_points.add_all(
+        @path.map { |point| [point.a_x.to_f + d[0], point.a_y.to_f + d[1]] }.flatten
+      )
+      p.setStroke(params[:color])
+      p.setFill(params[:background])
+      p.setStrokeWidth(params[:size])
+      @canvas.get_parent.get_children.add(p)
     end
 
     def pen_up
@@ -55,10 +112,12 @@ module TurtleHelpers
 
     def pen_size(size = PEN_SIZE)      
       @pen_size = size
+      @gc.setLineWidth(@pen_size)
     end
 
     def pen_color(color = PEN_COLOR)      
       @pen_color = color
+      @gc.setStroke(@pen_color)
     end
 
     def dot_size(size = DOT_SIZE)      
@@ -69,12 +128,21 @@ module TurtleHelpers
       @dot_color = color
     end
 
+    def background(color = BACKGROUND)
+      @background = color
+      @gc.setFill(@background)
+    end    
+
     def drawing?
       @drawing
     end
 
-    def dot(size = @dot_size, color = @dot_color)
-      draw_dot(@current_point.a_x, @current_point.a_y, size, color, @canvas) if @drawing
+    def dot(opts = {})
+      params = {
+        :color => @dot_color,
+        :size => @pen_size
+      }.deep_merge(opts)
+      draw_dot(@path.last.a_x, @path.last.a_y, params[:size], params[:color], @canvas) if @drawing
     end
 
     def heading(angle = HEADING)
@@ -90,18 +158,19 @@ module TurtleHelpers
     end
 
     def move(distance = LENGTH)
-      @new_point = @current_point.distance(@heading, distance)      
-      draw_line(@current_point.a_x, @current_point.a_y,
-        @new_point.a_x, @new_point.a_y,@pen_size, @pen_color, @canvas) if drawing?
-      @current_point = @new_point
+      @new_point = @path.last.distance(@heading, distance)
+      draw_line(@path.last.a_x, @path.last.a_y,
+        @new_point.a_x, @new_point.a_y, @pen_size, @pen_color, @canvas) if drawing?
+      @path << @new_point
     end
 
     def move_to(x = 0, y = 0)
-      @current_point = PointRelative.new(x, y, @bounds)
+      @path << PointRelative.new(x, y, @bounds)
     end
 
     def position
-      [@current_point.r_x, @current_point.r_y]
+      last = @path.last
+      [last.r_x, last.r_y]
     end
 
     def right(angle = RECT)

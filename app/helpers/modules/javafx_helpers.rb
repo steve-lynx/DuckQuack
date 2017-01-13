@@ -10,9 +10,10 @@ module JavafxHelpers
 
   def reset
     children = @container.get_children
-    (children.reduce([]) { |acc, child|
+    (children.reduce([]) { |acc, child|       
        acc << child unless child.get_id == 'default_canvas'; acc}
     ).each { |child| children.remove(child)}
+    @canvas.clear
     System.gc
   end
 

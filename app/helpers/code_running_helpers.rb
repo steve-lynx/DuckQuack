@@ -40,6 +40,8 @@ import javafx.scene.text.TextAlignment
 import javafx.scene.web.WebView
 import javafx.stage.Screen
 import javafx.stage.Stage
+import javafx.scene.shape.Polyline
+import javafx.scene.shape.Polygon
 
 module CodeRunningHelpers
 

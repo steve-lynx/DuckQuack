@@ -62,8 +62,14 @@ substitutions:
 methods:
   
   home: casa
-  pen_up: penna_su
-  pen_down: penna_giu
+  clear: pulisci
+  move_to_home: vai_a_casa
+  draw_path: disegna_percorso
+  draw_path_polygon: disegna_percorso_chiuso
+  background: colore_fondo
+  background=: colore_fondo=
+  pen_up: alza_penna
+  pen_down: abbassa_penna
   pen_size: spessore_penna
   pen_color: colore_penna
   pen_size=: spessore_penna=
