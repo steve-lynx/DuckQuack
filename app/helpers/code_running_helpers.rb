@@ -42,6 +42,9 @@ import javafx.stage.Screen
 import javafx.stage.Stage
 import javafx.scene.shape.Polyline
 import javafx.scene.shape.Polygon
+import javafx.scene.control.ProgressBar
+import javafx.scene.control.ProgressIndicator
+import javafx.scene.web.HTMLEditor
 
 module CodeRunningHelpers
 

@@ -10,6 +10,7 @@ include Java
 import java.lang.System
 
 require 'jrubyfx'
+import javafx.application.Platform
 require 'yaml'
 require 'fileutils'
 require 'facets'
@@ -73,9 +74,19 @@ class RunningCode
   private :inject_gc_methods
 
   def inject_additional_methods
-    self.class.send(:define_method, :clear_output) { @output.text = '' }
-    self.class.send(:define_method, :print) { |text| @output.text += text.to_s }
-    self.class.send(:define_method, :println) { |text| @output.text += "#{text.to_s}\n" }
+    #self.class.send(:define_method, :clear_output) { @output.text = '' }
+    #self.class.send(:define_method, :print) { |text| @output.text += text.to_s }
+    #self.class.send(:define_method, :println) { |text| @output.text += "#{text.to_s}\n" }
+
+    self.class.send(:define_method, :clear_output) { 
+      Platform.runLater(-> { @output.set_text('') })
+    }
+    self.class.send(:define_method, :print) { |text| 
+      Platform.runLater(-> { @output.append_text(text.to_s) })
+    }
+    self.class.send(:define_method, :println) { |text| 
+      Platform.runLater(-> { @output.append_text("#{text.to_s}\n") })
+    }  
   end
   private :inject_additional_methods
 

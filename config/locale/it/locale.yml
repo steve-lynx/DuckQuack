@@ -91,7 +91,17 @@ methods:
   right: destra
   left: sinistra
   axis: assi
-  
+
+  task: compito
+  task_run: esegui_compito
+  task_later: compito_ritardato
+  task_later_run: esegui_compito_ritardato
+  sleep: aspetta
+
+  html_editor_create: nuovo_html_editor
+  get_screen_bounds: limiti_schermo
+  progress_bar_create: nuova_barra_di_progresso
+  progress_indicator_create: nuovo_indicatore_di_progresso
   set_control_tooltip: imposta_indizio
   draw_line: disegna_linea
   draw_dot: disegna_punto

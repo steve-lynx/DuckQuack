@@ -149,6 +149,38 @@ module JavafxHelpers
     c
   end
 
+  def progress_bar_create(opts = {})
+    params = {
+      :x => 0,
+      :y => 0,
+      :progress => 10,
+      :fit_width => 200,
+      #:fit_height => 100,
+      :parent => nil
+    }.deep_merge(opts)
+    c = ProgressBar.new(params[:progress])
+    c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height])
+    control_add(c, :parent => params[:parent], :bounds => true)
+    c
+  end
+
+    def progress_indicator_create(opts = {})
+    params = {
+      :x => 0,
+      :y => 0,
+      :progress => 10,
+      :fit_width => 200,
+      #:fit_height => 100,
+      :parent => nil
+    }.deep_merge(opts)
+    c = ProgressIndicator.new(params[:progress])
+    c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height])
+    control_add(c, :parent => params[:parent], :bounds => true)
+    c
+  end
+
   def text_area_create(opts = {})
     params = {
       :x => 0,
@@ -158,6 +190,21 @@ module JavafxHelpers
       :parent => nil
     }.deep_merge(opts)
     c = TextArea.new
+    c.relocate(params[:x], params[:y])
+    set_control_dimension(c, params[:fit_width], params[:fit_height])
+    control_add(c, :parent => params[:parent], :bounds => true)
+    c
+  end
+
+  def html_editor_create(opts = {})
+    params = {
+      :x => 0,
+      :y => 0,
+      :fit_width => 200,
+      :fit_height => 200,
+      :parent => nil
+    }.deep_merge(opts)
+    c = HTMLEditor.new
     c.relocate(params[:x], params[:y])
     set_control_dimension(c, params[:fit_width], params[:fit_height])
     control_add(c, :parent => params[:parent], :bounds => true)
@@ -264,6 +311,10 @@ module JavafxHelpers
     e.load(url) unless url.empty?
     control_add(c, :parent => params[:parent], :bounds => true)
     e
+  end
+
+  def get_screen_bounds
+    Screen.get_bounds
   end
   
 end
