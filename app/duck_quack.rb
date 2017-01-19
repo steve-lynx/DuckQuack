@@ -10,6 +10,8 @@
 # DuckQuack Initializations
 ################################################################################
 
+APP_VERSION="0.6.0.beta"
+
 include Java
 import java.lang.System
 require 'rubygems'
@@ -91,6 +93,7 @@ Dir[File.join(PATH_LIB, '*.rb')].sort.each { |h|
 
 require 'jrubyfx'
 require 'sequel'
+require 'optparse'
 
 class DuckQuackApp < JRubyFX::Application
 
@@ -98,8 +101,26 @@ class DuckQuackApp < JRubyFX::Application
   import javafx.application.Platform
 
   include AppHelpers
-  attr_reader :stage
-  attr_accessor :main_pane
+
+  def configs
+    @@configs
+  end
+
+  def stage
+    @@stage
+  end
+
+  def database
+    @@database
+  end
+
+  def main_controller
+    @@main_controller
+  end
+
+  def main_pane
+    @@main_pane
+  end
 
   class << self
 
@@ -123,6 +144,7 @@ class DuckQuackApp < JRubyFX::Application
           :generate_methods_list => false,
           :database => 'duck_quack',
           :highlighting => { :async => false, :time => 300 },
+          :code_runner  => { :async => true, :type => :task }, #or :type => :later
           :path  => {
             :root => PATH_ROOT,
             :app => PATH_APP,
@@ -139,6 +161,7 @@ class DuckQuackApp < JRubyFX::Application
         }.deep_merge(c)
         @@configs.deep_rekey! { |k| k.to_sym }
       end
+      @@configs[:version] = APP_VERSION
       @@configs
     end
 
@@ -159,15 +182,16 @@ class DuckQuackApp < JRubyFX::Application
     end
   end
 
-  attr_reader :configs
-  attr_reader :stage
-  attr_reader :database
-
   def initialize
-    super
+    super   
     logger.info("DuckQuack - Initialization")
-    @configs = DuckQuackApp.initialization
+    #@configs =
+      DuckQuackApp.initialization
     set_app(self)
+    @@database = nil
+
+    @translation_regexp = Regexp.new(%((?<inlinecode>#{Regexp.new('(?m)#{(\w+|.*)}')})))
+    
     Dir[File.join(self.configs[:path][:lib], '*.{rb,jar}')].sort.each { |h|
       puts "LOADING EXTERNAL LIBS: #{h} "
       require(h)
@@ -182,70 +206,128 @@ class DuckQuackApp < JRubyFX::Application
     }
   end
 
-  def _substitutions
-    @configs.fetch2([:locale, :substitutions], {})
+  def substitutions
+    configs.fetch2([:locale, :substitutions], {})
   end
 
-  def _opt(key, default = '')
-    @configs.fetch2([:locale, key.to_sym], default)
+  def opt(key, default = "")
+    configs.fetch2([:locale, key.to_sym], default)
   end
 
-  def _t(key)
-    _opt(key, key.to_s.gsub(/\W|_/, ' ').squeeze(' '))
+  def build_ast(code, regex)
+    matches = code.to_enum(:scan, regex).map { Regexp.last_match }
+    matches.reduce([]) { |memo, matcher|
+      names = matcher.names
+      memo << names.size.times.reduce([]) { |acc, index|
+        name =  names[index].to_sym
+        acc = [name, matcher[name], matcher.begin(name), matcher.end(name)] unless matcher[name].nil?
+        acc
+      }      
+      memo
+    }
   end
 
-  def _t_methods
-    _opt(:methods, {})
+  def t(key)
+    t = opt(key, key.to_s.gsub(/\W|_/, ' ').squeeze(' '))
+    build_ast(t, @translation_regexp).each { |a|
+      code = a[1].match(Regexp.new('#{(\w+|.*)}'))
+      value = eval(code[1]) rescue ''
+      t.gsub!(a[1], value.to_s)
+    }
+    t
   end
 
-  def _t_method(key)
-    _t_methods.fetch2([key.to_sym], key)
+  def t_methods
+    opt(:methods, {})
   end
 
-  def _database_disconnect
+  def t_method(key)
+    t_methods.fetch2([key.to_sym], key)
+  end
+
+  def database_disconnect
     logger.info("Disconnecting database...")
-    @database.disconnect
+    database.disconnect
     logger.info("Database disconnected.")
-    @database.nil?
+    database.nil?
   end
 
-  def _database_connect
+  def database_connect
     logger.info("Connecting database...")
     require 'jdbc/sqlite3'
     Jdbc::SQLite3.load_driver
     require 'java'
     java_import Java::OrgSqlite::JDBC
     path_db = app.configs[:path][:db]    
-    @database =
+    @@database =
       Sequel.connect(
       "jdbc:sqlite:///" + File.join(path_db, "#{app.configs.fetch2([:database], 'duck_quack')}.db"),
       :loggers => [logger])
-    @database.pragma_set(:auto_vacuum, 1)
-    @database.pragma_set(:secure_delete, true)
-    @database.pragma_set(:case_sensitive_like, false)
+    database.pragma_set(:auto_vacuum, 1)
+    database.pragma_set(:secure_delete, true)
+    database.pragma_set(:case_sensitive_like, false)
     logger.info("Database connected.")
-    @database
+    database
   end
 
-  def start(stage)
-    @stage = stage
+  def init
+    
+    configs[:cli] = {
+      :load => '',
+      :run => '',
+      :hide => false
+    }
+    OptionParser.new do |opts|
+      opts.banner = "Usage: example.rb [options]"
+
+      opts.on("-v", "--version", "Show version") do |v|
+        puts APP_VERSION
+      end
+
+      opts.on("-h", "--hide", TrueClass, "hide on run") do |f|
+        configs[:cli][:hide] = true
+      end
+
+      opts.on("-l", "--load SOURCE", String, "load file") do |f|
+        configs[:cli][:load] = f
+      end
+
+      opts.on("-r", "--run SOURCE", String, "run file") do |f|
+        configs[:cli][:run] = f
+      end
+      
+    end.parse!    
+    configs[:cli][:hide] = false if !@@configs[:cli][:load].empty?
+  end
+
+  def set_title(title = '')
+    t = configs.fetch2([:title], 'title') + " - #{APP_VERSION}" + (title.empty? ? '' : " - #{ title }")
+    stage.set_title(t)
+    t
+  end
+
+  def set_stage_size
     bounds = Screen.get_primary.get_visual_bounds
-    size = case @configs.fetch2([:size], 'window')
-           when 'window'
-             [@configs.fetch2([:width], 800), @configs.fetch2([:height], 600)]
-           when 'medium'
-             [bounds.get_width / 2, bounds.get_height / 2]
-           else
-             [bounds.get_width - 20, bounds.get_height - 40]
-           end
-    with(stage,
-      title: @configs.fetch2([:title], 'title'),
-      width: size[0],
-      height: size[1]
-    ) do
-      fxml DuckQuackController      
-      show
+    case configs.fetch2([:size], 'window')
+    when 'window'
+      [configs.fetch2([:width], 800), configs.fetch2([:height], 600)]
+    when 'medium'
+      [bounds.get_width / 2, bounds.get_height / 2]
+    else
+      [bounds.get_width - 20, bounds.get_height - 40]
     end
+  end
+  private :set_stage_size
+
+  def start(stage)
+    @@stage = stage   
+    size = set_stage_size
+    with(stage, title: set_title, width: size[0], height: size[1]) {
+      @@main_controller = fxml(DuckQuackController)
+      @@main_pane = @@main_controller.main_pane
+      show if !app.configs[:cli][:hide]    
+      app.main_controller.load_file_if_cli
+    }
   end
 
   def stop

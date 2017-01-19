@@ -1,6 +1,6 @@
 ---
 about_caption: "Informazione"
-about_text: "DuckQuack versione 0.5.0 beta\n(c) 2016-2017 Massimo Maria Ghisalberti <zairik@gmail.com>\nlicence: Apache 2.0"
+about_text: "DuckQuack versione #{APP_VERSION}\n(c) 2016-2017 Massimo Maria Ghisalberti <zairik@gmail.com>\nlicence: Apache 2.0"
 new: nuovo
 run: avvia
 save: salva
@@ -95,7 +95,8 @@ methods:
   task: compito
   task_run: esegui_compito
   task_later: compito_ritardato
-  task_later_run: esegui_compito_ritardato
+  task_run_later: esegui_compito_ritardato
+  platform_run_later: esegui_compito_piattaforma
   sleep: aspetta
 
   html_editor_create: nuovo_html_editor

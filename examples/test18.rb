@@ -2,7 +2,7 @@
 pulisci
 pulisci_output
 
-@bounds = canvas.get_bounds_in_local
+@bounds = canvas.get_bounds_in_local # <error line comment>
 
 #p1 = PointRelative.new(0,0, @bounds)
 #dot(p1.a_x, p1.a_y)
@@ -30,20 +30,20 @@ def y_after_distance(distance, angle)
   @p2.a_y - y
 end
 
-dot(@p2.a_x, @p2.a_y, 3)
+draw_dot(@p2.a_x, @p2.a_y, 3)
 
 x = x_after_distance(60, 90)
 y = y_after_distance(60, 90)
-dot(x, y, 3, Color::BROWN)
+draw_dot(x, y, 3, Color::BROWN) 
 
 x = x_after_distance(60, -90)
 y = y_after_distance(60, -90)
-dot(x, y, 3, Color::RED)
+draw_dot(x, y, 3, Color::RED)
 
 x = x_after_distance(60, 180)
 y = y_after_distance(60, 180)
-dot(x, y, 5, Color::PURPLE)
+draw_dot(x, y, 5, Color::PURPLE)
 
 x = x_after_distance(60, -180)
 y = y_after_distance(60, -180)
-dot(x, y, 3, Color::YELLOW)
+draw_dot(x, y, 3, Color::YELLOW)

@@ -6,16 +6,18 @@ p2 = progress_bar_create(y: 40, progress: 0)
 
 max = 100
 
+
+
 esegui_compito { 
   (1..max).each { |n|
     p1.set_progress(n.to_f / max)
-    stampa n
-    aspetta(100)
+    println n
+    sleep(150)
   }
 
 }
 
-task_run{ 
+task = compito { 
   (1..max).each { |n|
     p2.set_progress(n.to_f / max)
     println n
@@ -23,3 +25,5 @@ task_run{
   }
 
 }
+
+task.start

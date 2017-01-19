@@ -2,7 +2,7 @@
 
 # Supporto per database sqlite
 
-DB = app._database_connect 
+DB = app.database_connect 
 
 
 DB.create_table!(:contatti) {
@@ -27,5 +27,5 @@ DB[:contatti].insert(
 risultato = DB[:contatti].where(nome: "Massimo").first
 
 stampa("il numero di telefono è: " + risultato[:telefono])
-app._database_disconnect
+app.database_disconnect
 

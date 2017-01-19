@@ -25,22 +25,23 @@ module TaskHelpers
     java.lang.Thread.sleep(millis)
   end
 
-  class TaskRunnableLater
-    include java.lang.Runnable
+  class TaskRunnableLater < Java::javafx.concurrent.Task
     attr_accessor :proc
     def start
-      Executors.newSingleThreadExecutor.execute(self)
+      ex = ExecutorsPool.set({ :c => 'TaskRunnableLater', :e => Executors.newCachedThreadPool, :t => 'newCachedThreadPool'})
+      ex.execute(self)
     end
     def run
-      #logger.debug("RUNNABLE CALLING...")
-      proc.call(@context, @container)
+      #logger.debug("TASK LATER CALLING...")
+      Platform.runLater(-> { @proc.call })
     end
   end
 
   class TaskRunnable < Java::javafx.concurrent.Task
     attr_accessor :proc
     def start
-      Executors.newSingleThreadExecutor.execute(self)
+      ex = ExecutorsPool.set({ :c => 'TaskRunnable', :e => Executors.newCachedThreadPool, :t => 'newCachedThreadPool'})
+      ex.execute(self)
     end
     def call
       #logger.debug("TASK CALLING...")
@@ -64,8 +65,12 @@ module TaskHelpers
     task
   end
   
-  def task_later_run(&block)      
-    later(&block).start
+  def task_run_later(&block)      
+    task_later(&block).start
+  end
+
+  def platform_run_later(&block)
+    Platform.runLater(-> { Proc.new(block).call })
   end
   
 end

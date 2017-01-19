@@ -28,7 +28,7 @@ class SyntaxHighlighter
   CODE_AREA_STYLE = 'code-editor'
 
   def initialize(code_area, path, highlighting = {})
-    @highlighting = { :async => false, :time => 500 }.deep_merge(highlighting)
+    @highlighting = { :async => false, :time => 100 }.deep_merge(highlighting)
     @code_area = code_area
     @syntax_specs = YAML.load_file(File.join(path, 'syntax-specs.yml'))
     @syntax_css = 'file://' + File.join(path, 'syntax-specs.css')
@@ -41,8 +41,6 @@ class SyntaxHighlighter
   end
 
   def syntax_activate_async
-    @executor = Executors.newSingleThreadExecutor
-    ExecutorsPool.set({ :c => 'SyntaxHighlighterAsync', :e => @executor, :t => 'SingleThreadExecutor'})
     @code_area.richChanges
     .filter(-> (change) { !change.get_inserted.equals(change.get_removed) })
     .successionEnds(Duration.ofMillis(@highlighting[:time]))
@@ -73,7 +71,7 @@ class SyntaxHighlighter
   def compute_highlighting_async
     task = TaskHighlighting.new
     task.caller = self
-    @executor.execute(task)
+    ExecutorsPool['SyntaxHighlighterAsync'].execute(task)
     task
   end
   private :compute_highlighting_async
@@ -93,24 +91,10 @@ class SyntaxHighlighter
   end
   private :syntax_regex  
 
-  def build_ast(code, regex)
-    matches = code.to_enum(:scan, regex).map { Regexp.last_match }
-    matches.reduce([]) { |memo, matcher|
-      names = matcher.names
-      memo << names.size.times.reduce([]) { |acc, index|
-        name =  names[index].to_sym
-        acc = [name, matcher[name], matcher.begin(name), matcher.end(name)] unless matcher[name].nil?
-        acc
-      }      
-      memo
-    }
-  end
-  #private :build_ast
-  
   def highlight_code(code = '')
     spansBuilder = StyleSpansBuilder.new
     lastKwEnd = 0
-    build_ast(code, syntax_regex).each { |a|
+    app.build_ast(code, syntax_regex).each { |a|
       spansBuilder.add([DEFAULT_STYLE], a[2] - lastKwEnd)            
       spansBuilder.add([a[0].to_s], a[3] - a[2])
       lastKwEnd = a[3]
@@ -130,7 +114,7 @@ class SyntaxHighlighter
     @current_error = @code_area.get_paragraph(point) 
     @syntax_regexs.insert(0, error_regex) if error_point?    
     code_area.move_to(point, 0)
-    @code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app._t(:error_line_comment)}>")
+    @code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app.t(:error_line_comment)}>")
     #@code_area.replace_text(point, 0, point, @current_error.length, @current_error.get_text)
   end
 

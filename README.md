@@ -21,6 +21,27 @@ Quindi la sequenza prima di partire è:
 
 Dopodiché si può lanciare l'applicazione con ```java -jar DuckQuack.jar``` od usare l'eseguibile Windows(tm) ```DuckQuack.exe```.
 
+Sono disponibili dei parametri da linea di comando ```--load [file]```, ```--run [file]``` e ```--hide```.
+Il parametro ```--hide``` nasconde l'ambiente alla esecuzione automatica di un file (utile se si creano finestre esterne nel sorgente per simulare una applicazione reale).
+
+### Configurazione
+
+Nel file ```config/config.yml``` sono presenti delle impostazioni di avvio:
+
+```
+:title => 'DuckQuack',
+:width => 960,
+:height => 700,
+:size => 'window',
+:lang => 'en',
+:tab_chars => '  ',
+:database => 'duck_quack',
+:highlighting => { :async => false, :time => 300 },
+:code_runner  => { :async => true, :type => :task }, #or :type => :later or :type => :sync
+```
+
+Queste sono quelle predefinite.
+
 ### Codice
 
 Il codice supportato è **Ruby** che viene eseguito e valutato tramite il pulsante *avvia*. In caso di errori:
@@ -64,7 +85,7 @@ Sono presenti alcune primitive per la creazione di interfacce grafiche all'inter
 + ```web_engine_create(url = '', opts = {})``` (un browser web)
 + ```close_main_stage``` (chiudo o nasconde la finestra principale)
 + ```show_main_stage``` (mostra la finestra principale)
-+ ... (fare riferimento al file ```app/helpers/running_code_helpers.rb```)
++ ... (fare riferimento al file ```app/helpers/running_code_helpers.rb``` e alla cartella ```modules```, nonché al file di localizzazione dentro ```config/locale/<lingua>/locale.yml```).
 
 Ogni nome di funzione aggiunta nei vari modi è localizzabile nel suo nome con i meccanismi accennati prima.
 Ovviamente tutto questo salvo bachi.

@@ -94,7 +94,7 @@
 }
 
 .comments,
-multiline_comments {
+.multiline_comments {
     -fx-fill: #E5C07B;
     -fx-font-style: italic;
 }

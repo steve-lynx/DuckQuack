@@ -32,7 +32,7 @@ class SourceCodeController
 
   def info(messages = {})
     append = messages.delete(:append)
-    m = messages.map { |k,v| "#{app._t(k.to_sym)}: #{v}" }.join(" ")
+    m = messages.map { |k,v| "#{app.t(k.to_sym)}: #{v}" }.join(" ")
     @code_area_info.text = append.nil? ? m : @code_area_info.text + ' - ' + m
   end
 
@@ -58,8 +58,8 @@ class SourceCodeController
 
   def substitutions_regex
     if @substitutions_regex.nil?
-      regex = app._substitutions.keys.reduce([]) { |acc, k|
-        acc << %((?<#{app._substitutions[k]}>#{Regexp.new(k.to_s)})); acc
+      regex = app.substitutions.keys.reduce([]) { |acc, k|
+        acc << %((?<#{app.substitutions[k]}>#{Regexp.new(k.to_s)})); acc
       }.join('|')
       @substitutions_regex = Regexp.new(regex)
       @substitutions_regex
@@ -93,7 +93,7 @@ class SourceCodeController
   
   def preprocess_code
     code = find_language    
-    @syntax_highlighter.build_ast(code, substitutions_regex).each { |a|
+    app.build_ast(code, substitutions_regex).each { |a|
       code.gsub!(Regexp.new('\b'+ a[1] +'\b'), a[0].to_s)
     }
     @source = code

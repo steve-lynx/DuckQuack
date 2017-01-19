@@ -56,7 +56,7 @@ class ExecutorController
   def run
     running_code = RunningCode.new(stack_pane, @source_controller, @canvas, @output)
     running_code.activate
-    running_code = nil
+    running_code = nil    
     System.gc #force garbage collection?
   end
 

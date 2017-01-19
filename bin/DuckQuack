@@ -4,6 +4,10 @@ BASEPATH=$(realpath $APPPATH)
 CD=$(realpath $(dirname $BASEPATH))
 cd $CD
 
+export GEM_HOME="$CD/app/gems"
+export GEM_PATH="$CD/app/gems"
+export PATH=$CD/bin:$GEM_HOME/bin:$PATH
+
 #VERBOSE_LOG=-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
 
-java -server -XX:+UseG1GC -XX:MaxGCPauseMillis=1000  -Dfile.encoding=UTF8 -jar $BASEPATH/jruby-complete.jar -S ../app/duck_quack.rb DuckQuack
+java -server -XX:+UseG1GC -XX:MaxGCPauseMillis=1000  -Dfile.encoding=UTF8 -jar $BASEPATH/jruby-complete.jar -S ../app/duck_quack.rb $1 $2 $3 $4

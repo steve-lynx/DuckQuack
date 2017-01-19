@@ -17,12 +17,25 @@ class ExecutorsPool
 
     def [](klass)
       ex = @@executors.find { |e|  e[:c] == klass }
-      ex.nil? ? nil : ex[:e]
+      if ex.nil? 
+        self.set({ :c => klass, :e => Executors.newSingleThreadExecutor, :t => 'SingleThreadExecutor'})
+      else
+        ex[:e]
+      end
     end
     alias :get :[]
 
+    def contains?(klass)
+      !(@@executors.find { |e|  e[:c] == klass }).nil?
+    end
+
     def set(executor)
-      @@executors << executor
+      if contains?(executor[:e])
+        get(executor[:e])
+      else
+        @@executors << executor
+        executor[:e]
+      end
     end
 
     def get_all

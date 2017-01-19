@@ -1,9 +1,5 @@
 #!/bin/sh
 
-JRUBY_VERSION=9.1.6.0
-JRUBY=jruby-complete-$JRUBY_VERSION.jar
-DOWNLOAD_PATH=http://jruby.org.s3.amazonaws.com/downloads/$JRUBY_VERSION/$JRUBY
-
 if [ -L $0 ]
 then
     BASEPATH=$(dirname $(readlink -f $0))
@@ -16,47 +12,11 @@ CD=$(realpath $(dirname $BASEPATH))
 #LIB=../lib
 cd $CD
 
-JRUBYBIN=$BASEPATH/jruby-complete.jar
-
-if [ ! -f $JRUBYBIN ]
-then
-    echo "=========================================================================="
-    echo download JRuby... from $DOWNLOAD_PATH
-    echo "=========================================================================="
-    wget $DOWNLOAD_PATH -O $JRUBYBIN -v
-else
-    echo "=========================================================================="
-    echo JRuby exist, skipping
-    echo "=========================================================================="
-fi
-
 export GEM_HOME="$CD/app/gems"
 export GEM_PATH="$CD/app/gems"
+export PATH=$CD/bin:$GEM_HOME/bin:$PATH
 
-echo "=========================================================================="
-echo Preparing gems in $GEM_PATH
-echo "=========================================================================="
-exit
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri jdbc-sqlite3
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri jrubyfx
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri rake
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri sequel
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri json
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri facets
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri ruby-beautify
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri pry
-java -jar $JRUBYBIN -S gem install -i $GEM_HOME --no-rdoc --no-ri pry-doc
+download_jruby
+gem_install_default
 
-#echo "=========================================================================="
-#echo Preparing libs...
-#echo "=========================================================================="
-#cd $LIB
 
-#wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.wellbehaved&a=wellbehavedfx&v=0.3&e=jar" -O wellbehavedfx-0.3.jar -v
-#wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.undo&a=undofx&v=1.2.2&e=jar" -O undofx-1.2.2.jar -v
-#wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.richtext&a=richtextfx&v=0.7-M3&e=jar" -O richtextfx-0.7-M3.jar -v
-#wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.fxmisc.flowless&a=flowless&v=0.5.1&e=jar" -O flowless-0.5.1.jar -v
-#wget "https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=org.reactfx&a=reactfx&v=2.0-M5&e=jar" -O reactfx-2.0-M5.jar -v
-
-#cd ../bin
-#echo done...

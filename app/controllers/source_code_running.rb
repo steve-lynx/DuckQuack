@@ -35,6 +35,7 @@ class RunningCode
   }
 
   def initialize(container, source_controller, canvas, output)
+    set_async_or_not    
     @output = output
     @source_controller = source_controller
     @container = container
@@ -45,6 +46,13 @@ class RunningCode
     generate_methods_list if app.configs.fetch2([:generate_methods_list], false)
     inject_methods_alias
   end
+
+  def set_async_or_not
+    @async_type = app.configs.fetch2([:code_runner, :type], :task)
+    @async_runner = app.configs.fetch2([:code_runner, :async], false)
+    @async_type = :sync if !@async_runner
+  end
+  private :set_async_or_not
 
   def inject_canvas_methods
     @canvas.methods.sort.each { |m|
@@ -74,10 +82,6 @@ class RunningCode
   private :inject_gc_methods
 
   def inject_additional_methods
-    #self.class.send(:define_method, :clear_output) { @output.text = '' }
-    #self.class.send(:define_method, :print) { |text| @output.text += text.to_s }
-    #self.class.send(:define_method, :println) { |text| @output.text += "#{text.to_s}\n" }
-
     self.class.send(:define_method, :clear_output) { 
       Platform.runLater(-> { @output.set_text('') })
     }
@@ -107,17 +111,17 @@ class RunningCode
 
   def inject_methods_alias
     methods.sort.each { |m|
-      a = app._t_method(m).to_sym
-      if a.to_s != m.to_s
+      a = app.t_method(m).to_sym
+      if (a.to_s != m.to_s) #&& (m != :activate)
         logger.debug("ALIAS: #{a} for #{m}")
-        self.class.send(:alias_method, a, m) unless respond_to?(a)
+        self.class.send(:alias_method, a, m) if !respond_to?(a)
       end
     }
   end
   private :inject_methods_alias
 
-  def activate
-    error_code_marker = ">>>> #{app._t(:error_line_marker)} >>>> "
+  def activate_sync
+    error_code_marker = ">>>> #{app.t(:error_line_marker)} >>>> "
     s = @source_controller.code_get
     begin
       base = -s.fetch2([:preamble_size], 0) + 1
@@ -128,7 +132,36 @@ class RunningCode
       r = Regexp.new(Regexp.escape(error_code_marker).to_s + ':(?<linenumber>\d*)(?<cause>.*|:in)')
       match = message.match(r)
       @source_controller.syntax_highlighter.set_error_point(match['linenumber'].to_i - 1, match['cause'])
-      @output.text += "\n#{message}"
+      println("\n#{message}")
+    end
+  end
+
+  class TaskActivate < Java::javafx.concurrent.Task
+    attr_accessor :runner
+    def call
+      Platform.runLater(-> { @runner.activate_sync })
+    end
+  end
+
+  def activate_async_task
+    task = TaskActivate.new
+    task.runner = self
+    ExecutorsPool['RunningCode'].execute(task)
+  end
+
+  def activate_async_later(runner = self)
+    Platform.runLater(-> { runner.activate_sync })
+  end
+
+  def activate
+    logger.debug("CODE RUNNING MODE: #{ @async_type.to_s.upcase }")
+    case @async_type 
+    when :task      
+      activate_async_task
+    when :later
+      activate_async_later
+    when :sync
+      activate_sync
     end
   end
 

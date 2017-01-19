@@ -192,7 +192,7 @@ module TurtleHelpers
     def initialize(canvas)
       super(canvas)
       methods.sort.each { |m|
-        a = app._t_method(m).to_sym
+        a = app.t_method(m).to_sym
         if a.to_s != m.to_s
           logger.debug("ALIAS: #{a} for #{m}")
           self.class.send(:alias_method, a, m) unless respond_to?(a)
