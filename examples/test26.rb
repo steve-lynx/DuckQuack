@@ -27,3 +27,5 @@ task = compito {
 }
 
 task.start
+
+#ferma_compiti

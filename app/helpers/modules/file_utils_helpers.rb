@@ -14,4 +14,10 @@ module FileUtilsHelpers
     FileUtils.pwd
   end
 
+  def open_file(filename)
+    c = ''
+    File.open(filename, 'r') { |f| c = f.read}
+    c
+  end
+
 end

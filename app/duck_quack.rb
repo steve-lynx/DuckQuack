@@ -10,7 +10,7 @@
 # DuckQuack Initializations
 ################################################################################
 
-APP_VERSION="0.6.0.beta"
+APP_VERSION="0.7.0.beta"
 
 include Java
 import java.lang.System
@@ -21,6 +21,7 @@ require 'yaml'
 RUN_PATH = System.getProperty("user.dir")
 
 ENV['APP_ENV'] ||= 'development'
+ENV['RACK_ENV'] ||= 'development'
 
 IS_IN_JAR = Pathname.new(
   File.expand_path(
@@ -29,6 +30,7 @@ IS_IN_JAR = Pathname.new(
 
 if IS_IN_JAR
   ENV['APP_ENV'] = 'production'
+  ENV['RACK_ENV'] = 'production'
   PATH_ROOT = 'uri:classloader:/' #"classpath:" #
   PATH_APP = File.join(PATH_ROOT, 'app')
   PATH_LIB = File.join(PATH_ROOT, 'lib')
@@ -94,11 +96,10 @@ Dir[File.join(PATH_LIB, '*.rb')].sort.each { |h|
 require 'jrubyfx'
 require 'sequel'
 require 'optparse'
+import javafx.stage.Screen
+import javafx.application.Platform
 
 class DuckQuackApp < JRubyFX::Application
-
-  import javafx.stage.Screen
-  import javafx.application.Platform
 
   include AppHelpers
 
@@ -162,6 +163,7 @@ class DuckQuackApp < JRubyFX::Application
         @@configs.deep_rekey! { |k| k.to_sym }
       end
       @@configs[:version] = APP_VERSION
+      @@configs[:env] = ENV['APP_ENV'].to_sym
       @@configs
     end
 
@@ -185,8 +187,7 @@ class DuckQuackApp < JRubyFX::Application
   def initialize
     super   
     logger.info("DuckQuack - Initialization")
-    #@configs =
-      DuckQuackApp.initialization
+    DuckQuackApp.initialization
     set_app(self)
     @@database = nil
 
@@ -331,11 +332,11 @@ class DuckQuackApp < JRubyFX::Application
   end
 
   def stop
-    ExecutorsPool.stop_all
+    ExecutorsPool.shutdown_all
   end
 
   def close
-    ExecutorsPool.stop_all
+    ExecutorsPool.shutdown_all
     logger.info("DuckQuack - Closing")
     Platform.exit
   end

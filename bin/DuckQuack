@@ -1,4 +1,6 @@
 #!/bin/sh
+APP_ENV=development
+RACK_ENV=development
 APPPATH=$(dirname $0)
 BASEPATH=$(realpath $APPPATH)
 CD=$(realpath $(dirname $BASEPATH))

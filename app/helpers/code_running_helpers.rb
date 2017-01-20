@@ -45,6 +45,7 @@ import javafx.scene.shape.Polygon
 import javafx.scene.control.ProgressBar
 import javafx.scene.control.ProgressIndicator
 import javafx.scene.web.HTMLEditor
+import javafx.scene.control.TextInputDialog
 
 module CodeRunningHelpers
 

@@ -10,31 +10,26 @@ include Java
 import java.lang.System
 
 require 'jrubyfx'
-
-import java.time.Duration
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import javafx.concurrent.Task
-import java.util.Optional
-
-
 require 'sinatra/base'
 
-module HttpHelpers  
-
+module HttpHelpers
+  
   class HttpServer < Sinatra::Base
     
     set :port, 3000
     set :host, '0.0.0.0'
 
-    get '/kill' do
-      Process.kill('TERM', Process.pid)   
+    class << self
+      def stop_httpd    
+        Process.kill('TERM', Process.pid) 
+      end
     end
 
-    get '/stop' do
-      Process.kill('TERM', Process.pid)   
+    get '/kill' do
+      HttpServer.stop_httpd
     end
 
   end
-  
+
+ 
 end

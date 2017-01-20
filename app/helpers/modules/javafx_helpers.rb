@@ -17,6 +17,20 @@ module JavafxHelpers
     System.gc
   end
 
+  def ask(caption = '')
+    d = TextInputDialog.new
+    d.set_title(app.t(:ask_caption))
+    d.setHeaderText(caption)
+    result = ''
+    d.show_and_wait
+    .if_present { |response| result = response }
+    result
+  end
+
+  def gets(caption = '')
+    ask(caption)
+  end
+
   def alert(caption, message)
     alert = Alert.new(Alert::AlertType::INFORMATION, message)
     alert.header_text = caption

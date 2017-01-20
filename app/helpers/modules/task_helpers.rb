@@ -25,10 +25,20 @@ module TaskHelpers
     java.lang.Thread.sleep(millis)
   end
 
+  def stop_tasks
+    logger.info("STOP TASKS!")
+    if @async_type != :sync
+      ExecutorsPool.stop('TaskRunnableLater')
+      ExecutorsPool.stop('TaskRunnable')
+    else
+      logger.info("RunningCode in sync mode")
+    end
+  end
+
   class TaskRunnableLater < Java::javafx.concurrent.Task
     attr_accessor :proc
     def start
-      ex = ExecutorsPool.set({ :c => 'TaskRunnableLater', :e => Executors.newCachedThreadPool, :t => 'newCachedThreadPool'})
+      ex = ExecutorsPool.set({ :c => 'TaskRunnableLater', :t => :cached })
       ex.execute(self)
     end
     def run
@@ -40,7 +50,7 @@ module TaskHelpers
   class TaskRunnable < Java::javafx.concurrent.Task
     attr_accessor :proc
     def start
-      ex = ExecutorsPool.set({ :c => 'TaskRunnable', :e => Executors.newCachedThreadPool, :t => 'newCachedThreadPool'})
+      ex = ExecutorsPool.set({ :c => 'TaskRunnable', :t => :cached })
       ex.execute(self)
     end
     def call

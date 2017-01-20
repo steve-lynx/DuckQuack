@@ -33,7 +33,11 @@ module Logging
     end
 
     def configure_logger_for(classname)
-      logger = Logger.new(STDOUT)
+      logger = if ENV['APP_ENV'] == 'development'
+                 Logger.new($stdout)
+               else
+                 Logger.new(File.join(RUN_PATH, 'log', 'duckquack.log'))
+               end
       logger.level = logger_level
       logger.progname = classname
       logger

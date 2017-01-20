@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.fxmisc.richtext.CodeArea?>
 
-<AnchorPane fx:id="main_pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="main_pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -91,7 +91,10 @@
                           <children>
                             <ButtonBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="352.0" VBox.vgrow="ALWAYS">
                               <buttons>
-                                <Button fx:id="clear_output_button" mnemonicParsing="false" onAction="#clear_output_clicked" text="clear" />
+                                <Button fx:id="kill_int_button" disable="true" mnemonicParsing="false" onAction="#kill_int_clicked" text="Kill (int)" />
+                                <Button fx:id="kill_term_button" disable="true" mnemonicParsing="false" onAction="#kill_term_clicked" text="Kill (term)" />
+                                <Button fx:id="stop_tasks_button" mnemonicParsing="false" onAction="#stop_tasks_clicked" text="Stop tasks" />
+                                <Button fx:id="clear_output_button" mnemonicParsing="false" onAction="#clear_output_clicked" text="clear" />                                
                               </buttons>
                               <padding>
                                 <Insets right="8.0" />

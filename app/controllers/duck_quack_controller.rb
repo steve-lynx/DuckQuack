@@ -9,6 +9,7 @@
 include Java
 import java.lang.System
 require 'jrubyfx'
+require 'ruby-beautify'
 import org.fxmisc.richtext.CodeArea
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
@@ -21,7 +22,40 @@ import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.input.MouseButton
 import org.fxmisc.flowless.VirtualizedScrollPane
 
-require 'ruby-beautify'
+import java.io.PrintStream
+import java.io.OutputStream
+
+class ConsoleRedirect
+
+  #class Out < java.io.OutputStream
+  #  attr_accessor :text_area
+  #  def write(i)
+  #    Platform.runLater(-> { @text_area.append_text(i.chr) })
+  #  end    
+  #end
+
+  class Out < StringIO    
+    attr_accessor :text_area
+    def write(text)
+      Platform.runLater(-> { @text_area.append_text(text) })
+    end  
+  end
+
+  class In < StringIO    
+    attr_accessor :text_area
+    def write(text)
+      Platform.runLater(-> { @text_area.append_text(text) })
+    end  
+  end
+
+  def initialize(text_area)
+    out = Out.new
+    out.text_area = text_area
+    $stdout = out
+    $stderr = out
+  end
+
+end
 
 class Java::JavafxSceneCanvas::Canvas
   def isResizable
@@ -51,6 +85,7 @@ class DuckQuackController
   attr_reader :main_pane
 
   def initialize
+    ConsoleRedirect.new(@output)
     @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) do |ev|
       if ev.get_code == KeyCode::TAB
         @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '    '))
@@ -149,6 +184,9 @@ class DuckQuackController
     @new_button.text = app.t(:new).capitalize
     @save_button.text = app.t(:save).capitalize
     @load_button.text = app.t(:load).capitalize
+    @kill_int_button.text = app.t(:kill_int).capitalize
+    @kill_term_button.text = app.t(:kill_term).capitalize
+    @stop_tasks_button.text = app.t(:stop_tasks).capitalize
     @clear_output_button.text = app.t(:clear_output).capitalize
   end
   private :set_captions
@@ -236,7 +274,7 @@ class DuckQuackController
   end
 
   def clear_output_clicked
-    @output.text = ''
+    @output.set_text('')
   end
 
   def close_app_clicked
@@ -282,4 +320,17 @@ class DuckQuackController
     )
     @executor.source_controller.code_set(code)
   end
+
+  def stop_tasks_clicked
+    @executor.running_code.stop_tasks if @executor.running_code
+  end
+
+  def kill_term_clicked
+    @executor.running_code.kill_term if @executor.running_code  
+  end
+
+  def kill_int_clicked
+    @executor.running_code.kill_int if @executor.running_code  
+  end
+ 
 end

@@ -1,5 +1,9 @@
-app/gems
-lib/gems
+app/gems/*
+lib/gems/*
+gems/*
+!app/gems/dummy
+!lib/gems/dummy
+!gems/dummy
 .gems
 bin/scenebuilder-all-*.jar
 .jrubyfx_cache
@@ -11,7 +15,7 @@ bin/*
 !bin/jarify
 !bin/jruby-complete.jar
 
-
+*.log
 *.gem
 *.rbc
 /.config

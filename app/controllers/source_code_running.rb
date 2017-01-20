@@ -23,6 +23,8 @@ class RunningCode
   attr_reader :output
   attr_reader :source_controller
 
+  attr_accessor :__http_process_pid
+
   require 'code_running_helpers'
   include CodeRunningHelpers
 
@@ -35,6 +37,7 @@ class RunningCode
   }
 
   def initialize(container, source_controller, canvas, output)
+    @__http_process_pid = nil
     set_async_or_not    
     @output = output
     @source_controller = source_controller
@@ -42,10 +45,9 @@ class RunningCode
     @canvas = canvas
     inject_gc_methods
     inject_canvas_methods
-    inject_additional_methods
     generate_methods_list if app.configs.fetch2([:generate_methods_list], false)
     inject_methods_alias
-  end
+  end  
 
   def set_async_or_not
     @async_type = app.configs.fetch2([:code_runner, :type], :task)
@@ -80,19 +82,6 @@ class RunningCode
     }
   end
   private :inject_gc_methods
-
-  def inject_additional_methods
-    self.class.send(:define_method, :clear_output) { 
-      Platform.runLater(-> { @output.set_text('') })
-    }
-    self.class.send(:define_method, :print) { |text| 
-      Platform.runLater(-> { @output.append_text(text.to_s) })
-    }
-    self.class.send(:define_method, :println) { |text| 
-      Platform.runLater(-> { @output.append_text("#{text.to_s}\n") })
-    }  
-  end
-  private :inject_additional_methods
 
   def generate_methods_list
     path = File.join(app.configs.fetch2([:path, :locale], './'), 'en')

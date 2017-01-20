@@ -14,6 +14,9 @@ select_all: seleziona tutto
 undo: annulla
 redo: ripeti
 clear_output: pulisci output
+kill_term: TERM(15)
+kill_int: Ctrl+C
+stop_tasks: ferma task attivi
 language: linguaggio
 format_code: organizza codice
 error_line_marker: "DuckQuack: file eseguito"
@@ -60,7 +63,8 @@ substitutions:
 
   
 methods:
-  
+
+  ask: chiedi
   home: casa
   clear: pulisci
   move_to_home: vai_a_casa
@@ -96,8 +100,15 @@ methods:
   task_run: esegui_compito
   task_later: compito_ritardato
   task_run_later: esegui_compito_ritardato
-  platform_run_later: esegui_compito_piattaforma
+  platform_run_later: esegui_compito_piattaforma_
   sleep: aspetta
+  stop_tasks: ferma_compiti
+
+  open_file: apri_file
+  kill_term: invia_term
+  kill_int: invia_int
+  enable_kills: abilita_kill
+  disable_kill: disabilita_kill
 
   html_editor_create: nuovo_html_editor
   get_screen_bounds: limiti_schermo
