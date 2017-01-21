@@ -59,33 +59,39 @@
     -fx-text-fill: #f8f8f2;
 }
 
-.keywords { 
-    -fx-fill: #C678DD; 
+.keywords {
+    -fx-fill: #C678DD;
     -fx-font-weight: bold;
 }
 
-.italian_keywords { 
-    -fx-fill: #C678DD; 
-    -fx-font-weight: bold; 
+.italian_keywords {
+    -fx-fill: #C678DD;
+    -fx-font-weight: bold;
 }
 
-.booleans { 
-    -fx-fill: #AEB9F5; 
-    -fx-font-weight: bold; 
+.booleans {
+    -fx-fill: #FD6803;
+    -fx-font-weight: bold;
 }
 
-.parenthesis{
-    -fx-fill: #ffffff;
+.parentheses_open{
+    -fx-fill: #FD6803;
+    -fx-font-weight: bold;
 }
 
-.operators { 
-    -fx-fill: #D774B3; 
-    -fx-font-weight: bold; 
+.parentheses_close{
+    -fx-fill: #FD6803;
+    -fx-font-weight: bold;
+}
+
+.operators {
+    -fx-fill: #D774B3;
+    -fx-font-weight: bold;
 }
 
 .punctuations{
     -fx-fill: #ffffff;
-    -fx-font-weight: bold; 
+    -fx-font-weight: bold;
 }
 
 .strings{
@@ -159,4 +165,3 @@
 .space{
     -fx-fill: #ffffff;
 }
-

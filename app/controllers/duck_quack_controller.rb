@@ -27,25 +27,11 @@ import java.io.OutputStream
 
 class ConsoleRedirect
 
-  #class Out < java.io.OutputStream
-  #  attr_accessor :text_area
-  #  def write(i)
-  #    Platform.runLater(-> { @text_area.append_text(i.chr) })
-  #  end    
-  #end
-
-  class Out < StringIO    
+  class Out < StringIO
     attr_accessor :text_area
     def write(text)
       Platform.runLater(-> { @text_area.append_text(text) })
-    end  
-  end
-
-  class In < StringIO    
-    attr_accessor :text_area
-    def write(text)
-      Platform.runLater(-> { @text_area.append_text(text) })
-    end  
+    end
   end
 
   def initialize(text_area)
@@ -85,13 +71,9 @@ class DuckQuackController
   attr_reader :main_pane
 
   def initialize
-    ConsoleRedirect.new(@output)
-    @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) do |ev|
-      if ev.get_code == KeyCode::TAB
-        @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '    '))
-        ev.consume
-      end
-    end
+    ConsoleRedirect.new(@output) if app.configs[:env] == :production
+    #code_editor_characters_filter
+    code_editor_keys_filter
     code_editor_context_menu
     scroll_pane = VirtualizedScrollPane.new(@code_editor)
     code_editor_info = Label.new('info:')
@@ -104,6 +86,37 @@ class DuckQuackController
     @filename = ''
     set_captions
   end
+
+  def code_editor_keys_filter
+    @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) { |ev|
+      if ev.get_code == KeyCode::TAB
+        @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '  '))
+        ev.consume
+      end
+    }
+  end
+  private :code_editor_keys_filter
+
+  def code_editor_characters_filter
+    @code_editor.add_event_filter(KeyEvent::KEY_TYPED) { |ev|
+      exclude = ["\b", "\t"]
+      complete = app.configs.fetch2([:complete_parentheses], false)
+      pos = @code_editor.get_caret_position
+      c = ev.get_character
+      case c
+      when "("
+        complete ? @code_editor.insert_text(pos, "()") : @code_editor.insert_text(pos, c)
+      when "["
+        complete ? @code_editor.insert_text(pos, "[]") : @code_editor.insert_text(pos, c)
+      when "{"
+        complete ? @code_editor.insert_text(pos, "{}") : @code_editor.insert_text(pos, c)
+      else
+        @code_editor.insert_text(pos, c) unless c.chomp.empty? || exclude.contains?(c)        
+      end
+      ev.consume
+    }
+  end
+  private :code_editor_characters_filter
 
   def load_file_if_cli
     cli_load_file = app.configs.fetch2([:cli, :load], '')
@@ -326,11 +339,11 @@ class DuckQuackController
   end
 
   def kill_term_clicked
-    @executor.running_code.kill_term if @executor.running_code  
+    @executor.running_code.kill_term if @executor.running_code
   end
 
   def kill_int_clicked
-    @executor.running_code.kill_int if @executor.running_code  
+    @executor.running_code.kill_int if @executor.running_code
   end
- 
+
 end

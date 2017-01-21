@@ -64,6 +64,8 @@ substitutions:
   
 methods:
 
+  http_get: richiesta_http
+
   ask: chiedi
   home: casa
   clear: pulisci
@@ -109,6 +111,8 @@ methods:
   kill_int: invia_int
   enable_kills: abilita_kill
   disable_kill: disabilita_kill
+
+  print_canvas: scrivi
 
   html_editor_create: nuovo_html_editor
   get_screen_bounds: limiti_schermo

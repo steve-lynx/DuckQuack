@@ -286,7 +286,6 @@ module JavafxHelpers
       :fit_height => 200,
       :background => Color::WHITE
     }.deep_merge(opts)
-
     root = Group.new
     stage = Stage.new
     stage.set_title(caption)
@@ -306,6 +305,18 @@ module JavafxHelpers
 
   def show_main_stage
     app.stage.show
+  end
+
+  def print_canvas(text, opts = {})
+    params = {
+      :x => 0,
+      :y => 0,
+      :canvas => nil
+    }.deep_merge(opts)
+    x, y = params[:x], params[:y]
+    canvas = params[:canvas].nil? ? @canvas : params[:canvas]
+    gc = canvas.get_graphics_context2_d
+    gc.fill_text(text, x, y)
   end
 
   def web_engine_create(url = '', opts = {})

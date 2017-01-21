@@ -40,17 +40,19 @@ class ExecutorController
   end
 
   def find_output_areas
-    @canvas = stack_pane.getChildren.reduce { |m, child|
-      m = child if child.is_a?(Canvas)
-      m
-    }
+    # @canvas = stack_pane.getChildren.reduce { |m, child|
+    #   m = child if child.is_a?(Canvas)
+    #   m
+    # }
+    @canvas = stack_pane.getChildren.find {|child| child.is_a?(Canvas)}
     @canvas.widthProperty.bind(stack_pane.widthProperty)
     @canvas.heightProperty.bind(stack_pane.heightProperty)
 
-    @output = output_pane.getChildren.reduce { |m, child|
-      m = child if child.is_a?(TextArea)
-      m
-    }
+    # @output = output_pane.getChildren.reduce { |m, child|
+    #   m = child if child.is_a?(TextArea)
+    #   m
+    # }
+    @output = output_pane.getChildren.find {|child| child.is_a?(TextArea)}
     @output.get_style_class.add("output-pane");
     @output.get_stylesheets.add('file://' + File.join(app.configs[:path][:config], 'output-pane.css'))
   end
@@ -60,7 +62,7 @@ class ExecutorController
     @running_code = nil
     System.gc #force garbage collection?
     @running_code = RunningCode.new(stack_pane, @source_controller, @canvas, @output)
-    @running_code.activate    
+    @running_code.activate
   end
 
 end

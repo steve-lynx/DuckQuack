@@ -144,6 +144,7 @@ class DuckQuackApp < JRubyFX::Application
           :language => 'ruby',
           :generate_methods_list => false,
           :database => 'duck_quack',
+          :complete_parentheses => true,
           :highlighting => { :async => false, :time => 300 },
           :code_runner  => { :async => true, :type => :task }, #or :type => :later
           :path  => {
@@ -185,14 +186,14 @@ class DuckQuackApp < JRubyFX::Application
   end
 
   def initialize
-    super   
+    super
     logger.info("DuckQuack - Initialization")
     DuckQuackApp.initialization
     set_app(self)
     @@database = nil
 
     @translation_regexp = Regexp.new(%((?<inlinecode>#{Regexp.new('(?m)#{(\w+|.*)}')})))
-    
+
     Dir[File.join(self.configs[:path][:lib], '*.{rb,jar}')].sort.each { |h|
       puts "LOADING EXTERNAL LIBS: #{h} "
       require(h)
@@ -223,7 +224,7 @@ class DuckQuackApp < JRubyFX::Application
         name =  names[index].to_sym
         acc = [name, matcher[name], matcher.begin(name), matcher.end(name)] unless matcher[name].nil?
         acc
-      }      
+      }
       memo
     }
   end
@@ -259,7 +260,7 @@ class DuckQuackApp < JRubyFX::Application
     Jdbc::SQLite3.load_driver
     require 'java'
     java_import Java::OrgSqlite::JDBC
-    path_db = app.configs[:path][:db]    
+    path_db = app.configs[:path][:db]
     @@database =
       Sequel.connect(
       "jdbc:sqlite:///" + File.join(path_db, "#{app.configs.fetch2([:database], 'duck_quack')}.db"),
@@ -272,7 +273,7 @@ class DuckQuackApp < JRubyFX::Application
   end
 
   def init
-    
+
     configs[:cli] = {
       :load => '',
       :run => '',
@@ -296,8 +297,8 @@ class DuckQuackApp < JRubyFX::Application
       opts.on("-r", "--run SOURCE", String, "run file") do |f|
         configs[:cli][:run] = f
       end
-      
-    end.parse!    
+
+    end.parse!
     configs[:cli][:hide] = false if !@@configs[:cli][:load].empty?
   end
 
@@ -321,12 +322,12 @@ class DuckQuackApp < JRubyFX::Application
   private :set_stage_size
 
   def start(stage)
-    @@stage = stage   
+    @@stage = stage
     size = set_stage_size
     with(stage, title: set_title, width: size[0], height: size[1]) {
       @@main_controller = fxml(DuckQuackController)
       @@main_pane = @@main_controller.main_pane
-      show if !app.configs[:cli][:hide]    
+      show if !app.configs[:cli][:hide]
       app.main_controller.load_file_if_cli
     }
   end

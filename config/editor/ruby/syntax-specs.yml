@@ -40,7 +40,7 @@ keywords:
   - '\bwhen\b'
   - '\bwhile\b'
   - '\byield\b'
-italian_keywords:  
+italian_keywords:
   - '\bINIZIO\b'
   - '\bFINE\b'
   - '\b__CODIFICA__\b'
@@ -107,12 +107,13 @@ modules:
 methods:
   - 'nil\?'
   - 'new'
-parenthesis:
+parentheses_open:
   - '('
-  - ')'
   - '['
-  - ']'
   - '{'
+parentheses_close:
+  - ')'
+  - ']'
   - '}'
 operators:
   - '+'
@@ -159,4 +160,3 @@ highlight8:
   - ''
 highlight9:
   - ''
-

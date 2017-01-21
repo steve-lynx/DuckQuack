@@ -33,11 +33,11 @@ class SyntaxHighlighter
     @syntax_specs = YAML.load_file(File.join(path, 'syntax-specs.yml'))
     @syntax_css = 'file://' + File.join(path, 'syntax-specs.css')
     @code_area.get_stylesheets.add(@syntax_css)
-    @code_area.set_style_class(0,  @code_area.length, CODE_AREA_STYLE)   
+    @code_area.set_style_class(0,  @code_area.length, CODE_AREA_STYLE)
     @comment_tag = @syntax_specs['comments'][0].gsub(".*$", '')
     reset_error_point
     syntax_regex
-    @highlighting[:async] ? syntax_activate_async : syntax_activate    
+    @highlighting[:async] ? syntax_activate_async : syntax_activate
   end
 
   def syntax_activate_async
@@ -55,8 +55,8 @@ class SyntaxHighlighter
     @code_area.richChanges
     .filter { |change| !change.get_inserted.equals(change.get_removed) }
     .subscribe { |change|
-      @code_area.set_style_spans(0, highlight_code(@code_area.get_text)) 
-    }    
+      @code_area.set_style_spans(0, highlight_code(@code_area.get_text))
+    }
   end
   private :syntax_activate
 
@@ -82,20 +82,20 @@ class SyntaxHighlighter
         words = @syntax_specs[k].reduce([]) { |memo, w|
           memo << (w.size > 1 ? Regexp.new(w) : Regexp.escape(w) );
           memo
-        } 
+        }
         acc << %((?<#{k.to_s}>#{words.join('|')})); acc
       }
       logger.debug(@syntax_regexs)
     end
     Regexp.new(@syntax_regexs.join('|'))
   end
-  private :syntax_regex  
+  private :syntax_regex
 
   def highlight_code(code = '')
     spansBuilder = StyleSpansBuilder.new
     lastKwEnd = 0
     app.build_ast(code, syntax_regex).each { |a|
-      spansBuilder.add([DEFAULT_STYLE], a[2] - lastKwEnd)            
+      spansBuilder.add([DEFAULT_STYLE], a[2] - lastKwEnd)
       spansBuilder.add([a[0].to_s], a[3] - a[2])
       lastKwEnd = a[3]
     }
@@ -104,21 +104,21 @@ class SyntaxHighlighter
   private :highlight_code
 
   def error_regex
-    line =  Regexp.escape(@current_error.get_text)     
+    line =  Regexp.escape(@current_error.get_text)
     "(?<#{LINE_ERROR_STYLE}>#{line})"
   end
   private :error_regex
 
   def set_error_point(point, cause)
     logger.debug("ERROR POINT: #{ point + 1}")
-    @current_error = @code_area.get_paragraph(point) 
-    @syntax_regexs.insert(0, error_regex) if error_point?    
+    @current_error = @code_area.get_paragraph(point)
+    @syntax_regexs.insert(0, error_regex) if error_point?
     code_area.move_to(point, 0)
     @code_area.insert_text(point, @current_error.length, " #{@comment_tag} <#{app.t(:error_line_comment)}>")
     #@code_area.replace_text(point, 0, point, @current_error.length, @current_error.get_text)
   end
 
-  def reset_error_point    
+  def reset_error_point
     @syntax_regexs.slice!(0) if error_point?
     @current_error = nil
   end
@@ -126,5 +126,5 @@ class SyntaxHighlighter
   def error_point?
     !@current_error.nil?
   end
-  
+
 end

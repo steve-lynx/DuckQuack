@@ -54,7 +54,7 @@ COSTANTE = 1
 
 simbolo = :pippo
 
-riempi_testo("SCRIVO NEL CANVAS", 200, 400)
+scrivi("SCRIVO NEL CANVAS", 200, 400)
 
 linea(340, 100, 10, 300, 4, Color::GREEN)
 linea(340, 100, 50, 300, 4, Color::RED)

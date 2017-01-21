@@ -11,8 +11,19 @@ import java.lang.System
 
 require 'jrubyfx'
 require 'sinatra/base'
+require 'json'
+require 'faraday'
 
 module HttpHelpers
+
+  def http_get(opts = {})
+    params = {
+      :url => ''
+    }.deep_merge(opts)
+    url = params.delete(:url)
+    conn = Faraday.new(url, params)
+    conn.get
+  end
   
   class HttpServer < Sinatra::Base
     
