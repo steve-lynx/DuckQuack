@@ -8,6 +8,9 @@
 
 module TurtleHelpers
 
+  ##
+  # Turtle is a minimal implementation of simil-LOGO Turtle graphics
+
   class Turtle
 
     include DrawingHelpers
@@ -30,6 +33,9 @@ module TurtleHelpers
     attr_accessor :background
     attr_reader :path
 
+    ##
+    # Attach a Turtle to canvas for drawing.
+
     def initialize(canvas)
       @canvas = canvas
       @bounds = @canvas.get_bounds_in_local
@@ -43,10 +49,16 @@ module TurtleHelpers
       pen_down
     end
 
+    ##
+    # Move Turtle to home and reset path and heading.
+
     def home
       @path = [PointRelative.new(0, 0, @bounds)]
       @heading = HEADING
     end
+
+    ##
+    # Clear canvas and all objects above.
 
     def clear
       children = @canvas.get_parent.get_children
@@ -57,9 +69,15 @@ module TurtleHelpers
       System.gc
     end
 
+    ##
+    # Move to home without reset path and heading.
+
     def move_to_home
       move_to(0, 0)
     end
+
+    ##
+    # Calculate canvas offset position relative to parent
 
     def calculate_delta_position
       b0 = @canvas.get_bounds_in_parent
@@ -67,6 +85,9 @@ module TurtleHelpers
       [b0.max_x - b1.max_x, b0.max_y - b1.max_y]
     end
     private :calculate_delta_position
+
+    ##
+    # Draw path from moves
 
     def draw_path(opts = {})
       params = {
@@ -85,6 +106,9 @@ module TurtleHelpers
       @canvas.get_parent.get_children.add(p)
     end
 
+    ##
+    # Draw polygon from moves
+
     def draw_path_polygon(opts = {})
       params = {
         :color => @pen_color,
@@ -101,6 +125,7 @@ module TurtleHelpers
       p.setStrokeWidth(params[:size])
       @canvas.get_parent.get_children.add(p)
     end
+
 
     def pen_up
       @drawing = false

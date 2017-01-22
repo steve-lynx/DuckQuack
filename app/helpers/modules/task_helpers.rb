@@ -21,9 +21,15 @@ import java.util.Optional
 
 module TaskHelpers
 
+  ##
+  # Stop current task for +millis+
+
   def sleep(millis)
     java.lang.Thread.sleep(millis)
   end
+
+  ##
+  # Force stop to all runnning tasks.
 
   def stop_tasks
     logger.info("STOP TASKS!")
@@ -34,6 +40,9 @@ module TaskHelpers
       logger.info("RunningCode in sync mode")
     end
   end
+
+  ##
+  # Runnable Task with JavaFx Platform.runLater.
 
   class TaskRunnableLater < Java::javafx.concurrent.Task
     attr_accessor :proc
@@ -47,6 +56,9 @@ module TaskHelpers
     end
   end
 
+  ##
+  # Runnable Task
+
   class TaskRunnable < Java::javafx.concurrent.Task
     attr_accessor :proc
     def start
@@ -59,25 +71,42 @@ module TaskHelpers
     end
   end
 
+  ##
+  # Create a new Task with +block+ execution. Return a task.
+  # Execute with +start+ method.
+
   def task(&block)      
     task = TaskRunnable.new
     task.proc = Proc.new(block)
     task
   end
 
+  ##
+  # Create a new Task with +block+ execution and +start+.
+
   def task_run(&block)  
     task(&block).start
   end
+
+  ##
+  # Create a new later Task with +block+ execution. Return a task.
+  # Execute with +start+ method.
 
   def task_later(&block)      
     task = TaskRunnableLater.new
     task.proc = Proc.new(block)
     task
   end
+
+  ##
+  # Create a new later Task with +block+ execution and +start+.
   
   def task_run_later(&block)      
     task_later(&block).start
   end
+
+  ##
+  # Create a runLater Task with +block+ execution.
 
   def platform_run_later(&block)
     Platform.runLater(-> { Proc.new(block).call })

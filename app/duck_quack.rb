@@ -10,7 +10,7 @@
 # DuckQuack Initializations
 ################################################################################
 
-APP_VERSION="0.7.0.beta"
+APP_VERSION="0.7.2.beta"
 
 include Java
 import java.lang.System

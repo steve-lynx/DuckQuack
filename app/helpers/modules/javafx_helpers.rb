@@ -8,6 +8,9 @@
 
 module JavafxHelpers
 
+  ##
+  # Reset 
+
   def reset
     children = @container.get_children
     (children.reduce([]) { |acc, child|       

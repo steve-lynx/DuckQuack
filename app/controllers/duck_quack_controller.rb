@@ -72,7 +72,7 @@ class DuckQuackController
 
   def initialize
     ConsoleRedirect.new(@output) if app.configs[:env] == :production
-    #code_editor_characters_filter
+    code_editor_characters_filter
     code_editor_keys_filter
     code_editor_context_menu
     scroll_pane = VirtualizedScrollPane.new(@code_editor)
@@ -89,7 +89,8 @@ class DuckQuackController
 
   def code_editor_keys_filter
     @code_editor.add_event_filter(KeyEvent::KEY_PRESSED) { |ev|
-      if ev.get_code == KeyCode::TAB
+      @current_key_code = ev.get_code 
+      if @current_key_code == KeyCode::TAB
         @code_editor.insert_text(@code_editor.get_caret_position, app.configs.fetch2([:tab_chars], '  '))
         ev.consume
       end
@@ -103,15 +104,33 @@ class DuckQuackController
       complete = app.configs.fetch2([:complete_parentheses], false)
       pos = @code_editor.get_caret_position
       c = ev.get_character
-      case c
-      when "("
-        complete ? @code_editor.insert_text(pos, "()") : @code_editor.insert_text(pos, c)
-      when "["
-        complete ? @code_editor.insert_text(pos, "[]") : @code_editor.insert_text(pos, c)
-      when "{"
-        complete ? @code_editor.insert_text(pos, "{}") : @code_editor.insert_text(pos, c)
+      is_controls_pressed =
+        ev.is_alt_down ||
+        ev.is_control_down ||
+        ev.is_meta_down || #|| ev.is_shift_down
+        @current_key_code == KeyCode::ESCAPE ||
+        @current_key_code == KeyCode::DELETE
+      is_char_empty = c.chomp.empty?
+      is_excluded = exclude.contains?(c)
+      #puts @current_key_code
+      if is_controls_pressed
+        logger.debug("CONTOLS KEYS PRESSED")
+      elsif is_char_empty
+        logger.debug("CHARACTER IS EMPTY")
+      elsif is_excluded
+        logger.debug("CHARACTER IS EXCLUDED")
       else
-        @code_editor.insert_text(pos, c) unless c.chomp.empty? || exclude.contains?(c)        
+        logger.debug("CHARACTER IS #{c}")
+        case c
+        when "("
+          complete ? @code_editor.insert_text(pos, "()") : @code_editor.insert_text(pos, c)
+        when "["
+          complete ? @code_editor.insert_text(pos, "[]") : @code_editor.insert_text(pos, c)
+        when "{"
+          complete ? @code_editor.insert_text(pos, "{}") : @code_editor.insert_text(pos, c)
+        else
+          @code_editor.insert_text(pos, c)   
+        end
       end
       ev.consume
     }
