@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class TurtleHelpers::Turtle - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="../DrawingHelpers.html">DrawingHelpers</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-axis">#axis</a>
+    
+    <li ><a href="#method-i-back">#back</a>
+    
+    <li ><a href="#method-i-clear">#clear</a>
+    
+    <li ><a href="#method-i-dot">#dot</a>
+    
+    <li ><a href="#method-i-draw_path">#draw_path</a>
+    
+    <li ><a href="#method-i-draw_path_polygon">#draw_path_polygon</a>
+    
+    <li ><a href="#method-i-drawing-3F">#drawing?</a>
+    
+    <li ><a href="#method-i-forward">#forward</a>
+    
+    <li ><a href="#method-i-home">#home</a>
+    
+    <li ><a href="#method-i-left">#left</a>
+    
+    <li ><a href="#method-i-move">#move</a>
+    
+    <li ><a href="#method-i-move_to">#move_to</a>
+    
+    <li ><a href="#method-i-move_to_home">#move_to_home</a>
+    
+    <li ><a href="#method-i-pen_down">#pen_down</a>
+    
+    <li ><a href="#method-i-pen_up">#pen_up</a>
+    
+    <li ><a href="#method-i-position">#position</a>
+    
+    <li ><a href="#method-i-right">#right</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-TurtleHelpers::Turtle">
+  <h1 id="class-TurtleHelpers::Turtle" class="class">
+    class TurtleHelpers::Turtle
+  </h1>
+
+  <section class="description">
+    
+<p><a href="Turtle.html">Turtle</a> is a minimal implementation of simil-LOGO
+<a href="Turtle.html">Turtle</a> graphics</p>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="BACKGROUND">BACKGROUND
+        
+        <dd>
+        
+      
+        <dt id="COLOR">COLOR
+        
+        <dd>
+        
+      
+        <dt id="DEG">DEG
+        
+        <dd>
+        
+      
+        <dt id="DOT_SIZE">DOT_SIZE
+        
+        <dd>
+        
+      
+        <dt id="HEADING">HEADING
+        
+        <dd>
+        
+      
+        <dt id="LENGTH">LENGTH
+        
+        <dd>
+        
+      
+        <dt id="PEN_SIZE">PEN_SIZE
+        
+        <dd>
+        
+      
+        <dt id="RECT">RECT
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-background" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">background</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-dot_color" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">dot_color</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-dot_size" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">dot_size</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-drawing" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">drawing</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-heading" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">heading</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-path" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">path</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-pen_color" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">pen_color</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-pen_size" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">pen_size</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(canvas)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Attach a <a href="Turtle.html">Turtle</a> to canvas for drawing.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">canvas</span>)
+  <span class="ruby-ivar">@canvas</span> = <span class="ruby-identifier">canvas</span>
+  <span class="ruby-ivar">@bounds</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">get_bounds_in_local</span>
+  <span class="ruby-ivar">@gc</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">get_graphics_context2_d</span>
+  <span class="ruby-ivar">@pen_color</span> = <span class="ruby-constant">COLOR</span>
+  <span class="ruby-ivar">@pen_size</span> = <span class="ruby-constant">PEN_SIZE</span>
+  <span class="ruby-ivar">@dot_color</span> = <span class="ruby-constant">COLOR</span>
+  <span class="ruby-ivar">@dot_size</span> = <span class="ruby-constant">DOT_SIZE</span>
+  <span class="ruby-ivar">@background</span> = <span class="ruby-constant">BACKGROUND</span>
+  <span class="ruby-identifier">home</span>
+  <span class="ruby-identifier">pen_down</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-axis" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">axis</span><span
+            class="method-args">(color = COLOR, size = 1)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="axis-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 208</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">axis</span>(<span class="ruby-identifier">color</span> = <span class="ruby-constant">COLOR</span>, <span class="ruby-identifier">size</span> = <span class="ruby-value">1</span>)
+  <span class="ruby-identifier">draw_axis</span>(<span class="ruby-identifier">color</span>, <span class="ruby-identifier">size</span>, <span class="ruby-ivar">@canvas</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-back" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">back</span><span
+            class="method-args">(distance = LENGTH)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="back-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 180</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">back</span>(<span class="ruby-identifier">distance</span> = <span class="ruby-constant">LENGTH</span>)
+  <span class="ruby-identifier">move</span>(<span class="ruby-operator">-</span><span class="ruby-identifier">distance</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-clear" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clear</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Clear canvas and all objects above.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="clear-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">clear</span>
+  <span class="ruby-identifier">children</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">get_parent</span>.<span class="ruby-identifier">get_children</span>
+  (<span class="ruby-identifier">children</span>.<span class="ruby-identifier">reduce</span>([]) { <span class="ruby-operator">|</span><span class="ruby-identifier">acc</span>, <span class="ruby-identifier">child</span><span class="ruby-operator">|</span>       
+     <span class="ruby-identifier">acc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">child</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@canvas</span>; <span class="ruby-identifier">acc</span>}
+  ).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> <span class="ruby-identifier">children</span>.<span class="ruby-identifier">remove</span>(<span class="ruby-identifier">child</span>)}
+  <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-constant">System</span>.<span class="ruby-identifier">gc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-dot" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dot</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dot-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dot</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:color</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@dot_color</span>,
+    <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pen_size</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">draw_dot</span>(<span class="ruby-ivar">@path</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">a_x</span>, <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">a_y</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:size</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:color</span>], <span class="ruby-ivar">@canvas</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@drawing</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-draw_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">draw_path</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Draw path from moves</p>
+          
+          
+
+          
+          <div class="method-source-code" id="draw_path-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">draw_path</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:color</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pen_color</span>,
+    <span class="ruby-value">:background</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@background</span>,
+    <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pen_size</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">d</span> = <span class="ruby-identifier">calculate_delta_position</span>
+  <span class="ruby-identifier">p</span> = <span class="ruby-constant">Polyline</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">get_points</span>.<span class="ruby-identifier">add_all</span>(
+    <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">point</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">point</span>.<span class="ruby-identifier">a_x</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">point</span>.<span class="ruby-identifier">a_y</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>]] }.<span class="ruby-identifier">flatten</span>
+  )
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">setStroke</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:color</span>])
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">setFill</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:background</span>])
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">setStrokeWidth</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:size</span>])
+  <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">get_parent</span>.<span class="ruby-identifier">get_children</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">p</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-draw_path_polygon" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">draw_path_polygon</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Draw polygon from moves</p>
+          
+          
+
+          
+          <div class="method-source-code" id="draw_path_polygon-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">draw_path_polygon</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:color</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pen_color</span>,
+    <span class="ruby-value">:background</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@background</span>,
+    <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pen_size</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">d</span> = <span class="ruby-identifier">calculate_delta_position</span>
+  <span class="ruby-identifier">p</span> = <span class="ruby-constant">Polygon</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">get_points</span>.<span class="ruby-identifier">add_all</span>(
+    <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">point</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">point</span>.<span class="ruby-identifier">a_x</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">point</span>.<span class="ruby-identifier">a_y</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>]] }.<span class="ruby-identifier">flatten</span>
+  )
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">setStroke</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:color</span>])
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">setFill</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:background</span>])
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">setStrokeWidth</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:size</span>])
+  <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">get_parent</span>.<span class="ruby-identifier">get_children</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">p</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-drawing-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">drawing?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="drawing-3F-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">drawing?</span>
+  <span class="ruby-ivar">@drawing</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-forward" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">forward</span><span
+            class="method-args">(distance = LENGTH)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="forward-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">forward</span>(<span class="ruby-identifier">distance</span> = <span class="ruby-constant">LENGTH</span>)
+  <span class="ruby-identifier">move</span>(<span class="ruby-identifier">distance</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-home" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">home</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Move <a href="Turtle.html">Turtle</a> to home and reset path and heading.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="home-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">home</span>
+  <span class="ruby-ivar">@path</span> = [<span class="ruby-constant">PointRelative</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-ivar">@bounds</span>)]
+  <span class="ruby-ivar">@heading</span> = <span class="ruby-constant">HEADING</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-left" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">left</span><span
+            class="method-args">(angle = RECT)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="left-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 204</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">left</span>(<span class="ruby-identifier">angle</span> = <span class="ruby-constant">RECT</span>)
+  <span class="ruby-ivar">@heading</span> = (<span class="ruby-ivar">@heading</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">angle</span>) <span class="ruby-operator">%</span> <span class="ruby-value">360</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-move" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">move</span><span
+            class="method-args">(distance = LENGTH)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="move-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">move</span>(<span class="ruby-identifier">distance</span> = <span class="ruby-constant">LENGTH</span>)
+  <span class="ruby-ivar">@new_point</span> = <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-ivar">@heading</span>, <span class="ruby-identifier">distance</span>)
+  <span class="ruby-identifier">draw_line</span>(<span class="ruby-ivar">@path</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">a_x</span>, <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">a_y</span>,
+    <span class="ruby-ivar">@new_point</span>.<span class="ruby-identifier">a_x</span>, <span class="ruby-ivar">@new_point</span>.<span class="ruby-identifier">a_y</span>, <span class="ruby-ivar">@pen_size</span>, <span class="ruby-ivar">@pen_color</span>, <span class="ruby-ivar">@canvas</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">drawing?</span>
+  <span class="ruby-ivar">@path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@new_point</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-move_to" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">move_to</span><span
+            class="method-args">(x = 0, y = 0)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="move_to-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">x</span> = <span class="ruby-value">0</span>, <span class="ruby-identifier">y</span> = <span class="ruby-value">0</span>)
+  <span class="ruby-ivar">@path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">PointRelative</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>, <span class="ruby-ivar">@bounds</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-move_to_home" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">move_to_home</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Move to home without reset path and heading.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="move_to_home-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">move_to_home</span>
+  <span class="ruby-identifier">move_to</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-pen_down" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pen_down</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pen_down-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 133</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pen_down</span>
+  <span class="ruby-ivar">@drawing</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-pen_up" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pen_up</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pen_up-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 129</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pen_up</span>
+  <span class="ruby-ivar">@drawing</span> = <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-position" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">position</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="position-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">position</span>
+  <span class="ruby-identifier">last</span> = <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">last</span>
+  [<span class="ruby-identifier">last</span>.<span class="ruby-identifier">r_x</span>, <span class="ruby-identifier">last</span>.<span class="ruby-identifier">r_y</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-right" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">right</span><span
+            class="method-args">(angle = RECT)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="right-source">
+            <pre><span class="ruby-comment"># File turtle_helpers.rb, line 200</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">right</span>(<span class="ruby-identifier">angle</span> = <span class="ruby-constant">RECT</span>)
+  <span class="ruby-ivar">@heading</span> = (<span class="ruby-ivar">@heading</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">angle</span>) <span class="ruby-operator">%</span> <span class="ruby-value">360</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

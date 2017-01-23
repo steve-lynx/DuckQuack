@@ -1,0 +1,75 @@
+---
+
+d: >
+  def <method_name>(params)
+    <body>
+  end
+  
+i: >
+  if <conditional>
+    <body if true>
+  else
+    <body if false>
+  end
+
+I: >
+  if <conditional>
+    <body if true>
+  elsif <conditional>
+    <body if true>
+  else
+    <body if false>
+  end
+  
+b: > 
+  do |value| 
+    <body>
+  end
+  
+c: >
+  case <value>
+  when:
+    <body>
+  when:
+    <body>
+  else
+    <default body>
+  end
+  
+e: >
+  begin
+    <block>
+  rescue => exception
+    puts exception.message
+    puts exception.backtrace
+  end
+  
+f: >
+  for <variable> [, variable ...] in <expression> [do]
+     <body>
+  end
+  
+h: >
+  <enumerator>.each do |element|
+    <body>
+  end
+  
+s: >
+  class <NameClass>
+    <class body>
+  end
+  
+m: >
+  module <NameModule>
+    <module body>
+  end
+  
+w: >
+  while <conditional> [do]
+   <body>
+  end
+  
+u: >
+  until <conditional> [do]
+   <body>
+  end

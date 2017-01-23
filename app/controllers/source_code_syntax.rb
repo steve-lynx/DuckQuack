@@ -22,6 +22,7 @@ import java.util.Optional
 class SyntaxHighlighter
 
   attr_reader :code_area
+  
 
   LINE_ERROR_STYLE = 'lineerror'
   DEFAULT_STYLE = 'default'
@@ -30,7 +31,7 @@ class SyntaxHighlighter
   def initialize(code_area, path, highlighting = {})
     @highlighting = { :async => false, :time => 100 }.deep_merge(highlighting)
     @code_area = code_area
-    @syntax_specs = YAML.load_file(File.join(path, 'syntax-specs.yml'))
+    @syntax_specs = YAML.load_file(File.join(path, 'syntax-specs.yml'))    
     @syntax_css = 'file://' + File.join(path, 'syntax-specs.css')
     @code_area.get_stylesheets.add(@syntax_css)
     @code_area.set_style_class(0,  @code_area.length, CODE_AREA_STYLE)

@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module JavafxHelpers - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-alert">#alert</a>
+    
+    <li ><a href="#method-i-alert_and_wait">#alert_and_wait</a>
+    
+    <li ><a href="#method-i-ask">#ask</a>
+    
+    <li ><a href="#method-i-audio_clip_create">#audio_clip_create</a>
+    
+    <li ><a href="#method-i-button_create">#button_create</a>
+    
+    <li ><a href="#method-i-canvas_create">#canvas_create</a>
+    
+    <li ><a href="#method-i-close_main_stage">#close_main_stage</a>
+    
+    <li ><a href="#method-i-control_add">#control_add</a>
+    
+    <li ><a href="#method-i-get_screen_bounds">#get_screen_bounds</a>
+    
+    <li ><a href="#method-i-gets">#gets</a>
+    
+    <li ><a href="#method-i-html_editor_create">#html_editor_create</a>
+    
+    <li ><a href="#method-i-image_view_create">#image_view_create</a>
+    
+    <li ><a href="#method-i-label_create">#label_create</a>
+    
+    <li ><a href="#method-i-media_player_create">#media_player_create</a>
+    
+    <li ><a href="#method-i-print_canvas">#print_canvas</a>
+    
+    <li ><a href="#method-i-progress_bar_create">#progress_bar_create</a>
+    
+    <li ><a href="#method-i-progress_indicator_create">#progress_indicator_create</a>
+    
+    <li ><a href="#method-i-reset">#reset</a>
+    
+    <li ><a href="#method-i-set_control_dimension">#set_control_dimension</a>
+    
+    <li ><a href="#method-i-set_control_tooltip">#set_control_tooltip</a>
+    
+    <li ><a href="#method-i-show_main_stage">#show_main_stage</a>
+    
+    <li ><a href="#method-i-text_area_create">#text_area_create</a>
+    
+    <li ><a href="#method-i-text_field_create">#text_field_create</a>
+    
+    <li ><a href="#method-i-web_engine_create">#web_engine_create</a>
+    
+    <li ><a href="#method-i-window_create">#window_create</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-JavafxHelpers">
+  <h1 id="module-JavafxHelpers" class="module">
+    module JavafxHelpers
+  </h1>
+
+  <section class="description">
+    
+<p>Initial developer: Massimo Maria Ghisalberti
+&lt;massimo.ghisalberti@gmail.org&gt; Date: 2016-12-18 Company: Pragmas
+&lt;contact.info@pragmas.org&gt; Licence: Apache License Version 2.0, <a
+href="http://www.apache.org/licenses">www.apache.org/licenses</a>/</p>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-alert" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">alert</span><span
+            class="method-args">(caption, message)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="alert-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">alert</span>(<span class="ruby-identifier">caption</span>, <span class="ruby-identifier">message</span>)
+  <span class="ruby-identifier">alert</span> = <span class="ruby-constant">Alert</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Alert</span><span class="ruby-operator">::</span><span class="ruby-constant">AlertType</span><span class="ruby-operator">::</span><span class="ruby-constant">INFORMATION</span>, <span class="ruby-identifier">message</span>)
+  <span class="ruby-identifier">alert</span>.<span class="ruby-identifier">header_text</span> = <span class="ruby-identifier">caption</span>
+  <span class="ruby-identifier">alert</span>.<span class="ruby-identifier">show</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-alert_and_wait" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">alert_and_wait</span><span
+            class="method-args">(caption, message)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="alert_and_wait-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">alert_and_wait</span>(<span class="ruby-identifier">caption</span>, <span class="ruby-identifier">message</span>)
+  <span class="ruby-identifier">alert</span> = <span class="ruby-constant">Alert</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Alert</span><span class="ruby-operator">::</span><span class="ruby-constant">AlertType</span><span class="ruby-operator">::</span><span class="ruby-constant">INFORMATION</span>, <span class="ruby-identifier">message</span>, <span class="ruby-constant">ButtonType</span><span class="ruby-operator">::</span><span class="ruby-constant">CANCEL</span>, <span class="ruby-constant">ButtonType</span><span class="ruby-operator">::</span><span class="ruby-constant">OK</span>)
+  <span class="ruby-identifier">alert</span>.<span class="ruby-identifier">header_text</span> = <span class="ruby-identifier">caption</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">alert</span>.<span class="ruby-identifier">show_and_wait</span>
+  .<span class="ruby-identifier">filter</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> <span class="ruby-identifier">response</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ButtonType</span><span class="ruby-operator">::</span><span class="ruby-constant">OK</span> }
+  .<span class="ruby-identifier">if_present</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> <span class="ruby-identifier">result</span> = <span class="ruby-keyword">true</span>}
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ask" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ask</span><span
+            class="method-args">(caption = '')</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ask-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ask</span>(<span class="ruby-identifier">caption</span> = <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">d</span> = <span class="ruby-constant">TextInputDialog</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">d</span>.<span class="ruby-identifier">set_title</span>(<span class="ruby-identifier">app</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:ask_caption</span>))
+  <span class="ruby-identifier">d</span>.<span class="ruby-identifier">setHeaderText</span>(<span class="ruby-identifier">caption</span>)
+  <span class="ruby-identifier">result</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-identifier">d</span>.<span class="ruby-identifier">show_and_wait</span>
+  .<span class="ruby-identifier">if_present</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> <span class="ruby-identifier">result</span> = <span class="ruby-identifier">response</span> }
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-audio_clip_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_clip_create</span><span
+            class="method-args">(source, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="audio_clip_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 250</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_clip_create</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:protocol</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:file</span>,
+    <span class="ruby-value">:autoplay</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:volume</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1.0</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">a</span> = <span class="ruby-constant">AudioClip</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{params[:protocol].to_s}://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">source</span>)
+  <span class="ruby-identifier">a</span>.<span class="ruby-identifier">set_volume</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:volume</span>])
+  <span class="ruby-identifier">a</span>.<span class="ruby-identifier">play</span>
+  <span class="ruby-identifier">a</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-button_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">button_create</span><span
+            class="method-args">(text, opts = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="button_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">button_create</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">opts</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">100</span>,
+    <span class="ruby-comment">#:fit_height =&gt; 100,</span>
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">Button</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_on_action</span>(<span class="ruby-identifier">block</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-canvas_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">canvas_create</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="canvas_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">canvas_create</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:fit_height</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:background</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Color</span><span class="ruby-operator">::</span><span class="ruby-constant">WHITE</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">Canvas</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">gc</span> = <span class="ruby-identifier">c</span>.<span class="ruby-identifier">get_graphics_context2_d</span>
+  <span class="ruby-identifier">gc</span>.<span class="ruby-identifier">setFill</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:background</span>])
+  <span class="ruby-identifier">gc</span>.<span class="ruby-identifier">fillRect</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">gc</span>.<span class="ruby-identifier">methods</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">gc</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">m</span>).<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:define_method</span>, <span class="ruby-identifier">m</span>) { <span class="ruby-identifier">get_graphics_context2_d</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">m</span>) }
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:define_method</span>, <span class="ruby-identifier">m</span>) { <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span> <span class="ruby-identifier">get_graphics_context2_d</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">m</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) }
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  }
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-close_main_stage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">close_main_stage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="close_main_stage-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 304</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">close_main_stage</span>
+  <span class="ruby-identifier">app</span>.<span class="ruby-identifier">stage</span>.<span class="ruby-identifier">hide</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-control_add" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">control_add</span><span
+            class="method-args">(control, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="control_add-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">control</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">parent</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@container</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>]
+  <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">get_children</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">control</span>)
+  <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">applyCss</span>
+  <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">layout</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:bounds</span>]
+    <span class="ruby-identifier">bounds</span> = <span class="ruby-identifier">control</span>.<span class="ruby-identifier">get_bounds_in_parent</span>
+    <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">control</span>, <span class="ruby-identifier">bounds</span>.<span class="ruby-identifier">get_width</span>, <span class="ruby-identifier">bounds</span>.<span class="ruby-identifier">get_height</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">parent</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_screen_bounds" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_screen_bounds</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_screen_bounds-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 343</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_screen_bounds</span>
+  <span class="ruby-constant">Screen</span>.<span class="ruby-identifier">get_bounds</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-gets" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">gets</span><span
+            class="method-args">(caption = '')</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="gets-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">gets</span>(<span class="ruby-identifier">caption</span> = <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">ask</span>(<span class="ruby-identifier">caption</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-html_editor_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">html_editor_create</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="html_editor_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">html_editor_create</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:fit_height</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">HTMLEditor</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-image_view_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">image_view_create</span><span
+            class="method-args">(image, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="image_view_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 230</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">image_view_create</span>(<span class="ruby-identifier">image</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:protocol</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:file</span>,
+    <span class="ruby-comment">#:fit_width =&gt; 130, :fit_height =&gt; 150, :preserve =&gt; false,</span>
+    <span class="ruby-value">:smooth</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">ImageView</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">image</span> = <span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{params[:protocol].to_s}://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">image</span>, <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">setImage</span>(<span class="ruby-identifier">image</span>)
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_preserve_ratio</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:preserve</span>].<span class="ruby-identifier">nil?</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:preserve</span>].<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_smooth</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:smooth</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-label_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">label_create</span><span
+            class="method-args">(text, opts = {}, &action)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="label_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">label_create</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">opts</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">action</span>)
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">100</span>,
+    <span class="ruby-comment">#:fit_height =&gt; 100,</span>
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_on_action</span>(<span class="ruby-identifier">action</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">action</span>
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-media_player_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">media_player_create</span><span
+            class="method-args">(source, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="media_player_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">media_player_create</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:protocol</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:file</span>,
+    <span class="ruby-value">:autoplay</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>,
+    <span class="ruby-comment">#:fit_width =&gt; 100, :fit_height =&gt; 100,</span>
+    <span class="ruby-value">:smooth</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">m</span> = <span class="ruby-constant">Media</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{params[:protocol].to_s}://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">source</span>)
+  <span class="ruby-identifier">mp</span> = <span class="ruby-constant">MediaPlayer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">m</span>)
+  <span class="ruby-identifier">mv</span> = <span class="ruby-constant">MediaView</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">mp</span>)
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">mv</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">mv</span>.<span class="ruby-identifier">set_smooth</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:smooth</span>])
+  <span class="ruby-identifier">mv</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">mv</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">mp</span>.<span class="ruby-identifier">set_auto_play</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:autoplay</span>])
+  <span class="ruby-identifier">mv</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print_canvas" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_canvas</span><span
+            class="method-args">(text, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="print_canvas-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 312</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_canvas</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:canvas</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>]
+  <span class="ruby-identifier">canvas</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:canvas</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@canvas</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:canvas</span>]
+  <span class="ruby-identifier">gc</span> = <span class="ruby-identifier">canvas</span>.<span class="ruby-identifier">get_graphics_context2_d</span>
+  <span class="ruby-identifier">gc</span>.<span class="ruby-identifier">fill_text</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-progress_bar_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">progress_bar_create</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="progress_bar_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">progress_bar_create</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:progress</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-comment">#:fit_height =&gt; 100,</span>
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">ProgressBar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:progress</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-progress_indicator_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">progress_indicator_create</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="progress_indicator_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 184</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">progress_indicator_create</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:progress</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-comment">#:fit_height =&gt; 100,</span>
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">ProgressIndicator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:progress</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-reset" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reset</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Reset</p>
+          
+          
+
+          
+          <div class="method-source-code" id="reset-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
+  <span class="ruby-identifier">children</span> = <span class="ruby-ivar">@container</span>.<span class="ruby-identifier">get_children</span>
+  (<span class="ruby-identifier">children</span>.<span class="ruby-identifier">reduce</span>([]) { <span class="ruby-operator">|</span><span class="ruby-identifier">acc</span>, <span class="ruby-identifier">child</span><span class="ruby-operator">|</span>       
+     <span class="ruby-identifier">acc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">get_id</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;default_canvas&#39;</span>; <span class="ruby-identifier">acc</span>}
+  ).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> <span class="ruby-identifier">children</span>.<span class="ruby-identifier">remove</span>(<span class="ruby-identifier">child</span>)}
+  <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-constant">System</span>.<span class="ruby-identifier">gc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-set_control_dimension" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">set_control_dimension</span><span
+            class="method-args">(c, width, height)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="set_control_dimension-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">width</span>, <span class="ruby-identifier">height</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">width</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">height</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">set_dim_width</span>, <span class="ruby-identifier">set_dim_height</span> =
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:set_fit_width</span>)
+        [<span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_fit_width</span>(<span class="ruby-identifier">w</span>) }, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_fit_height</span>(<span class="ruby-identifier">h</span>) }]
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:set_pref_width</span>)
+        [<span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_pref_width</span>(<span class="ruby-identifier">w</span>) }, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_pref_height</span>(<span class="ruby-identifier">h</span>) }]
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:set_width</span>)
+        [<span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_width</span>(<span class="ruby-identifier">w</span>) }, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_height</span>(<span class="ruby-identifier">h</span>) }]
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:set_min_width</span>)
+        [<span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_min_width</span>(<span class="ruby-identifier">w</span>) }, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_min_height</span>(<span class="ruby-identifier">h</span>) }]
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:set_max_width</span>)
+        [<span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_min_width</span>(<span class="ruby-identifier">w</span>) }, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_min_height</span>(<span class="ruby-identifier">h</span>) }]
+      <span class="ruby-keyword">else</span>
+        [<span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;CONTROL WIDTH #{w} UNSUPPORTED&quot;</span>)}, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;CONTROL HEIGHT #{h} UNSUPPORTED&quot;</span>)}]
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">set_dim_width</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">width</span>)
+    <span class="ruby-identifier">set_dim_height</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">height</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-set_control_tooltip" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">set_control_tooltip</span><span
+            class="method-args">(c, text = '')</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="set_control_tooltip-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_control_tooltip</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">text</span> = <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_tooltip</span>(<span class="ruby-constant">Tooltip</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">text</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-show_main_stage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_main_stage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_main_stage-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 308</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_main_stage</span>
+  <span class="ruby-identifier">app</span>.<span class="ruby-identifier">stage</span>.<span class="ruby-identifier">show</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-text_area_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">text_area_create</span><span
+            class="method-args">(opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="text_area_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 200</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">text_area_create</span>(<span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:fit_height</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">TextArea</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-text_field_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">text_field_create</span><span
+            class="method-args">(opts = {}, &action)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="text_field_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 152</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">text_field_create</span>(<span class="ruby-identifier">opts</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">action</span>)
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-comment">#:fit_height =&gt; 100,</span>
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">TextField</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">set_control_dimension</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_on_action</span>(<span class="ruby-identifier">action</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">action</span>
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-web_engine_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">web_engine_create</span><span
+            class="method-args">(url = '', opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="web_engine_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 324</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">web_engine_create</span>(<span class="ruby-identifier">url</span> = <span class="ruby-string">&#39;&#39;</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">400</span>,
+    <span class="ruby-value">:fit_height</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">400</span>,
+    <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">WebView</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">e</span> = <span class="ruby-identifier">c</span>.<span class="ruby-identifier">getEngine</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">relocate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:y</span>])
+  <span class="ruby-identifier">w</span>, <span class="ruby-identifier">h</span> = [<span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>]]
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_pref_width</span>(<span class="ruby-identifier">w</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">w</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">set_pref_height</span>(<span class="ruby-identifier">h</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">e</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">url</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">control_add</span>(<span class="ruby-identifier">c</span>, <span class="ruby-value">:parent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:parent</span>], <span class="ruby-value">:bounds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">e</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-window_create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">window_create</span><span
+            class="method-args">(caption, opts = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="window_create-source">
+            <pre><span class="ruby-comment"># File javafx_helpers.rb, line 283</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">window_create</span>(<span class="ruby-identifier">caption</span>, <span class="ruby-identifier">opts</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">:x</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:y</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+    <span class="ruby-value">:fit_width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:fit_height</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+    <span class="ruby-value">:background</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Color</span><span class="ruby-operator">::</span><span class="ruby-constant">WHITE</span>
+  }.<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">root</span> = <span class="ruby-constant">Group</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">stage</span> = <span class="ruby-constant">Stage</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">set_title</span>(<span class="ruby-identifier">caption</span>)
+  <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">set_on_close_request</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span> <span class="ruby-identifier">app</span>.<span class="ruby-identifier">stage</span>.<span class="ruby-identifier">show</span> }
+  <span class="ruby-identifier">scene</span> = <span class="ruby-constant">Scene</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:fit_height</span>])
+  <span class="ruby-identifier">pane</span> = <span class="ruby-constant">AnchorPane</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">root</span>.<span class="ruby-identifier">get_children</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">pane</span>)
+  <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">set_scene</span>(<span class="ruby-identifier">scene</span>)
+  <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">size_to_scene</span>
+  <span class="ruby-identifier">stage</span>.<span class="ruby-identifier">show</span>
+  <span class="ruby-identifier">pane</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

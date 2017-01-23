@@ -144,7 +144,6 @@ class DuckQuackApp < JRubyFX::Application
           :language => 'ruby',
           :generate_methods_list => false,
           :database => 'duck_quack',
-          :complete_parentheses => true,
           :highlighting => { :async => false, :time => 300 },
           :code_runner  => { :async => true, :type => :task }, #or :type => :later
           :path  => {

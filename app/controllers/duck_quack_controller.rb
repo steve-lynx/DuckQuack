@@ -98,39 +98,48 @@ class DuckQuackController
   end
   private :code_editor_keys_filter
 
+  def complete_char(c)
+    completes = @source_code_controller.completes
+    pos = @code_editor.get_caret_position
+    if completes.keys.contains?(c)
+      @code_editor.insert_text(pos, completes[c])
+      @code_editor.selectRange(pos + 1, pos + 1)
+    else
+      @code_editor.insert_text(pos, c)
+    end
+  end
+  private :complete_char
+
+  def snippet_char(c)
+    pos = @code_editor.get_caret_position
+    snippets = @source_code_controller.snippets
+    snippet = snippets.fetch2([c], '')
+    @code_editor.insert_text(pos, snippet) unless snippet.empty?
+  end
+  private :snippet_char
+
   def code_editor_characters_filter
+    exclude = ["\b", "\t"]
     @code_editor.add_event_filter(KeyEvent::KEY_TYPED) { |ev|
-      exclude = ["\b", "\t"]
-      complete = app.configs.fetch2([:complete_parentheses], false)
-      pos = @code_editor.get_caret_position
       c = ev.get_character
       is_controls_pressed =
         ev.is_alt_down ||
         ev.is_control_down ||
-        ev.is_meta_down || #|| ev.is_shift_down
+        ev.is_meta_down || 
         @current_key_code == KeyCode::ESCAPE ||
         @current_key_code == KeyCode::DELETE
       is_char_empty = c.chomp.empty?
       is_excluded = exclude.contains?(c)
-      #puts @current_key_code
       if is_controls_pressed
-        logger.debug("CONTOLS KEYS PRESSED")
+        logger.debug("CONTROLS KEYS PRESSED")
+        snippet_char(c) if ev.is_alt_down
       elsif is_char_empty
         logger.debug("CHARACTER IS EMPTY")
       elsif is_excluded
         logger.debug("CHARACTER IS EXCLUDED")
       else
         logger.debug("CHARACTER IS #{c}")
-        case c
-        when "("
-          complete ? @code_editor.insert_text(pos, "()") : @code_editor.insert_text(pos, c)
-        when "["
-          complete ? @code_editor.insert_text(pos, "[]") : @code_editor.insert_text(pos, c)
-        when "{"
-          complete ? @code_editor.insert_text(pos, "{}") : @code_editor.insert_text(pos, c)
-        else
-          @code_editor.insert_text(pos, c)   
-        end
+        complete_char(c)
       end
       ev.consume
     }

@@ -56,6 +56,7 @@ Il sistema prevede una certa personalizzazione che va dalla colorazione della si
 + ```./config/editor/ruby/syntax-specs.css```: *una serie di stili per la colorazione della sintassi*
 
 Nella stessa cartella un file ```code.yml``` permette di specificare una serie di righe predefinite da eseguire insieme al codice. Utile per eventuali *require* o *import* da usare in maniera predefinita.
+Si possono specificare anche dei blocchi di codice da inserire tramite la pressione del tasto ```Alt``` insieme ad una lettera o ```Alt+Shift``` ed una lettera, le definizioni sono nel file ```snippets.yml```. I caratteri sono autocompletabili tramite il file ```completes.yml```, utile per le parentesi per esempio: inserendo una parentesi ```(``` verrà inserito ```()``` con il cursore posizionato al centro.
 
 Oltre alla personalizzazione del linguaggio e dell'editor tramite i file di cui sopra, nella cartella ```./config/locale/it``` c'è il file (```locale.yml```) per la traduzione di alcune parte dell'interfaccia, dei metodi da eseguire ed un *mapping* di sostituzioni in linea prima della esecuzione. In questo modo si dovrebbe poter personalizzare il codice per le varie eveniente senza troppa difficoltà.
 
@@ -87,6 +88,7 @@ Sono presenti alcune primitive per la creazione di interfacce grafiche all'inter
 + ```show_main_stage``` (mostra la finestra principale)
 + ... (fare riferimento al file ```app/helpers/running_code_helpers.rb``` e alla cartella ```modules```, nonché al file di localizzazione dentro ```config/locale/<lingua>/locale.yml```).
 
+La documentazione rdoc generata è nella cartella ```doc```.
 Ogni nome di funzione aggiunta nei vari modi è localizzabile nel suo nome con i meccanismi accennati prima.
 Ovviamente tutto questo salvo bachi.
 

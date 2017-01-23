@@ -20,13 +20,15 @@ class SourceCodeController
   attr_reader :code_area
   attr_reader :gutter
   attr_reader :syntax_highlighter
+  attr_reader :snippets
+  attr_reader :completes
 
   LINE_NUMBER_STYLE = 'linenumber'
   LINE_SYMBOL_STYLE = 'linesymbol'
 
   def initialize(code_area, code_area_info)    
     @code_area = code_area
-    @code_area_info = code_area_info
+    @code_area_info = code_area_info    
     prepare_editing
   end
 
@@ -38,9 +40,11 @@ class SourceCodeController
 
   def prepare_editing
     find_language
+    @config_path = File.join(app.configs[:path][:editor], @language)
+    @snippets = YAML.load_file(File.join(@config_path, 'snippets.yml'))
+    @completes = YAML.load_file(File.join(@config_path, 'completes.yml'))
     @code_area.set_paragraph_graphic_factory(linenumber_and_symbols_factory)
-    @syntax_highlighter = SyntaxHighlighter.new(
-      @code_area, File.join(app.configs[:path][:editor], @language), app.configs[:highlighting])
+    @syntax_highlighter = SyntaxHighlighter.new(@code_area, @config_path, app.configs[:highlighting])
   end
 
   def linenumber_and_symbols_factory
